@@ -1,0 +1,54 @@
+@font-face {
+  font-family: 'Grtsk-Exa';
+  font-style:  normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("Grtsk-Exa-Regular-Cyrillic-Latin-ekaterina_deryushkina.woff2?v=3.19") format("woff2"),
+       url("Grtsk-Exa-Regular-Cyrillic-Latin-ekaterina_deryushkina.woff?v=3.19") format("woff");
+}
+
+@font-face {
+  font-family: 'Grtsk-Exa';
+  font-style:  normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("Grtsk-Exa-Medium-Cyrillic-Latin-ekaterina_deryushkina.woff2?v=3.19") format("woff2"),
+       url("Grtsk-Exa-Medium-Cyrillic-Latin-ekaterina_deryushkina.woff?v=3.19") format("woff");
+}
+
+@font-face {
+  font-family: 'Grtsk-Exa';
+  font-style:  normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("Grtsk-Exa-Semibold-Cyrillic-Latin-ekaterina_deryushkina.woff2?v=3.19") format("woff2"),
+       url("Grtsk-Exa-Semibold-Cyrillic-Latin-ekaterina_deryushkina.woff?v=3.19") format("woff");
+}
+
+@font-face {
+  font-family: 'Grtsk-Tera';
+  font-style:  normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("Grtsk-Tera-Semibold-Cyrillic-Latin-ekaterina_deryushkina.woff2") format("woff2"),
+       url("Grtsk-Tera-Semibold-Cyrillic-Latin-ekaterina_deryushkina.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Grtsk-Tera';
+  font-style:  normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("Grtsk-Tera-Bold-Cyrillic-Latin-ekaterina_deryushkina.woff2") format("woff2"),
+       url("Grtsk-Tera-Bold-Cyrillic-Latin-ekaterina_deryushkina.woff") format("woff");
+}
+
+
+@font-face {
+  font-family: 'Grtsk-Mega';
+  font-style:  normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("Grtsk-Mega-Bold-Cyrillic-Latin-ekaterina_deryushkina.woff2") format("woff2"),
+       url("Grtsk-Mega-Bold-Cyrillic-Latin-ekaterina_deryushkina.woff") format("woff");
+}

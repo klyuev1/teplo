@@ -1,0 +1,11 @@
+/* Подключаем нормалайз */
+@import url(./vendor/normalize.css);
+
+/* Подключаем шрифты */
+@import url(./vendor/fonts/fonts.css);
+
+/* Настраиваем параметры страницы */
+@import url(./components/App/App.css);
+
+/* Правила для Register*/
+@import url(./components/Register/Register.css);
