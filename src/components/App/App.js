@@ -17,11 +17,11 @@ function App() {
 
   // Функции авторизации
   function handleRegister() {
-    console.log("hi, bro")
+    console.log("hi, bro");
   }
   
   function handleLogin() {
-    console.log("hi, bro")
+    console.log("hi, bro");
   }
   
   
