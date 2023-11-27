@@ -23,4 +23,8 @@
 /* Правила для Footer*/
 @import url(./components/Footer/Footer.css);
 
+.body {
+  font-size: large;
+}
+
 
