@@ -1,0 +1,29 @@
+.main {
+  width: 100%;
+  
+}
+
+.main__container {
+  background-color: #A34461;
+  background: url(../../images/pattern.svg) no-repeat center;
+  background-size: cover;
+  margin: 0 auto;
+  height: 700px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.main__title {
+  max-width: 600px;
+  margin: 0;
+  padding: 0;
+  color: #F5887A;
+  font-family: 'Grtsk-Mega', 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0.01em;
+  text-align: center;
+}

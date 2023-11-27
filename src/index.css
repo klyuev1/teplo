@@ -9,3 +9,18 @@
 
 /* Правила для Register*/
 @import url(./components/Register/Register.css);
+
+/* Правила для Header*/
+@import url(./components/Header/Header.css);
+
+/* Правила для Main*/
+@import url(./components/Main/Main.css);
+
+  /* Правила для Techs*/
+  @import url(./components/Main/Techs/Techs.css);
+
+  
+/* Правила для Footer*/
+@import url(./components/Footer/Footer.css);
+
+

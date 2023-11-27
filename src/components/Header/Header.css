@@ -1,0 +1,87 @@
+.header {
+  background-color: #424242;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
+
+
+.header__box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo-berp {
+  font-family: 'Grtsk-Mega', 'Arial', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: #FFF;
+  margin-right: 8px;
+}
+
+.header__br {
+  height: 24px;
+  width: 1px;
+  background-color: #616161;
+}
+
+.header__logo {
+  margin-left: 8px;
+  color: #FFF;
+  font-family: 'Grtsk-Tera', 'Arial', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.header__link {
+  color: #FFF;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  margin-left: 12px;
+}
+
+.header__notification {
+  width: 10px;
+  height: 13px;
+  border: 0;
+  background: url(../../images/notif.svg) center no-repeat;
+}
+
+.header__profile {
+  margin: 0;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  margin-left: 19px;
+  background-color: inherit;
+}
+
+.header__photo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-position: center;
+  object-fit: contain;
+}
+
+.header_purple {
+  background-color: #A34461;
+}
+
+.header_white-back {
+  background-color: #FFF;
+}
