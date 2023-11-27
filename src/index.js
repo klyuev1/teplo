@@ -9,6 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    {/* ааааа */}
       <App />
     </BrowserRouter>
   </React.StrictMode>
