@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .app {
   font-family: 'Grtsk-Exa', 'Arial', sans-serif;
   margin: 0 auto;

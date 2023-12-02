@@ -1,27 +1,34 @@
 import React from 'react';
 import projFile from '../../../images/proj-file.svg';
 
+import data from '../../../utils/data';
+
 function ProjectTable({}) {
   
   return (
-  <table>
+  <table className='table'>
         
     <thead>
-      <tr>
-        <th>Наименование проекта</th>
-        <th>Кол-во помещений</th>
-        <th>Дата создания</th>
-        <th></th>
+      <tr className='table_header'>
+        <th className='table_head column1'>Наименование проекта</th>
+        <th className='table_head column2'>Кол-во помещений</th>
+        <th className='table_head column3'>Дата создания</th>
+        <th className='table_head column4'></th>
       </tr>
     </thead>
 
     <tbody>
-      <tr>
-        <td><img src={projFile}/>Декабристов</td>
-        <td>156</td>
-        <td>24.04.2024 17:53</td>
-        <td><button /></td>
-      </tr>
+
+      {data.map(card => (
+
+        <tr className='table_row' key={card._id}>
+          <td className='table_d column1'><img className='table__icon' src={projFile}/>{card.name}</td>
+          <td className='table_d column2'>{card.rooms}</td>
+          <td className='table_d column3'>{card.date}</td>
+          <td className='table_d column4'><button className='table__delete'/></td>
+        </tr>
+
+      ))}
     </tbody>
 
   </table>

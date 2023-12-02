@@ -9,6 +9,7 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Projects from '../Projects/Projects';
+import Rooms from '../Rooms/Rooms';
 
 
 function App() {
@@ -57,7 +58,6 @@ function App() {
             </>
           }/>
 
-          {/* Остановился здесь */}
           <Route path='/projects' element={
             <>
               <Header
@@ -65,6 +65,19 @@ function App() {
               />
               <ProtectedRoute
                 element={Projects}
+                isLoggedIn={isLoggedIn}
+              />
+              <Footer/>
+            </>
+          }/>
+
+          <Route path='/projects/:projectId/rooms' element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Rooms}
                 isLoggedIn={isLoggedIn}
               />
               <Footer/>

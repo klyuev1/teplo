@@ -7,7 +7,7 @@ function Techs() {
       <h3 className='techs__heading'>Технологии</h3>
       <div className='techs__box'>
         <h2 className='techs__title'>7 технологий</h2>
-        <p className='techs__subtitle'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
+        <p className='techs__subtitle'>были применены в проекте в процессе его написания. Благодаря которым можно достичь семантически чистого и интерактивного интерфейса, модульности, эффективной работы с сервером и гибкости в работе с данными.</p>
         <ul className='techs__list'>
           <li className='techs__item'>HTML</li>
           <li className='techs__item'>CSS</li>

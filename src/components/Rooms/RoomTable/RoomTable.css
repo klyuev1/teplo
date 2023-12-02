@@ -1,0 +1,34 @@
+.room-column1 {
+  text-align: center;
+  width: 5%;
+  border-left: 0;
+  
+}
+.room-column2 {
+  width: 60%;
+  text-align: start;
+  padding-left: 24px;
+}
+.room-column3 { 
+  width: 10%;
+  text-align: center;
+}
+.room-column4 { 
+  width: 10%;
+  text-align: center;
+}
+.room-column5 { 
+  width: 10%;
+  text-align: center;
+}
+.room-column6 { 
+  width: 5%; 
+  text-align: center;
+  border-right: 0;
+}
+
+@media screen and (max-width: 1440px){
+  .room-column2 {
+    width: 45%;
+  }
+}

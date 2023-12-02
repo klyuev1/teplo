@@ -1,9 +1,9 @@
-.projects {
+.rooms {
   margin: 12px 0;
   min-height: 600px;
 }
 
-.projects__up-container {
+.rooms__up-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -12,18 +12,18 @@
   margin-right: 24px;
 }
 
-.projects__title-box {
+.rooms__title-box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.projects__title-logo {
+.rooms__title-logo {
   width: 24px;
   height: 24px;
 }
 
-.projects__title {
+.rooms__title {
   margin: 0;
   margin-left: 12px;
   font-size: 20px;
@@ -31,24 +31,33 @@
   line-height: 24px;
 }
 
-.projects__button {
+.rooms__button-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.rooms__button {
   margin: 0;
   padding: 0;
   border: 0;
   color: #FFF;
   background-color: #424242;
   border-radius: 4px;
-  width: 100%;
-  max-width: 150px;
+  /* width: 100%; */
+  width: 150px;
   height: 32px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 16px;
   letter-spacing: 0.01em;
   cursor: pointer;
   transition: opacity .1s linear;
   
 }
-.projects__button:hover {
+.rooms__button:hover {
   opacity: 0.8;
 }
+
+

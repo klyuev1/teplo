@@ -18,13 +18,33 @@
 
   /* Правила для Techs*/
   @import url(./components/Main/Techs/Techs.css);
+  
+  /* Правила для navtab */
+  @import url(./components/Main/NavTab/NavTab.css);
 
+  /* Правила для AboutProject */
+  @import url(./components/Main/AboutProject/AboutProject.css);
+  
+  /* Правила для AboutMe */
+  @import url(./components/Main/AboutMe/AboutMe.css);
   
 /* Правила для Footer*/
 @import url(./components/Footer/Footer.css);
 
-.body {
-  font-size: large;
-}
+/* Правила для Projects*/
+@import url(./components/Projects/Projects.css);
+
+/* Правила для ProjectTable*/
+@import url(./components/Projects/ProjectTable/ProjectTable.css);
+
+
+/* Правила для Rooms*/
+@import url(./components/Rooms/Rooms.css);
+
+/* Правила для RoomTable*/
+@import url(./components/Rooms/RoomTable/RoomTable.css);
+
+
+
 
 

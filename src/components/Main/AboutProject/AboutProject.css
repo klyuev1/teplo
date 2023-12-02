@@ -1,0 +1,208 @@
+.about-project {
+  margin: 90px 24px 150px;
+}
+
+.about-project__title {
+  margin: 0;
+  font-family: 'Grtsk-Tera', 'Arial', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  height: 50px;
+  border-bottom: 1px solid #000;
+}
+
+.about-project__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 70px;
+  gap: 50px;
+}
+
+.about-project__info-column {
+  display: block;
+  flex-direction: column;
+  margin-bottom: 150px;
+  width: 50%;
+}
+
+.about-project__subtitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  margin-bottom: 26px;
+}
+
+.about-project__ul {
+  padding-left: 25px;
+}
+
+.about-project__text::before {
+  color: #A34461;
+}
+
+.about-project__text { 
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 0;
+  list-style: disc;
+}
+
+.about-project__time {
+  margin: 0 auto;
+  /* max-width: 1280px; */
+  display: grid;
+  grid-template-columns: 11% 22% 22% 33% 12%;
+  grid-template-rows: 36px 1fr;
+  grid-template-areas:
+  "first-week second-week third-week fourth-week fifth-week"
+  "agreement design back-end front-end deploy";
+}
+
+.about-project__weeks {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-project__part {
+  margin: 0;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color:#A0A0A0;
+  text-align: center;
+}
+
+        .first-week {
+          background-color: #F5F4F2;
+          grid-area: first-week;
+        }
+
+        .second-week {
+          background-color: #B87486;
+          color: #FFF;
+          grid-area: second-week;
+        }
+        
+        .third-week {
+          background-color: #F5F4F2;
+          grid-area: third-week;
+        }
+
+        .fourth-week {
+          background-color: #B87486;
+          color: #FFF;
+          grid-area: fourth-week;
+        }
+
+        .fifth-week {
+          background-color: #F5F4F2;
+          grid-area: fifth-week;
+        }
+
+
+        .agreement {
+          grid-area: agreement;
+        }
+        
+        .design {
+          grid-area: design;
+        }
+
+        .back-end {
+          grid-area: back-end;
+        }
+
+        .front-end {
+          grid-area: front-end;
+        }
+        
+        .deploy {
+          grid-area: deploy;
+        }
+
+
+@media screen and (max-width: 980px){
+  .about-project {
+    margin: 90px 24px;
+  }
+
+  .about-project__info {
+    gap: 30px;
+  }
+
+  .about-project__subtitle {
+    margin-bottom: 22px;
+  }
+
+  .about-project__text { 
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .about-project__info-column {
+    margin-bottom: 93px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 680px){
+  .about-project {
+    margin: 70px 24px 140px;
+  }
+
+  .about-project__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60px;
+    gap: 56px;
+    margin-bottom: 60px;
+  }
+
+  .about-project__info-column {
+    margin: 0;
+  }
+
+  .about-project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 16px;
+  }
+
+  .about-project__text { 
+    margin: 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  
+  .about-project__weeks {
+    font-size: 11px;
+    line-height: 13px;
+  }
+  
+  .about-project__part {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    margin-top: 10px;
+  }
+}
