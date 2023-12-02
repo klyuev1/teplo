@@ -1,10 +1,17 @@
 .header {
+  /* width: 100vw; */
   background-color: #424242;
+  margin: auto;
+}
+
+.header__func {
+  max-width: 1920px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 12px 24px;
 }
+
 
 
 

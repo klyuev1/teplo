@@ -16,12 +16,21 @@
 /* Правила для Main*/
 @import url(./components/Main/Main.css);
 
-  /* Правила для Techs*/
-  @import url(./components/Main/Techs/Techs.css);
+/* Правила для Techs*/
+@import url(./components/Main/Techs/Techs.css);
 
-  
+/* Правила для Fasades*/
+@import url(./components/Facades/Facades.css);
+
+/* Правила для Fasade*/
+@import url(./components/Facade/Facade.css);
+
 /* Правила для Footer*/
 @import url(./components/Footer/Footer.css);
+
+@import url(./components/CreateProjectPopup/CreateProjectPopup.css);
+
+@import url(./components/PopupWithForm/PopupWithForm.css);
 
 .body {
   font-size: large;
