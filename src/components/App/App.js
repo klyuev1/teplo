@@ -10,11 +10,14 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Projects from '../Projects/Projects';
 import Rooms from '../Rooms/Rooms';
+import Facades from '../Facades/Facades';
 
+import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
+  const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
 
   // Функции авторизации
   function handleRegister() {
@@ -24,9 +27,11 @@ function App() {
   function handleLogin() {
     console.log("hi, bro");
   }
-  
-  
+ 
 
+    // Global state переменная открытия попапов
+    const isOpen = isCreateProjectPopupOpen;
+  
   return (
     <CurrentUserContext.Provider value={currentUser} >
       <div className="app">
@@ -70,6 +75,20 @@ function App() {
               <Footer/>
             </>
           }/>
+          <Route path='/facades' element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Facades}
+                isLoggedIn={isLoggedIn}
+              />
+              <Footer/>   
+            </>
+          
+
+          }/>
 
           <Route path='/projects/:projectId/rooms' element={
             <>
@@ -85,6 +104,12 @@ function App() {
           }/>
 
         </Routes>
+
+        <CreateProjectPopup
+        isOpen={isCreateProjectPopupOpen}
+        /> 
+
+
 
       </div>
     </CurrentUserContext.Provider>

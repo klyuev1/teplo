@@ -44,7 +44,14 @@
 /* Правила для RoomTable*/
 @import url(./components/Rooms/RoomTable/RoomTable.css);
 
+/* Правила для Fasades*/
+@import url(./components/Facades/Facades.css);
 
+/* Правила для Fasade*/
+@import url(./components/Facade/Facade.css);
 
+/* Правила для CreateProjectPopup*/
+@import url(./components/CreateProjectPopup/CreateProjectPopup.css);
 
-
+/* Правила для PopupWithForm*/
+@import url(./components/PopupWithForm/PopupWithForm.css);

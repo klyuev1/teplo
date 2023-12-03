@@ -1,0 +1,148 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  
+
+  justify-content: center;
+  align-items: center;
+  
+  width: 100%;
+  height: 100%;
+  
+  background-color: rgba(20, 25, 26, 0.32);
+  display: none;
+}
+.popup_opened {
+  display: flex;
+}
+
+.popup__container {
+  position: relative;
+  flex-direction: row;
+  margin-top: 0;
+  max-width: 430px;
+  width: 100%;
+  
+  background-color: #fff;
+  color: #000;
+  border-radius: 10px;
+}
+.popup__form {
+  margin: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.popup__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(20, 25, 26, 0.12);
+}
+.popup__title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+.popup__button-close {
+  background: url(../../images/IconButtons.svg);
+  
+  background-size: contain;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  
+  transition: opacity 0.2s linear;
+  cursor: pointer;
+}
+.popup__button-close:hover {
+  opacity: 0.6;
+}
+.popup__label {
+  display: block;
+  margin: 24px 0 0;
+  position: relative;
+}
+.popup__label:last-of-type {
+  margin: 24px 0 36px;
+}
+
+.popup__input-name {
+  margin: 0;
+  margin-bottom: 12px;
+  
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.12px;
+  
+  color: #a8a19a;
+}
+.popup__input {
+  margin: 0;
+  width: 100%;
+  height: 24px;
+
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.12px;
+
+  border-radius: 4px;
+  border: 1px solid rgba(20, 25, 26, 0.12);
+  color: #000;
+}
+.popup__input-error {
+  margin: 0;
+  
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+
+  color: #ef3b24;
+}
+
+.popup__button-submit {
+  margin: 0;
+  height: 32px;
+  width: 100%;
+  
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.12px;
+  text-align: center;
+  cursor: pointer;
+
+  border: none;
+  border-radius: 4px;
+  
+  background: #424242;
+  color: #fff;
+}
+
+.popup__select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+ 
+  margin: 0;
+  width: 100%;
+  height: 24px;
+  padding-left: 2px;
+  
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.12px;
+
+  border-radius: 4px;
+  border: 1px solid rgba(20, 25, 26, 0.12);
+  color: #000;
+}
