@@ -36,7 +36,12 @@
   text-decoration: none;
   border: #424242;
   border-radius: 4px;
+  transition: opacity .1s linear;
 }
+.fasades__button:hover {
+  opacity: 0.8;
+}
+
 .elements {
   margin: 24px 100px 50px;
   display: grid;

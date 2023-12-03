@@ -75,20 +75,6 @@ function App() {
               <Footer/>
             </>
           }/>
-          <Route path='/facades' element={
-            <>
-              <Header
-                isLoggedIn={isLoggedIn}
-              />
-              <ProtectedRoute
-                element={Facades}
-                isLoggedIn={isLoggedIn}
-              />
-              <Footer/>   
-            </>
-          
-
-          }/>
 
           <Route path='/projects/:projectId/rooms' element={
             <>
@@ -103,17 +89,29 @@ function App() {
             </>
           }/>
 
+          <Route path='/facades' element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Facades}
+                isLoggedIn={isLoggedIn}
+              />
+              <Footer/>   
+            </>
+          
+
+          }/>
+          
         </Routes>
 
         <CreateProjectPopup
         isOpen={isCreateProjectPopupOpen}
         /> 
 
-
-
       </div>
-    </CurrentUserContext.Provider>
-    
+    </CurrentUserContext.Provider>    
   );
 }
 
