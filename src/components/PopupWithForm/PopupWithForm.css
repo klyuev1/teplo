@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   
-  display: flex;
+
   justify-content: center;
   align-items: center;
   
@@ -11,7 +11,12 @@
   height: 100%;
   
   background-color: rgba(20, 25, 26, 0.32);
+  display: none;
 }
+.popup_opened {
+  display: flex;
+}
+
 .popup__container {
   position: relative;
   flex-direction: row;

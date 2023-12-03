@@ -11,7 +11,8 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Projects from '../Projects/Projects';
 import Facades from '../Facades/Facades';
 
-import PopupWithForm from '../PopupWithForm/PopupWithForm';
+// import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 
 
 function App() {
@@ -93,7 +94,9 @@ function App() {
 
         </Routes>
 
-        <PopupWithForm/> 
+        <CreateProjectPopup
+        isOpen={isCreateProjectPopupOpen}
+        /> 
 
 
 

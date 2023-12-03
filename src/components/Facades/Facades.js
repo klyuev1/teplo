@@ -19,7 +19,8 @@ function Facades() {
       </div>
 
       <section className="elements">
-        {/* {props.cards.map((card) => ( */}
+        {/* Создать JSON - сделать как было во фронте место(спринт 9) */}
+        {/* {props.cards.map((card) => ( */} 
           <Facade
             // key={card._id}
             // card={card}
