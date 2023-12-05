@@ -13,11 +13,13 @@ import Rooms from '../Rooms/Rooms';
 import Facades from '../Facades/Facades';
 
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
+import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
+  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
 
   // Функции авторизации
   function handleRegister() {
@@ -109,6 +111,9 @@ function App() {
         <CreateProjectPopup
         isOpen={isCreateProjectPopupOpen}
         /> 
+        <CreateFacadePopupOpen
+        isOpen={isCreateFacadePopupOpen}
+        />
 
       </div>
     </CurrentUserContext.Provider>    
