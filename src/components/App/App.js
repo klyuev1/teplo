@@ -15,10 +15,11 @@ import Profile from '../Profile/Profile';
 
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
-
-
+import CreateRoomPopup from '../CreateRoomPopup/CreateRoomPopup';
 
 import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
+import {getProjects} from '../../utils/Api';
+
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import truth from '../../images/thurh.svg';
 import fail from '../../images/fail.svg';
@@ -30,6 +31,10 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
   const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
+  
+  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
+  
+  const [projects, setProjects] = React.useState([]);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [titleInfo, setTitleInfo] = React.useState("");
@@ -37,9 +42,11 @@ function App() {
 
   React.useEffect(() => {
     if (isLoggedIn){
-    Promise.all([getUser()])
-    .then(([userData]) => {
+    Promise.all([getUser(), getProjects()])
+    .then(([userData, projectsData]) => {
       setCurrentUser(userData);
+      setProjects(projectsData);
+      // console.log(projectsData);
       setIsLoggedIn(true);
     })
     .catch((err) => {
@@ -186,6 +193,7 @@ function App() {
               <ProtectedRoute
                 element={Projects}
                 isLoggedIn={isLoggedIn}
+                projects={projects}
               />
               <Footer/>
             </>
@@ -241,12 +249,18 @@ function App() {
         </Routes>
 
         <CreateProjectPopup
-        isOpen={isCreateProjectPopupOpen}
+          isOpen={isCreateProjectPopupOpen}
         />
 
         <CreateFacadePopupOpen
-        isOpen={isCreateFacadePopupOpen}
+          isOpen={isCreateFacadePopupOpen}
         />
+
+        <CreateRoomPopup
+          isOpen={isCreateRoomPopupOpen}
+        />
+
+
 
         <InfoTooltip
           isOpen={isInfoTooltipOpen}

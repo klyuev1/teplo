@@ -19,7 +19,7 @@ function CreateFacadePopupOpen(props) {
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <label className='popup__label'>
@@ -28,11 +28,11 @@ function CreateFacadePopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
-          value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
+          // value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <div className='popup__input-section'>
@@ -42,11 +42,11 @@ function CreateFacadePopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
-          value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
+          // value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <label className='popup__label'>
@@ -55,11 +55,11 @@ function CreateFacadePopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
-          value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
+          // value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <label className='popup__label'>
@@ -68,11 +68,11 @@ function CreateFacadePopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
-          value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
+          // value='https://i.pinimg.com/236x/34/78/3b/34783b77c9cff4059bdf44ce8934bb35.jpg'
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       </div>
