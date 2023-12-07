@@ -24,22 +24,28 @@
   font-weight: 400;
   line-height: 16px;
   letter-spacing: 0.01em;
-  position: relative;
 }
 
 .table__icon {
+  background: url(../../../images/proj-file.svg) no-repeat center center;
   width: 16px;
   height: 14px;
   margin-right: 8px;
-  position: relative;
-  top: 2px;
+  -webkit-transition: background-image .1s linear;
+    -moz-transition: background-image .1s linear;
+    -o-transition: background-image .1s linear;
+    -ms-transition: background-image .1s linear;
+    transition: background-image .1s linear;
+}
+.table__td-button:hover .table__icon {
+  background-image: url(../../../images/proj-file-hover.svg);
 }
 
 .table__delete {
   margin: 0;
   padding: 0;
   border: 0;
-  background: url(../../../images/delete-button.svg) no-repeat center;
+  background: url(../../../images/delete-button.svg) no-repeat center center;
   width: 18px;
   height: 19px;
   cursor: pointer;
@@ -49,6 +55,22 @@
   background-image: url(../../../images/delete-button-hover.svg);
 }
 
+
+.table__td-button {
+  display: flex;
+  /* align-items: center; */
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: start;
+  background-color: inherit;
+  cursor: pointer;
+  transition: color .2s linear;
+}
+.table__td-button:hover  {
+  color: #EF3B24;
+}
 
 
 .column1 {

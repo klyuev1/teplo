@@ -25,7 +25,11 @@ function RoomTable({}) {
 
         <tr className='table_row' key={card._id}>
           <td className='table_d room-column1'>{card.number}</td>
-          <td className='table_d room-column2'>{card.name}</td>
+          <td className='table_d room-column2'>
+            <button className='table__td-button'>
+              {card.name}
+            </button>
+          </td>
           <td className='table_d room-column3'>{card.area}</td>
           <td className='table_d room-column4'>{card.nameFacade}</td>
           <td className='table_d room-column5'>{card.heatLoss}</td>

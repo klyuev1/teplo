@@ -22,7 +22,11 @@ function ProjectTable({}) {
       {data.map(card => (
 
         <tr className='table_row' key={card._id}>
-          <td className='table_d column1'><img className='table__icon' src={projFile}/>{card.name}</td>
+          <td className='table_d column1'>
+            <button className='table__td-button'>
+              <div className='table__icon' />{card.name}
+            </button>
+          </td>
           <td className='table_d column2'>{card.rooms}</td>
           <td className='table_d column3'>{card.date}</td>
           <td className='table_d column4'><button className='table__delete'/></td>

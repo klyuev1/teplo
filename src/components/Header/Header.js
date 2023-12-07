@@ -20,10 +20,7 @@ function Header({isLoggedIn, purpleThemeHeader, colorWhite}) {
 
           <div className='header__box'>
             
-            {isLoggedIn === true &&<button className='header__notification' type='button'/>}
-            {isLoggedIn === true &&<button className='header__profile' type='button'>
-              <img className='header__photo' src='https://sopranoclub.ru/images/memy-na-avu-275-memnyh-avatarok/file56870.jpeg' alt='фото пользователя' />
-            </button>}
+            {isLoggedIn === true && <Link className="header__user" to='/profile'><div className={`header__user-logo`}/></Link>}
             
             {isLoggedIn === false && <Link className='header__link' to='/signin'>Вход</Link>}
             {isLoggedIn === false && <Link className='header__link' to='/signup'>Регистрация</Link>}

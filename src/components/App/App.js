@@ -11,26 +11,139 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Projects from '../Projects/Projects';
 import Rooms from '../Rooms/Rooms';
 import Facades from '../Facades/Facades';
+import Profile from '../Profile/Profile';
 
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 
+
+
+import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import truth from '../../images/thurh.svg';
+import fail from '../../images/fail.svg';
+import NotFound from '../NotFound/NotFound';
+
 function App() {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
 
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [titleInfo, setTitleInfo] = React.useState("");
+  const [iconInfo, setIconInfo] = React.useState("");
+
+  React.useEffect(() => {
+    if (isLoggedIn){
+    Promise.all([getUser()])
+    .then(([userData]) => {
+      setCurrentUser(userData);
+      setIsLoggedIn(true);
+    })
+    .catch((err) => {
+      console.log(err)
+      setIsLoggedIn(false);
+    });
+  }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  },[isLoggedIn]);
+
   // Функции авторизации
-  function handleRegister() {
-    console.log("hi, bro");
+  function handleRegister(name, email, password) {
+    signup(name, email, password)
+      .then(() => {
+        signin(email, password)
+          .then(() => {
+            setIsLoggedIn(true);
+            setTitleInfo("Вы успешно зарегистрировались!");
+            setIconInfo(truth);
+            navigate('/projects', {replace: true});
+          })
+          .catch(() => {
+            setTitleInfo("Что-то пошло не так! Попробуйте ещё раз");
+            setIconInfo(fail);
+          })
+          .finally(() =>{
+            handleInfoTooltipClick();
+          })
+      })
+      .catch((error) => {
+        if (error === 409){
+            setTitleInfo("Пользователь с таким Email уже зарегистрирован");
+            setIconInfo(fail);
+        } else {
+            setTitleInfo("Что-то не так с введенными данными");
+            setIconInfo(fail);
+        }
+      })
+      .finally(() =>{
+        handleInfoTooltipClick();
+      })
+    
   }
   
-  function handleLogin() {
-    console.log("hi, bro");
+  function handleLogin(email, password) {
+    signin(email, password)
+    .then(() => {
+      setIsLoggedIn(true);
+      setTitleInfo("Вы успешно авторизировались!");
+      setIconInfo(truth);
+      navigate('/projects', {replace: true});
+    })
+    .catch(() => {
+      setTitleInfo("Что-то пошло не так! Попробуйте ещё раз.");
+      setIconInfo(fail);
+    })
+    .finally(() =>{
+      handleInfoTooltipClick();
+    })
   }
  
+  function HandleSignOut() {
+    signout()
+    .then(() => {
+      setIsLoggedIn(false);
+      // setSavedMovies([]);
+      // setFormValueFound('');
+      // setShortMovies(false);
+      // setMoviesFound([]);
+      navigate('/')
 
-    // Global state переменная открытия попапов
-    const isOpen = isCreateProjectPopupOpen;
+    })
+    .catch((err) => console.log(err))
+    .finally(() =>{
+      localStorage.clear();
+    })
+  }
+
+  function handleUpdateUser(name, email) {
+    updateUser(name, email)
+      .then((res) => {
+        setTitleInfo("Данные о профиле изменены");
+        setIconInfo(truth);
+        setCurrentUser(res.user);
+      })
+      .catch(() => {
+        setTitleInfo("Что-то пошло не так! Попробуйте ещё раз.");
+        setIconInfo(fail);
+      })
+      .finally(() =>{
+        handleInfoTooltipClick();
+      })
+  }
+
+  function handleInfoTooltipClick() {
+    setIsInfoTooltipOpen(true);
+  }
+
+
+  // закрывает попап всплываемого окошка регистрации, можно объединить с другими попапами
+  function closePopup(){
+    setIsInfoTooltipOpen(false);
+  }
+
+    // Global state переменная открытия попапов // это не стейт! и он здесь не нужен
+    // const isOpen = isCreateProjectPopupOpen; 
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -103,12 +216,40 @@ function App() {
           
 
           }/>
+
+          <Route path='/profile' element={
+            <>
+              <Header 
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Profile}
+                isLoggedIn={isLoggedIn}
+
+                onSignOut={HandleSignOut}
+                onUpdateUser={handleUpdateUser}
+              />
+            </>
+          }/>
+
+          <Route path='*' element={
+            <NotFound />
+          }/>
           
         </Routes>
 
         <CreateProjectPopup
         isOpen={isCreateProjectPopupOpen}
-        /> 
+        />
+
+
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closePopup}
+          title={titleInfo}
+          icon={iconInfo}
+        />
+
 
       </div>
     </CurrentUserContext.Provider>    

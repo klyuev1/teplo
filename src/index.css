@@ -37,7 +37,6 @@
 /* Правила для ProjectTable*/
 @import url(./components/Projects/ProjectTable/ProjectTable.css);
 
-
 /* Правила для Rooms*/
 @import url(./components/Rooms/Rooms.css);
 
@@ -55,3 +54,12 @@
 
 /* Правила для PopupWithForm*/
 @import url(./components/PopupWithForm/PopupWithForm.css);
+
+/* Правила для Profile*/
+@import url(./components/Profile/Profile.css);
+
+/* Правила для InfoTooltip*/
+@import url(./components/InfoTooltip/InfoTooltip.css);
+
+/* Правила для NotFound*/
+@import url(./components/NotFound/NotFound.css);

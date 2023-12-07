@@ -68,6 +68,10 @@
   line-height: 17px;
   text-decoration: none;
   color: #000;
+  transition: opacity .2s linear;
+}
+.about-me__link:hover {
+  opacity: .7;
 }
 
 .about-me__photo {
