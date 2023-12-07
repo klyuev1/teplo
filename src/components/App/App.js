@@ -14,6 +14,7 @@ import Facades from '../Facades/Facades';
 import Profile from '../Profile/Profile';
 
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
+import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
 
 
 
@@ -28,6 +29,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
+  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [titleInfo, setTitleInfo] = React.useState("");
@@ -242,6 +244,9 @@ function App() {
         isOpen={isCreateProjectPopupOpen}
         />
 
+        <CreateFacadePopupOpen
+        isOpen={isCreateFacadePopupOpen}
+        />
 
         <InfoTooltip
           isOpen={isInfoTooltipOpen}

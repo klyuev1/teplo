@@ -4,6 +4,7 @@ function PopupWithForm(props) {
   return (
     <div className={`popup popup_type_${props.name} ${props.isOpen ? 'popup_opened' : ''} `}>
       <div className='popup__container'>
+        <div className='popup__div'></div>
         <form className='popup__form'>
           <div className='popup__header'>
             <h2 className='popup__title'>{props.title}</h2>
