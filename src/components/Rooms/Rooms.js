@@ -15,9 +15,9 @@ function Rooms({isLoggedIn}) {
         </div>
         
         <div className='rooms__button-box'>
-          <button className='rooms__button' type='button'>Выгрузить в Excel</button>
+          <button className='rooms__button' type='button'>Выгрузить в CSV</button>
           <button className='rooms__button' type='button'>Редактировать проект</button>
-          <button className='rooms__button' type='button'>Создать проект</button>
+          <button className='rooms__button' type='button'>Создать помещение</button>
         </div>
         
       

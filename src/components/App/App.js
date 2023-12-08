@@ -11,20 +11,64 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Projects from '../Projects/Projects';
 import Rooms from '../Rooms/Rooms';
 import Facades from '../Facades/Facades';
+import Profile from '../Profile/Profile';
 
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
+import CreateRoomPopup from '../CreateRoomPopup/CreateRoomPopup';
+
+import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
+import {getProjects} from '../../utils/Api';
+
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import truth from '../../images/thurh.svg';
+import fail from '../../images/fail.svg';
+import NotFound from '../NotFound/NotFound';
 
 function App() {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
   const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
+  
+  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
+  
+  const [projects, setProjects] = React.useState([]);
+
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
+  const [titleInfo, setTitleInfo] = React.useState("");
+  const [iconInfo, setIconInfo] = React.useState("");
+
+  React.useEffect(() => {
+    if (isLoggedIn){
+    Promise.all([getUser(), getProjects()])
+    .then(([userData, projectsData]) => {
+      setCurrentUser(userData);
+      setProjects(projectsData);
+      // console.log(projectsData);
+      setIsLoggedIn(true);
+    })
+    .catch((err) => {
+      console.log(err)
+      setIsLoggedIn(false);
+    });
+  }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  },[isLoggedIn]);
 
   useEffect(() => {
 
   },[])
 
+  
+  function handleCreateFacadeClick() {
+    setIsCreateFacadePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsCreateFacadePopupOpen(false);
+  }
   // Функции авторизации
   function handleRegister() {
     console.log("hi, bro");
@@ -33,18 +77,10 @@ function App() {
   function handleLogin() {
     console.log("hi, bro");
   }
-
-  function handleCreateFacadeClick() {
-    setIsCreateFacadePopupOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsCreateFacadePopupOpen(false);
-  }
  
 
     // Global state переменная открытия попапов
-    const isOpen = isCreateProjectPopupOpen || isCreateFacadePopupOpen;
+    const isOpen = isCreateProjectPopupOpen;
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -85,6 +121,7 @@ function App() {
               <ProtectedRoute
                 element={Projects}
                 isLoggedIn={isLoggedIn}
+                projects={projects}
               />
               <Footer/>
             </>
@@ -118,16 +155,49 @@ function App() {
           
 
           }/>
+
+          <Route path='/profile' element={
+            <>
+              <Header 
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Profile}
+                isLoggedIn={isLoggedIn}
+
+                onSignOut={HandleSignOut}
+                onUpdateUser={handleUpdateUser}
+              />
+            </>
+          }/>
+
+          <Route path='*' element={
+            <NotFound />
+          }/>
           
         </Routes>
 
         <CreateProjectPopup
-        isOpen={isCreateProjectPopupOpen}
-        /> 
+          isOpen={isCreateProjectPopupOpen}
+        />
+
         <CreateFacadePopupOpen
         isOpen={isCreateFacadePopupOpen}
-        onClose={closeAllPopups}
         />
+
+        <CreateRoomPopup
+          isOpen={isCreateRoomPopupOpen}
+        />
+
+
+
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closePopup}
+          title={titleInfo}
+          icon={iconInfo}
+        />
+
 
       </div>
     </CurrentUserContext.Provider>    

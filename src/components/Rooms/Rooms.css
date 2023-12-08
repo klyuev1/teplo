@@ -1,6 +1,7 @@
 .rooms {
   margin: 12px 0;
   min-height: 600px;
+  min-height: 78vh;
 }
 
 .rooms__up-container {

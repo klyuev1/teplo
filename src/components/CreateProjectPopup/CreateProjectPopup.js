@@ -18,7 +18,7 @@ function CreateProjectPopupOpen(props) {
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <label className='popup__label'>

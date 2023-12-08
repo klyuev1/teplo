@@ -19,7 +19,7 @@ function CreateFacadePopupOpen(props) {
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <label className='popup__label'>
@@ -31,10 +31,11 @@ function CreateFacadePopupOpen(props) {
           minLength='2'
           maxLength='40'
           required
-          onChange=''
+          // onChange=''
         />
       </label>
       <div className='popup__input-section'>
+
         <label className='popup__label'>
           <h3 className='popup__input-name'>Высота фасада:</h3>
           <div className='popup__input-unit-block'>
@@ -80,6 +81,7 @@ function CreateFacadePopupOpen(props) {
             <p className='popup__input-unit'>м2</p>
           </div>
         </label>
+
       </div>
     </PopupWithForm>
   );

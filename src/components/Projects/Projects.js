@@ -2,7 +2,7 @@ import React from 'react';
 import projLogo from '../../images/proj-logo.svg';
 import ProjectTable from './ProjectTable/ProjectTable';
 
-function Projects({isLoggedIn}) {
+function Projects({isLoggedIn, projects}) {
   
   return (
     <section className= 'projects' >
@@ -18,7 +18,9 @@ function Projects({isLoggedIn}) {
       
       </div>
 
-      <ProjectTable />
+      <ProjectTable 
+        projects={projects}
+      />
 
     </section>
     

@@ -15,10 +15,10 @@
   margin: 24px 0;
   text-decoration: none;
   margin-right: 40px;
-  transition: color .2s linear;
+  transition: color .1s linear;
 }
 .navtab__link:hover {
-  color: #CCC;
+  color: #FCD8D4;
 }
 
 .navtab__link:last-of-type {
