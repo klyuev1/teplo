@@ -4,10 +4,11 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 function CreateProjectPopupOpen(props) {
   return (
     <PopupWithForm
-    name='create-project'
-    title='Cоздание проекта'
-    buttonName='Создать проект'
-    isOpen={props.isOpen}
+      name='create-project'
+      title='Cоздание проекта'
+      buttonName='Создать проект'
+      isOpen={props.isOpen}
+      isClose={props.onClose}
     >
       <label className='popup__label'>
         <h3 className='popup__input-name'>Наименование проекта:</h3>

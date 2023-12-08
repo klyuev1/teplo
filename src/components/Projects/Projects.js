@@ -2,7 +2,7 @@ import React from 'react';
 import projLogo from '../../images/proj-logo.svg';
 import ProjectTable from './ProjectTable/ProjectTable';
 
-function Projects({isLoggedIn, projects}) {
+function Projects({isLoggedIn, projects, handleCreateProjectClick}) {
   
   return (
     <section className= 'projects' >
@@ -14,7 +14,7 @@ function Projects({isLoggedIn, projects}) {
           <h2 className='projects__title'>Проекты</h2>
         </div>
         
-        <button className='projects__button' type='button'>Создать проект</button>
+        <button className='projects__button' type='button' onClick={handleCreateProjectClick}>Создать проект</button>
       
       </div>
 

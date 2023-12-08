@@ -34,7 +34,6 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
   const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
-  
   const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
   
   const [projects, setProjects] = React.useState([]);
@@ -59,6 +58,10 @@ function App() {
   }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   },[isLoggedIn]);
+
+  function handleCreateRoom() {
+    
+  }
 
   function handleRegister(name, email, password) {
     signup(name, email, password)
@@ -143,8 +146,16 @@ function App() {
     })
   }
   
+  function handleCreateProjectClick() {
+    setIsCreateProjectPopupOpen(true);
+  }
+
   function handleCreateFacadeClick() {
     setIsCreateFacadePopupOpen(true);
+  }
+
+  function handleCreateRoomClick() {
+    setIsCreateRoomPopupOpen(true);
   }
 
   function handleInfoTooltipClick() {
@@ -154,6 +165,8 @@ function App() {
   function closeAllPopups() {
     setIsCreateFacadePopupOpen(false);
     setIsInfoTooltipOpen(false);
+    setIsCreateRoomPopupOpen(false);
+    setIsCreateProjectPopupOpen(false);
   }
   
   return (
@@ -196,6 +209,7 @@ function App() {
                 element={Projects}
                 isLoggedIn={isLoggedIn}
                 projects={projects}
+                handleCreateProjectClick={handleCreateProjectClick}
               />
               <Footer/>
             </>
@@ -209,6 +223,7 @@ function App() {
               <ProtectedRoute
                 element={Rooms}
                 isLoggedIn={isLoggedIn}
+                handleCreateRoomClick={handleCreateRoomClick}
               />
               <Footer/>
             </>
@@ -252,14 +267,17 @@ function App() {
           {/* Попапы */}
         <CreateProjectPopup
           isOpen={isCreateProjectPopupOpen}
+          onClose={closeAllPopups}
         />
 
         <CreateFacadePopupOpen
-        isOpen={isCreateFacadePopupOpen}
+          isOpen={isCreateFacadePopupOpen}
+          onClose={closeAllPopups}
         />
 
         <CreateRoomPopup
           isOpen={isCreateRoomPopupOpen}
+          onClose={closeAllPopups}
         />
 
         <InfoTooltip

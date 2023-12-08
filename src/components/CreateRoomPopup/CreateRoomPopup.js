@@ -3,7 +3,7 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import facadesData from '../../utils/facade-data';
 import Facade from '../Facade/Facade';
 
-function CreateRoomPopup({isOpen}) {
+function CreateRoomPopup(props) {
   
 
   return(
@@ -11,7 +11,8 @@ function CreateRoomPopup({isOpen}) {
     name='create-project'
     title='Cоздание комнаты'
     buttonName='Создать комнату'
-    isOpen={isOpen}
+    isOpen={props.isOpen}
+    isClose={props.onClose}
     >
       <label className='popup__label'>
         <h3 className='popup__input-name'>Номер комнаты:</h3>
@@ -30,7 +31,7 @@ function CreateRoomPopup({isOpen}) {
       </label>
       
       <label className='popup__label'>
-        <h3 className='popup__input-name'>Площадь помещения</h3>
+        <h3 className='popup__input-name'>Площадь помещения:</h3>
         <input
           name='areaRoom' type='number' className='popup__input' required
           // onChange=''

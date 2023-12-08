@@ -2,7 +2,7 @@ import React from 'react';
 import projLogo from '../../images/proj-logo.svg';
 import RoomTable from './RoomTable/RoomTable'
 
-function Rooms({isLoggedIn}) {
+function Rooms({isLoggedIn, handleCreateRoomClick}) {
   
   return (
     <section className= 'rooms' >
@@ -17,7 +17,7 @@ function Rooms({isLoggedIn}) {
         <div className='rooms__button-box'>
           <button className='rooms__button' type='button'>Выгрузить в CSV</button>
           <button className='rooms__button' type='button'>Редактировать проект</button>
-          <button className='rooms__button' type='button'>Создать помещение</button>
+          <button className='rooms__button' type='button' onClick={handleCreateRoomClick}>Создать помещение</button>
         </div>
         
       
