@@ -3,7 +3,7 @@ import Facade from '../Facade/Facade';
 import iconFasades from '../../images/iconFasades.svg';
 import facadesData from '../../utils/facade-data';
 
-function Facades() {
+function Facades(props) {
   return (
     <section className='facades'>
       
@@ -12,7 +12,8 @@ function Facades() {
           <img className='fasades__title-logo' src={iconFasades} alt='logo'/>
           <h2 className='fasades__title'>Фасады</h2>
         </div>
-        <button className='fasades__button' type='button'>
+        <button className='fasades__button' type='button'
+        onClick={props.onCreareFacade}>
           Создать фасад
         </button>
       </div>

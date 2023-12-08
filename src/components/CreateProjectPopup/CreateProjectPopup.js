@@ -15,7 +15,6 @@ function CreateProjectPopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
-          value='Пшеница 2.1'
           minLength='2'
           maxLength='40'
           required

@@ -18,11 +18,29 @@
 }
 .element__number{
   margin: 0;
-  margin-bottom: 12px;
+  
   font-family: 'Grtsk-Exa', 'Arial', sans-serif;
   align-self: center;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.01em;
   text-decoration: none;
+}
+.element__div {
+  margin: 0 12px 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.element__button-delete {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: url(../../images/delete-button.svg) no-repeat center;
+  width: 18px;
+  height: 19px;
+  cursor: pointer;
+  transition: background-image .1s linear;
+}
+.element__button-delete:hover {
+  background-image: url(../../images/delete-button-hover.svg);
 }

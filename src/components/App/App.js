@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
@@ -57,102 +57,30 @@ function App() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   },[isLoggedIn]);
 
+  useEffect(() => {
+
+  },[])
+
+  
+  function handleCreateFacadeClick() {
+    setIsCreateFacadePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsCreateFacadePopupOpen(false);
+  }
   // Функции авторизации
-  function handleRegister(name, email, password) {
-    signup(name, email, password)
-      .then(() => {
-        signin(email, password)
-          .then(() => {
-            setIsLoggedIn(true);
-            setTitleInfo("Вы успешно зарегистрировались!");
-            setIconInfo(truth);
-            navigate('/projects', {replace: true});
-          })
-          .catch(() => {
-            setTitleInfo("Что-то пошло не так! Попробуйте ещё раз");
-            setIconInfo(fail);
-          })
-          .finally(() =>{
-            handleInfoTooltipClick();
-          })
-      })
-      .catch((error) => {
-        if (error === 409){
-            setTitleInfo("Пользователь с таким Email уже зарегистрирован");
-            setIconInfo(fail);
-        } else {
-            setTitleInfo("Что-то не так с введенными данными");
-            setIconInfo(fail);
-        }
-      })
-      .finally(() =>{
-        handleInfoTooltipClick();
-      })
-    
+  function handleRegister() {
+    console.log("hi, bro");
   }
   
-  function handleLogin(email, password) {
-    signin(email, password)
-    .then(() => {
-      setIsLoggedIn(true);
-      setTitleInfo("Вы успешно авторизировались!");
-      setIconInfo(truth);
-      navigate('/projects', {replace: true});
-    })
-    .catch(() => {
-      setTitleInfo("Что-то пошло не так! Попробуйте ещё раз.");
-      setIconInfo(fail);
-    })
-    .finally(() =>{
-      handleInfoTooltipClick();
-    })
+  function handleLogin() {
+    console.log("hi, bro");
   }
  
-  function HandleSignOut() {
-    signout()
-    .then(() => {
-      setIsLoggedIn(false);
-      // setSavedMovies([]);
-      // setFormValueFound('');
-      // setShortMovies(false);
-      // setMoviesFound([]);
-      navigate('/')
 
-    })
-    .catch((err) => console.log(err))
-    .finally(() =>{
-      localStorage.clear();
-    })
-  }
-
-  function handleUpdateUser(name, email) {
-    updateUser(name, email)
-      .then((res) => {
-        setTitleInfo("Данные о профиле изменены");
-        setIconInfo(truth);
-        setCurrentUser(res.user);
-      })
-      .catch(() => {
-        setTitleInfo("Что-то пошло не так! Попробуйте ещё раз.");
-        setIconInfo(fail);
-      })
-      .finally(() =>{
-        handleInfoTooltipClick();
-      })
-  }
-
-  function handleInfoTooltipClick() {
-    setIsInfoTooltipOpen(true);
-  }
-
-
-  // закрывает попап всплываемого окошка регистрации, можно объединить с другими попапами
-  function closePopup(){
-    setIsInfoTooltipOpen(false);
-  }
-
-    // Global state переменная открытия попапов // это не стейт! и он здесь не нужен
-    // const isOpen = isCreateProjectPopupOpen; 
+    // Global state переменная открытия попапов
+    const isOpen = isCreateProjectPopupOpen;
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -220,6 +148,7 @@ function App() {
               <ProtectedRoute
                 element={Facades}
                 isLoggedIn={isLoggedIn}
+                onCreareFacade={handleCreateFacadeClick}
               />
               <Footer/>   
             </>
@@ -253,7 +182,7 @@ function App() {
         />
 
         <CreateFacadePopupOpen
-          isOpen={isCreateFacadePopupOpen}
+        isOpen={isCreateFacadePopupOpen}
         />
 
         <CreateRoomPopup
