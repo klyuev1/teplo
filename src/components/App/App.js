@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
@@ -21,6 +21,10 @@ function App() {
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
   const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
 
+  useEffect(() => {
+
+  },[])
+
   // Функции авторизации
   function handleRegister() {
     console.log("hi, bro");
@@ -29,10 +33,18 @@ function App() {
   function handleLogin() {
     console.log("hi, bro");
   }
+
+  function handleCreateFacadeClick() {
+    setIsCreateFacadePopupOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsCreateFacadePopupOpen(false);
+  }
  
 
     // Global state переменная открытия попапов
-    const isOpen = isCreateProjectPopupOpen;
+    const isOpen = isCreateProjectPopupOpen || isCreateFacadePopupOpen;
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -99,6 +111,7 @@ function App() {
               <ProtectedRoute
                 element={Facades}
                 isLoggedIn={isLoggedIn}
+                onCreareFacade={handleCreateFacadeClick}
               />
               <Footer/>   
             </>
@@ -113,6 +126,7 @@ function App() {
         /> 
         <CreateFacadePopupOpen
         isOpen={isCreateFacadePopupOpen}
+        onClose={closeAllPopups}
         />
 
       </div>
