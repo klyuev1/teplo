@@ -1,0 +1,33 @@
+.popup-facade-room__box {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* overflow: auto; */
+}
+
+.popup-facade-room {
+  border-radius: 4px;
+  border: 2px rgba(20, 25, 26, 0.12) solid;
+  transition: border .1s linear;
+  position: relative;
+}
+
+.popup-facade-room__input {
+  position: relative;
+  top: 20px;
+  left: 5px;
+}
+
+.popup-facade-room__card {
+  width: 150px;
+  
+}
+.popup-facade-room__img {
+  width: 100%;
+  max-height: 400px;
+}
+
+
+.popup-facade-room__title {
+
+}

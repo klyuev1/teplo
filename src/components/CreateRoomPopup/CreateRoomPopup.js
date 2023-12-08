@@ -37,20 +37,20 @@ function CreateRoomPopup({isOpen}) {
         />
       </label>
       
-      {/* <label className='popup__label'>
+      <label className='popup__label'>
         <h3 className='popup__input-name'>Тип фасада</h3>
-        <div>
+        <div className='popup-facade-room__box'>
           {facadesData.map((facade) => (
-            <article className='element'>
-            <input type='radio' />
-            <button className='element__button' type='button'>
-              <img className='element__photo'  alt='facade'/>
-              <h3 className='element__number'>{facade.name}</h3>
-            </button>
+            <article className='popup-facade-room'>
+            <input type='radio' name="facade" className='popup-facade-room__input'/>
+            <div className='popup-facade-room__card'>
+              <img src={facade.link} className='popup-facade-room__img'  alt='facade'/>
+              <h3 className='popup-facade-room__title'>{facade.name}</h3>
+            </div >
           </article>
           ))}
         </div>
-      </label> */}
+      </label>
 
     </PopupWithForm>
   )
