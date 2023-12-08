@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
 
+// Компоненты
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Register from '../../components/Register/Register';
 import Login from '../../components/Login/Login';
 import Header from '../Header/Header';
@@ -12,18 +13,20 @@ import Projects from '../Projects/Projects';
 import Rooms from '../Rooms/Rooms';
 import Facades from '../Facades/Facades';
 import Profile from '../Profile/Profile';
-
 import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
 import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
 import CreateRoomPopup from '../CreateRoomPopup/CreateRoomPopup';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import NotFound from '../NotFound/NotFound';
 
+// API запросы
 import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
 import {getProjects} from '../../utils/Api';
 
-import InfoTooltip from '../InfoTooltip/InfoTooltip';
+// etc
 import truth from '../../images/thurh.svg';
 import fail from '../../images/fail.svg';
-import NotFound from '../NotFound/NotFound';
+
 
 function App() {
   const navigate = useNavigate();
@@ -57,30 +60,101 @@ function App() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   },[isLoggedIn]);
 
-  useEffect(() => {
+  function handleRegister(name, email, password) {
+    signup(name, email, password)
+      .then(() => {
+        signin(email, password)
+          .then(() => {
+            setIsLoggedIn(true);
+            setTitleInfo("Вы успешно зарегистрировались!");
+            setIconInfo(truth);
+            navigate('/projects', {replace: true});
+          })
+          .catch(() => {
+            setTitleInfo("Что-то пошло не так! Попробуйте ещё раз");
+            setIconInfo(fail);
+          })
+          .finally(() =>{
+            handleInfoTooltipClick();
+          })
+      })
+      .catch((error) => {
+        if (error === 409){
+            setTitleInfo("Пользователь с таким Email уже зарегистрирован");
+            setIconInfo(fail);
+        } else {
+            setTitleInfo("Что-то не так с введенными данными");
+            setIconInfo(fail);
+        }
+      })
+      .finally(() =>{
+        handleInfoTooltipClick();
+      })
+    
+  }
 
-  },[])
+  function handleLogin(email, password) {
+    signin(email, password)
+    .then(() => {
+      setIsLoggedIn(true);
+      setTitleInfo("Вы успешно авторизировались!");
+      setIconInfo(truth);
+      navigate('/projects', {replace: true});
+    })
+    .catch(() => {
+      setTitleInfo("Что-то пошло не так! Попробуйте ещё раз.");
+      setIconInfo(fail);
+    })
+    .finally(() =>{
+      handleInfoTooltipClick();
+    })
+  }
 
+  function handleUpdateUser(name, email) {
+    updateUser(name, email)
+      .then((res) => {
+        setTitleInfo("Данные о профиле изменены");
+        setIconInfo(truth);
+        setCurrentUser(res.user);
+      })
+      .catch(() => {
+        setTitleInfo("Что-то пошло не так! Попробуйте ещё раз.");
+        setIconInfo(fail);
+      })
+      .finally(() =>{
+        handleInfoTooltipClick();
+      })
+  }
+
+  function HandleSignOut() {
+    signout()
+    .then(() => {
+      setIsLoggedIn(false);
+      // setSavedMovies([]);
+      // setFormValueFound('');
+      // setShortMovies(false);
+      // setMoviesFound([]);
+      navigate('/')
+
+    })
+    .catch((err) => console.log(err))
+    .finally(() =>{
+      localStorage.clear();
+    })
+  }
   
   function handleCreateFacadeClick() {
     setIsCreateFacadePopupOpen(true);
   }
 
+  function handleInfoTooltipClick() {
+    setIsInfoTooltipOpen(true);
+  }
+
   function closeAllPopups() {
     setIsCreateFacadePopupOpen(false);
+    setIsInfoTooltipOpen(false);
   }
-  // Функции авторизации
-  function handleRegister() {
-    console.log("hi, bro");
-  }
-  
-  function handleLogin() {
-    console.log("hi, bro");
-  }
- 
-
-    // Global state переменная открытия попапов
-    const isOpen = isCreateProjectPopupOpen;
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -152,8 +226,6 @@ function App() {
               />
               <Footer/>   
             </>
-          
-
           }/>
 
           <Route path='/profile' element={
@@ -177,6 +249,7 @@ function App() {
           
         </Routes>
 
+          {/* Попапы */}
         <CreateProjectPopup
           isOpen={isCreateProjectPopupOpen}
         />
@@ -189,11 +262,9 @@ function App() {
           isOpen={isCreateRoomPopupOpen}
         />
 
-
-
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
-          onClose={closePopup}
+          onClose={closeAllPopups}
           title={titleInfo}
           icon={iconInfo}
         />
