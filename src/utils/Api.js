@@ -14,3 +14,21 @@ export const getProjects = () => {
   })
   .then(CheckRes)
 }
+
+export const postMovie = ({
+  country, director, duration, year, description,
+  image, trailerLink, nameRU, nameEN, thumbnail, movieId
+}) => {
+  return fetch(`${BASE_URL}/movies`, {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        country, director, duration, year, description,
+        image, trailerLink, nameRU, nameEN, thumbnail, movieId
+      }),  
+  })
+  .then(CheckRes)
+}

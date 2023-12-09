@@ -60,7 +60,7 @@ function App() {
   },[isLoggedIn]);
 
   function handleCreateRoom() {
-    
+    // остановился здесь
   }
 
   function handleRegister(name, email, password) {
