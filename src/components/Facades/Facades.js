@@ -1,7 +1,6 @@
 import React from 'react';
 import Facade from '../Facade/Facade';
 import iconFasades from '../../images/iconFasades.svg';
-import facadesData from '../../utils/facade-data';
 
 function Facades(props) {
   return (
@@ -19,13 +18,15 @@ function Facades(props) {
       </div>
 
       <section className='elements'>
-        {facadesData.map((facade) => (
+        {props.facades.map((facade) => (
           <Facade
+            facade={facade}
             name={facade.name}
             link={facade.link}
             height={facade.height}
             width={facade.width}
             areaWall={facade.areaWall}
+            onCardDelete={props.onCardDelete}
           />
         ))}
       </section>

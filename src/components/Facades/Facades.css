@@ -1,5 +1,6 @@
 .facades {
-  margin: 0;  
+  margin: 0;
+  min-height: 78vh;  
 }
 .fasades__up-container{
   display: flex;
