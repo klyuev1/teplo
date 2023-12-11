@@ -21,7 +21,7 @@ import NotFound from '../NotFound/NotFound';
 
 // API запросы
 import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
-import {getProjects} from '../../utils/Api';
+import {getProjects, getFacades, postFacades, deleteFacade} from '../../utils/Api';
 
 // etc
 import truth from '../../images/thurh.svg';
@@ -37,6 +37,7 @@ function App() {
   const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
   
   const [projects, setProjects] = React.useState([]);
+  const [facades, setFacades] = React.useState([]);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [titleInfo, setTitleInfo] = React.useState("");
@@ -44,10 +45,11 @@ function App() {
 
   React.useEffect(() => {
     if (isLoggedIn){
-    Promise.all([getUser(), getProjects()])
-    .then(([userData, projectsData]) => {
+    Promise.all([getUser(), getProjects(), getFacades()])
+    .then(([userData, projectsData, facadesData]) => {
       setCurrentUser(userData);
       setProjects(projectsData);
+      setFacades(facadesData)
       // console.log(projectsData);
       setIsLoggedIn(true);
     })
@@ -168,6 +170,35 @@ function App() {
     setIsCreateRoomPopupOpen(false);
     setIsCreateProjectPopupOpen(false);
   }
+
+  function handleCreateFacade(name, link, height, width, areaWindow) {
+    postFacades(name, link, height, width, areaWindow)
+    .then((newFacade) => {
+      setFacades([newFacade, ...facades]);
+      closeAllPopups();
+    })
+    .catch((error) => {
+      if (error === 409){
+          setTitleInfo("Площадь стены не может быть меньше 0");
+          setIconInfo(fail);
+          closeAllPopups();
+      handleInfoTooltipClick()                   
+      } else {
+        setTitleInfo("Что-то не так с введенными данными");
+      }
+      setIconInfo(fail);
+      handleInfoTooltipClick()
+    })
+    .finally(() => {
+      // closeAllPopups();
+    });
+  }
+
+  function handleDeleteFacade(facade) {
+    deleteFacade(facade._id).then(() => {
+      setFacades((state) => state.filter((c) => c._id !== facade._id));
+    });
+  }
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
@@ -236,8 +267,10 @@ function App() {
               />
               <ProtectedRoute
                 element={Facades}
+                facades={facades}
                 isLoggedIn={isLoggedIn}
                 onCreareFacade={handleCreateFacadeClick}
+                onCardDelete={handleDeleteFacade}
               />
               <Footer/>   
             </>
@@ -273,11 +306,13 @@ function App() {
         <CreateFacadePopupOpen
           isOpen={isCreateFacadePopupOpen}
           onClose={closeAllPopups}
+          onCreateFacade={handleCreateFacade}
         />
 
         <CreateRoomPopup
           isOpen={isCreateRoomPopupOpen}
           onClose={closeAllPopups}
+          facades={facades}
         />
 
         <InfoTooltip

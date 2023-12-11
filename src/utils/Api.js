@@ -32,3 +32,42 @@ export const postMovie = ({
   })
   .then(CheckRes)
 }
+
+export const getFacades = () => {
+  return fetch(`${BASE_URL}/facades`, {
+      method: 'GET',
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+      },
+      credentials: "include"
+  })
+  .then(CheckRes)
+}
+
+export const postFacades = ({
+  name, link, height, width, areaWindow
+}) => {
+  return fetch(`${BASE_URL}/facades`, {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        name, link, height, width, areaWindow
+      }),  
+  })
+  .then(CheckRes)
+}
+
+export const deleteFacade = (facadeId) => {
+  return fetch(`${BASE_URL}/facades/${facadeId}`, {
+      method: 'DELETE',
+      headers: {
+          "Content-Type": "application/json"
+      },
+      credentials: "include",
+  })
+  .then(CheckRes)
+}

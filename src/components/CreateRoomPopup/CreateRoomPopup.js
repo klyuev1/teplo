@@ -1,7 +1,5 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import facadesData from '../../utils/facade-data';
-import Facade from '../Facade/Facade';
 
 function CreateRoomPopup(props) {
   
@@ -41,7 +39,7 @@ function CreateRoomPopup(props) {
       <label className='popup__label'>
         <h3 className='popup__input-name'>Тип фасада</h3>
         <div className='popup-facade-room__box'>
-          {facadesData.map((facade) => (
+          {props.facades.map((facade) => (
             <article className='popup-facade-room'>
             <input type='radio' name="facade" className='popup-facade-room__input'/>
             <div className='popup-facade-room__card'>
