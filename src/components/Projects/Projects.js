@@ -2,7 +2,7 @@ import React from 'react';
 import projLogo from '../../images/proj-logo.svg';
 import ProjectTable from './ProjectTable/ProjectTable';
 
-function Projects({isLoggedIn, projects, handleCreateProjectClick}) {
+function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}) {
   
   return (
     <section className= 'projects' >
@@ -14,12 +14,13 @@ function Projects({isLoggedIn, projects, handleCreateProjectClick}) {
           <h2 className='projects__title'>Проекты</h2>
         </div>
         
-        <button className='projects__button' type='button' onClick={handleCreateProjectClick}>Создать проект</button>
+        <button className='projects__button' type='button' onClick={onCreateProjectClick}>Создать проект</button>
       
       </div>
 
       <ProjectTable 
         projects={projects}
+        onProjectDelete={onProjectDelete}
       />
 
     </section>

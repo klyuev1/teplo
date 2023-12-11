@@ -21,7 +21,7 @@ import NotFound from '../NotFound/NotFound';
 
 // API запросы
 import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
-import {getProjects} from '../../utils/Api';
+import {getProjects, postProject, deleteProject} from '../../utils/Api';
 
 // etc
 import truth from '../../images/thurh.svg';
@@ -59,9 +59,30 @@ function App() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   },[isLoggedIn]);
 
-  function handleCreateRoom() {
-    // остановился здесь
+  function handleCreateProject(project) {
+    postProject({
+      name: project.name, 
+      tOutside: project.tOutside, 
+      tInside: project.tInside, 
+      rWall: project.rWall, 
+      rWindow: project.rWindow, 
+      beta: project.beta, 
+      kHousehold: project.kHousehold
+    })
+    .then((newProject)=>{
+      setProjects([newProject, ...projects]);
+    })
+    .catch((err) => console.log(err));
   }
+
+  function handleDeleteProject(project) {
+    deleteProject(project._id)
+    .then(() => {
+      setProjects((state) => state.filter((c) => c._id !== project._id));
+    })
+    .catch((err) => console.log(err));
+  }
+  // Доделал вкладку проекты
 
   function handleRegister(name, email, password) {
     signup(name, email, password)
@@ -209,7 +230,8 @@ function App() {
                 element={Projects}
                 isLoggedIn={isLoggedIn}
                 projects={projects}
-                handleCreateProjectClick={handleCreateProjectClick}
+                onCreateProjectClick={handleCreateProjectClick}
+                onProjectDelete={handleDeleteProject}
               />
               <Footer/>
             </>
@@ -268,6 +290,7 @@ function App() {
         <CreateProjectPopup
           isOpen={isCreateProjectPopupOpen}
           onClose={closeAllPopups}
+          handleCreateProject={handleCreateProject}
         />
 
         <CreateFacadePopupOpen

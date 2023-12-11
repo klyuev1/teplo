@@ -15,20 +15,30 @@ export const getProjects = () => {
   .then(CheckRes)
 }
 
-export const postMovie = ({
-  country, director, duration, year, description,
-  image, trailerLink, nameRU, nameEN, thumbnail, movieId
+export const postProject = ({
+  name, tOutside, tInside, rWall, rWindow, beta, kHousehold
 }) => {
-  return fetch(`${BASE_URL}/movies`, {
+  return fetch(`${BASE_URL}/projects`, {
       method: 'POST',
       headers: {
           "Content-Type": "application/json"
       },
       credentials: "include",
       body: JSON.stringify({
-        country, director, duration, year, description,
-        image, trailerLink, nameRU, nameEN, thumbnail, movieId
+        name, tOutside, tInside, rWall, rWindow, beta, kHousehold
       }),  
+  })
+  .then(CheckRes)
+}
+
+export const deleteProject = (projectId) => {
+  return fetch(`${BASE_URL}/projects/${projectId}`, {
+      method: 'DELETE',
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+      },
+      credentials: "include"
   })
   .then(CheckRes)
 }
