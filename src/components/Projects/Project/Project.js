@@ -1,7 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Project({project, onProjectDelete}) {
+
+function Project({isLoggedIn, project, onProjectDelete}) {
   
+  
+
+  // React.useEffect(() => {
+  //   // if (isLoggedIn){
+  //   Promise.all([getRooms(project._id)])
+  //   .then(([roomsData]) => {
+  //     console.log(roomsData);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err)
+  //   });
+  // // }
+  //   //eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[isLoggedIn]);
+
   function handleDeleteproject() {
     onProjectDelete(project)
   }
@@ -9,9 +26,9 @@ function Project({project, onProjectDelete}) {
   return (
         <tr className='table_row' key={project._id}>
           <td className='table_d column1'>
-            <button className='table__td-button'>
+            <Link className='table__td-button' to={`/projects/${project._id}/rooms`}>
               <div className='table__icon' />{project.name}
-            </button>
+            </Link>
           </td>
           <td className='table_d column2'>{project.tOutside}</td>
           <td className='table_d column3'>1111</td>

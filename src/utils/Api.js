@@ -82,3 +82,31 @@ export const deleteFacade = (facadeId) => {
   })
   .then(CheckRes)
 }
+
+export const getRooms = (projectId) => {
+  return fetch(`${BASE_URL}/projects/${projectId}/rooms`, {
+      method: 'GET',
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+      },
+      credentials: "include"
+  })
+  .then(CheckRes)
+}
+
+export const postRoom = (projectId, {
+  number, name, height, width, areaWall, areaWindow, areaRoom
+}) => {
+  return fetch(`${BASE_URL}/projects${projectId}`, {
+      method: 'POST',
+      headers: {
+          "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        number, name, height, width, areaWall, areaWindow, areaRoom
+      }),  
+  })
+  .then(CheckRes)
+}

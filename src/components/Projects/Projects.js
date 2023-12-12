@@ -19,6 +19,7 @@ function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete})
       </div>
 
       <ProjectTable 
+        isLoggedIn={isLoggedIn}
         projects={projects}
         onProjectDelete={onProjectDelete}
       />

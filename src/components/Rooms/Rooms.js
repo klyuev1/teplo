@@ -1,8 +1,25 @@
 import React from 'react';
 import projLogo from '../../images/proj-logo.svg';
 import RoomTable from './RoomTable/RoomTable'
+import { useParams } from 'react-router-dom';
+import {getRooms} from '../../utils/Api';
 
-function Rooms({isLoggedIn, handleCreateRoomClick}) {
+function Rooms({isLoggedIn, handleCreateRoomClick, onRoomCreate}) {
+
+  const {projectID} = useParams();
+  const [rooms, setRooms] = React.useState([]);
+
+  React.useEffect(() => {
+      if (isLoggedIn){
+    getRooms(projectID)
+    .then((rooms) => {
+      setRooms(rooms);
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }},[isLoggedIn]);
   
   return (
     <section className= 'rooms' >
@@ -23,7 +40,11 @@ function Rooms({isLoggedIn, handleCreateRoomClick}) {
       
       </div>
 
-      <RoomTable />
+      <RoomTable
+        projectID={projectID}
+        rooms={rooms}
+        onRoomCreate={onRoomCreate}
+      />
 
     </section>
     

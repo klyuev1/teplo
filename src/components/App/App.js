@@ -43,6 +43,10 @@ function App() {
   const [titleInfo, setTitleInfo] = React.useState("");
   const [iconInfo, setIconInfo] = React.useState("");
 
+
+  const [projID, setProjID] = React.useState("");
+  const [savedroom, setSavedroom] = React.useState({});
+
   React.useEffect(() => {
     if (isLoggedIn){
     Promise.all([getUser(), getProjects(), getFacades()])
@@ -220,9 +224,33 @@ function App() {
       setFacades((state) => state.filter((c) => c._id !== facade._id));
     });
   }
+
+  function handleCreateRoomChild(projectID, room) {
+    setProjID(projectID);
+    setSavedroom(room);
+    console.log(room)
+  }
+  // Остановился здесь. Проблема с вложенностью
+
+  // function handleCreateRoom(projectID, room) {
+  //   postProject(projectID, {
+  //     number: room.number,
+  //     name: room.name,
+  //     height: room.height,
+  //     width: room.width,
+  //     areaWall: room.areaWall,
+  //     areaWindow: room.areaWindow,
+  //     areaRoom: room.areaRoom
+  //   })
+  //   .then((newRoom)=>{
+  //     setRooms([newRoom, ...rooms]);
+  //   })
+  //   .catch((err) => console.log(err));
+  // }
   
   return (
     <CurrentUserContext.Provider value={currentUser} >
+      
       <div className="app">
         <Routes>
 
@@ -268,7 +296,7 @@ function App() {
             </>
           }/>
 
-          <Route path='/projects/:projectId/rooms' element={
+          <Route path={`/projects/:projectID/rooms`} element={
             <>
               <Header
                 isLoggedIn={isLoggedIn}
@@ -277,6 +305,7 @@ function App() {
                 element={Rooms}
                 isLoggedIn={isLoggedIn}
                 handleCreateRoomClick={handleCreateRoomClick}
+                onRoomCreate={handleCreateRoomChild}
               />
               <Footer/>
             </>

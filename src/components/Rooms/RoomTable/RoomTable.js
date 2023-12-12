@@ -1,10 +1,10 @@
 import React from 'react';
-import projFile from '../../../images/proj-file.svg';
+import Room from '../Room/Room';
 
-import roomsData from '../../../utils/room-data';
+function RoomTable({projectID, rooms, onRoomCreate}) {
 
-function RoomTable({}) {
   
+
   return (
   <table className='table'>
         
@@ -21,20 +21,14 @@ function RoomTable({}) {
 
     <tbody>
 
-      {roomsData.map(card => (
+      {rooms.map(room => (
 
-        <tr className='table_row' key={card._id}>
-          <td className='table_d room-column1'>{card.number}</td>
-          <td className='table_d room-column2'>
-            <button className='table__td-button'>
-              {card.name}
-            </button>
-          </td>
-          <td className='table_d room-column3'>{card.area}</td>
-          <td className='table_d room-column4'>{card.nameFacade}</td>
-          <td className='table_d room-column5'>{card.heatLoss}</td>
-          <td className='table_d room-column6'><button className='table__delete'/></td>
-        </tr>
+        <Room 
+          room={room}
+          key={room._id}
+          projectID={projectID}
+          onRoomCreate={onRoomCreate}
+        />
 
       ))}
     </tbody>
