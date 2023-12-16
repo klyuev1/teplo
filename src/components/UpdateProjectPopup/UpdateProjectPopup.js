@@ -10,8 +10,9 @@ import {
   T_OUTSIDE_SRG, T_INSIDE_SRG, R_WALL_SRG, R_WINDOW_SRG,
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
+import { useRooms } from '../../contexts/RoomsContext';
 
-function CreateProjectPopupOpen(props) {
+function UpdateProjectPopup(props) {
   const [name, setName] = React.useState('');
   const [region, setRegion] = React.useState('');
   const [tOutside, setTOutside] = React.useState();
@@ -20,6 +21,7 @@ function CreateProjectPopupOpen(props) {
   const [rWindow, setRWindow] = React.useState();
   const [beta, setBeta] = React.useState();
   const [kHousehold, setKHousehold] = React.useState();
+  const { projectID } = useRooms();
 
   React.useEffect(() => {
     setName('');
@@ -77,7 +79,7 @@ function CreateProjectPopupOpen(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.handleCreateProject({name, tOutside, tInside, rWall, rWindow, beta, kHousehold});
+    props.onUpdateProject(projectID, {name, tOutside, tInside, rWall, rWindow, beta, kHousehold});
     props.onClose();
   } 
    
@@ -85,8 +87,8 @@ function CreateProjectPopupOpen(props) {
   return (
     <PopupWithForm
       name='create-project'
-      title='Cоздание проекта'
-      buttonName='Создать проект'
+      title='Редактирование проекта'
+      buttonName='Редактировать проект'
       isOpen={props.isOpen}
       isClose={props.onClose}
       onSubmit={handleSubmit}
@@ -94,7 +96,8 @@ function CreateProjectPopupOpen(props) {
       <label className='popup__label'>
         <h3 className='popup__input-name'>Наименование проекта:</h3>
         <input
-          name='name' type='text'
+          name='name'
+          type='text'
           className='popup__input'
           minLength='2'
           maxLength='40'
@@ -138,4 +141,4 @@ function CreateProjectPopupOpen(props) {
   );
 }
 
-export default CreateProjectPopupOpen;
+export default UpdateProjectPopup;

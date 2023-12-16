@@ -1,7 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
-function Project({project, onProjectDelete}) {
+
+function Project({isLoggedIn, project, onProjectDelete}) {
   
+  const parsedDate = new Date(project.createdAt);
+  const formattedDate = format(parsedDate, 'dd.MM.yyyy');
+
   function handleDeleteproject() {
     onProjectDelete(project)
   }
@@ -9,12 +15,12 @@ function Project({project, onProjectDelete}) {
   return (
         <tr className='table_row' key={project._id}>
           <td className='table_d column1'>
-            <button className='table__td-button'>
+            <Link className='table__td-button' to={`/projects/${project._id}/rooms`}>
               <div className='table__icon' />{project.name}
-            </button>
+            </Link>
           </td>
           <td className='table_d column2'>{project.tOutside}</td>
-          <td className='table_d column3'>1111</td>
+          <td className='table_d column3'>{formattedDate}</td>
           <td className='table_d column4'><button className='table__delete' type='button' onClick={handleDeleteproject}/></td>
         </tr>
   );

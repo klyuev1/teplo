@@ -1,7 +1,7 @@
 import React from 'react';
 import Project from '../Project/Project';
 
-function ProjectTable({projects, onProjectDelete}) {
+function ProjectTable({isLoggedIn, projects, onProjectDelete}) {
   
 
 
@@ -11,7 +11,7 @@ function ProjectTable({projects, onProjectDelete}) {
     <thead>
       <tr className='table_header'>
         <th className='table_head column1'>Наименование проекта</th>
-        <th className='table_head column2'>Наруржняя температура</th>
+        <th className='table_head column2'>Наружняя температура</th>
         <th className='table_head column3'>Дата создания</th>
         <th className='table_head column4'></th>
       </tr>
@@ -21,6 +21,7 @@ function ProjectTable({projects, onProjectDelete}) {
 
       {projects.map(project => (
         <Project 
+          isLoggedIn={isLoggedIn}
           project={project}
           key={project._id}
           onProjectDelete={onProjectDelete}

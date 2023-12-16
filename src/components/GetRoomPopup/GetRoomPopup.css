@@ -1,0 +1,61 @@
+.popup__room-div {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr); /* Два столбца с динамическими размерами */
+  grid-template-rows: repeat(5, auto);
+  gap: 10px;
+  
+  
+  grid-template-areas:
+  "td1 td2 td2 td2"
+  "td3 td3 td4 td5"
+  "td6 td6 td7 td7"
+  "td8 td8 td8 td8"
+  ;
+}
+
+.popup__room-info {
+  display: block;
+  margin: 24px 0 0;
+  position: relative;
+}
+
+.td1 {
+  grid-area: td1;
+  min-width: none;
+}
+
+.td2 {
+  grid-area: td2;
+  min-width: none;
+}
+
+.td3 {
+  grid-area: td3;
+  min-width: none;
+}
+
+.td4 {
+  grid-area: td4;
+  min-width: none;
+}
+
+.td5 {
+  grid-area: td5;
+  min-width: none;
+}
+
+.td6 {
+  grid-area: td6;
+  min-width: none;
+}
+
+.td7 {
+  grid-area: td7;
+  min-width: none;
+}
+
+.td8 {
+  grid-area: td8;
+  min-width: none;
+}

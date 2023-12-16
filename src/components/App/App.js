@@ -2,40 +2,31 @@ import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 // Компоненты
-import CurrentUserContext from "../../contexts/CurrentUserContext";
-import Register from "../../components/Register/Register";
-import Login from "../../components/Login/Login";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import Footer from "../Footer/Footer";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import Projects from "../Projects/Projects";
-import Rooms from "../Rooms/Rooms";
-import Facades from "../Facades/Facades";
-import Profile from "../Profile/Profile";
-import CreateProjectPopup from "../CreateProjectPopup/CreateProjectPopup";
-import CreateFacadePopupOpen from "../CreateFacadePopup/CreateFacadePopup";
-import CreateRoomPopup from "../CreateRoomPopup/CreateRoomPopup";
-import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import NotFound from "../NotFound/NotFound";
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import Register from '../../components/Register/Register';
+import Login from '../../components/Login/Login';
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import Footer from '../Footer/Footer';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Projects from '../Projects/Projects';
+import Rooms from '../Rooms/Rooms';
+import Facades from '../Facades/Facades';
+import Profile from '../Profile/Profile';
+import CreateProjectPopup from '../CreateProjectPopup/CreateProjectPopup';
+import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
+import CreateRoomPopup from '../CreateRoomPopup/CreateRoomPopup';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import NotFound from '../NotFound/NotFound';
+import { useRooms } from '../../contexts/RoomsContext';
+import UpdateProjectPopup from '../UpdateProjectPopup/UpdateProjectPopup';
+
+import GetFacadePopup from '../GetFacadePopup/GetFacadePopup';
+import GetRoomPopup from '../GetRoomPopup/GetRoomPopup';
 
 // API запросы
-import {
-  signup,
-  signin,
-  signout,
-  getUser,
-  updateUser,
-} from "../../utils/ApiReg";
-import {
-  getProjects,
-  postProject,
-  deleteProject,
-  getFacades,
-  postFacades,
-  deleteFacade,
-  downloadRooms,
-} from "../../utils/Api";
+import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
+import {getProjects, postProject, deleteProject, getFacades, postFacades, deleteFacade, postRoom, deleteRoom, updateProject, downloadRooms} from '../../utils/Api';
 
 // etc
 import truth from "../../images/thurh.svg";
@@ -44,14 +35,12 @@ import fail from "../../images/fail.svg";
 function App() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-  const [currentUser, setCurrentUser] = React.useState({ name: "", email: "" });
-  const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] =
-    React.useState(false);
-  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] =
-    React.useState(false);
-  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] =
-    React.useState(false);
-
+  const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
+  const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
+  const [isUpdateProjectPopupOpen, setIsUpdateProjectPopupOpen] = React.useState(false);
+  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
+  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
+  
   const [projects, setProjects] = React.useState([]);
   const [facades, setFacades] = React.useState([]);
 
@@ -59,6 +48,12 @@ function App() {
   const [titleInfo, setTitleInfo] = React.useState("");
   const [iconInfo, setIconInfo] = React.useState("");
 
+  const { rooms, setRooms } = useRooms();
+  const [selectedFacade, setSelectedFacade] = React.useState({});
+  const [selectedRoom, setSelectedRoom] = React.useState({});
+
+
+  // Основные функции с api-запросами
   React.useEffect(() => {
     if (isLoggedIn) {
       Promise.all([getUser(), getProjects(), getFacades()])
@@ -208,31 +203,6 @@ function downloadCSV() {
       });
   }
 
-  function handleCreateProjectClick() {
-    setIsCreateProjectPopupOpen(true);
-  }
-
-  function handleCreateFacadeClick() {
-    setIsCreateFacadePopupOpen(true);
-  }
-
-  function handleCreateRoomClick() {
-    setIsCreateRoomPopupOpen(true);
-  }
-
-  function handleInfoTooltipClick() {
-    setIsInfoTooltipOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsCreateFacadePopupOpen(false);
-    setIsCreateRoomPopupOpen(false);
-    setIsCreateProjectPopupOpen(false);
-  }
-  function closeInfoToolTip() {
-    setIsInfoTooltipOpen(false);
-  }
-
   function handleCreateFacade(name, link, height, width, areaWindow) {
     postFacades(name, link, height, width, areaWindow)
       .then((newFacade) => {
@@ -255,9 +225,93 @@ function downloadCSV() {
       setFacades((state) => state.filter((c) => c._id !== facade._id));
     });
   }
+  function handleCreateRoom(projectID, room) {
+    postRoom(projectID, {
+      number: room.number,
+      name: room.name,
+      height: room.height,
+      width: room.width,
+      areaWall: room.areaWall,
+      areaWindow: room.areaWindow,
+      areaRoom: room.areaRoom,
+      numberFacade: room.numberFacade
+    })
+    
+    .then((newRoom)=>{
+      // setRooms([newRoom, ...rooms]);
+      setRooms([...rooms, newRoom]);
+    })
+    .catch((err) => console.log(err));
 
+  }
+
+  function handleUpdateProject(projectID, project) {
+    updateProject(projectID, {
+      name: project.name, 
+      tOutside: project.tOutside, 
+      tInside: project.tInside, 
+      rWall: project.rWall, 
+      rWindow: project.rWindow, 
+      beta: project.beta, 
+      kHousehold: project.kHousehold
+    })
+    .then((newProject)=>{
+      setProjects([newProject, ...projects]);
+    })
+    .catch((err) => console.log(err));
+
+  }
+
+  function handleDeleteRoom(projectID, room) {
+    deleteRoom(projectID, room._id)
+    .then(() => {
+      setRooms((state) => state.filter((c) => c._id !== room._id));
+    })
+    .catch((err) => console.log(err));
+  }
+
+  
+  // Функции кликеры
+  function handleCreateProjectClick() {
+    setIsCreateProjectPopupOpen(true);
+  }
+
+  function handleCreateFacadeClick() {
+    setIsCreateFacadePopupOpen(true);
+  }
+
+  function handleCreateRoomClick() {
+    setIsCreateRoomPopupOpen(true);
+  }
+  
+  function handleUpdateProjectClick() {
+    setIsUpdateProjectPopupOpen(true);
+  }
+
+  function handleInfoTooltipClick() {
+    setIsInfoTooltipOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsCreateFacadePopupOpen(false);
+    setIsInfoTooltipOpen(false);
+    setIsCreateRoomPopupOpen(false);
+    setIsCreateProjectPopupOpen(false);
+    setIsUpdateProjectPopupOpen(false);
+    setSelectedFacade({});
+    setSelectedRoom({});
+  }
+
+  function handleFacadeClick(facade) {
+    setSelectedFacade(facade);
+  }
+
+  function handleRoomClick(room) {
+    setSelectedRoom(room);
+  }
+  
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={currentUser} >
       <div className="app">
         <Routes>
           <Route
@@ -304,38 +358,40 @@ function downloadCSV() {
             }
           />
 
-          <Route
-            path="/projects/:projectId/rooms"
-            element={
-              <>
-                <Header isLoggedIn={isLoggedIn} />
-                <ProtectedRoute
-                  element={Rooms}
-                  isLoggedIn={isLoggedIn}
-                  handleCreateRoomClick={handleCreateRoomClick}
-                  // onDownloadCSV={downloadCSV}
-                />
-                <Footer />
-              </>
-            }
-          />
+          <Route path={`/projects/:projectID/rooms`} element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Rooms}
+                isLoggedIn={isLoggedIn}
+                handleCreateRoomClick={handleCreateRoomClick}
+                onUpdateProjectClick={handleUpdateProjectClick}
+                onRoomDelete={handleDeleteRoom}
+                onClickRoom={handleRoomClick}
+                // onDownloadCSV={downloadCSV}
+              />
+              <Footer/>
+            </>
+          }/>
 
-          <Route
-            path="/facades"
-            element={
-              <>
-                <Header isLoggedIn={isLoggedIn} />
-                <ProtectedRoute
-                  element={Facades}
-                  facades={facades}
-                  isLoggedIn={isLoggedIn}
-                  onCreareFacade={handleCreateFacadeClick}
-                  onCardDelete={handleDeleteFacade}
-                />
-                <Footer />
-              </>
-            }
-          />
+          <Route path='/facades' element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Facades}
+                facades={facades}
+                isLoggedIn={isLoggedIn}
+                onCreareFacade={handleCreateFacadeClick}
+                onCardDelete={handleDeleteFacade}
+                onClickFacade={handleFacadeClick}
+              />
+              <Footer/>   
+            </>
+          }/>
 
           <Route
             path="/profile"
@@ -372,6 +428,13 @@ function downloadCSV() {
           isOpen={isCreateRoomPopupOpen}
           onClose={closeAllPopups}
           facades={facades}
+          onCreateRoom={handleCreateRoom}
+        />
+
+        <UpdateProjectPopup 
+          isOpen={isUpdateProjectPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateProject={handleUpdateProject}
         />
 
         <InfoTooltip
@@ -380,9 +443,19 @@ function downloadCSV() {
           title={titleInfo}
           icon={iconInfo}
         />
+        <GetFacadePopup
+          facade={selectedFacade}
+          onClose = {closeAllPopups}
+        />
+        
+        <GetRoomPopup
+          room={selectedRoom}
+          onClose = {closeAllPopups}
+        />
+
+
       </div>
     </CurrentUserContext.Provider>
   );
 }
-
 export default App;

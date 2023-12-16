@@ -66,3 +66,12 @@
 
 /* Правила для NotFound*/
 @import url(./components/CreateRoomPopup/CreateRoomPopup.css);
+
+/* Правила для GetFacadePopup*/
+@import url(./components/GetFacadePopup/GetFacadePopup.css);
+
+/* Правила для GetRoomPopup*/
+@import url(./components/GetRoomPopup/GetRoomPopup.css);
+
+/* Правила для Room*/
+@import url(./components/Rooms/Room/Room.css);
