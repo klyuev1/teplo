@@ -12,7 +12,6 @@ function Room({room, onRoomDelete, onClickRoom}) {
 
   function handleClick() {
     onClickRoom(room);
-    console.log(room)
   }
 
   return (

@@ -73,30 +73,30 @@ function App() {
   }, [isLoggedIn]);
 
 
-function downloadCSV() {
-  downloadRooms('657d8c1c64db6069244714f4')
-    .then(res => {
-      if (!res.ok) {
-        throw new Error(`Ошибка загрузки: ${res.status} ${res.statusText}`);
-      }
-      return res.blob();
-    })
-    .then(blob => {
-      // console.log("Содержимое blob:", blob);
-      const url = window.URL.createObjectURL(blob);
-      // console.log("URL объекта:", url);
+  function downloadCSV() {
+    downloadRooms('657d8c1c64db6069244714f4')
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Ошибка загрузки: ${res.status} ${res.statusText}`);
+        }
+        return res.blob();
+      })
+      .then(blob => {
+        // console.log("Содержимое blob:", blob);
+        const url = window.URL.createObjectURL(blob);
+        // console.log("URL объекта:", url);
 
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'output.csv');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    })
-    .catch(error => {
-      console.error("Произошла ошибка:", error);
-    });
-}
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'output.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(error => {
+        console.error("Произошла ошибка:", error);
+      });
+  }
 
   function handleCreateProject(project) {
     postProject({
@@ -225,6 +225,7 @@ function downloadCSV() {
       setFacades((state) => state.filter((c) => c._id !== facade._id));
     });
   }
+
   function handleCreateRoom(projectID, room) {
     postRoom(projectID, {
       number: room.number,
@@ -314,49 +315,49 @@ function downloadCSV() {
     <CurrentUserContext.Provider value={currentUser} >
       <div className="app">
         <Routes>
-          <Route
-            path="signup"
-            element={
-              <Register isLoggedIn={isLoggedIn} onRegister={handleRegister} />
-            }
-          />
 
-          <Route
-            path="/signin"
-            element={<Login isLoggedIn={isLoggedIn} onLogin={handleLogin} />}
-          />
+          <Route path='signup' element={
+            <Register
+              isLoggedIn={isLoggedIn}
+              onRegister={handleRegister}
+            />
+          }/>
 
-          <Route
-            path="/"
-            element={
-              <>
-                <Header
-                  isLoggedIn={isLoggedIn}
-                  purpleThemeHeader="header_purple"
-                  colorWhite="header_white-back"
-                />
-                <Main />
-                <Footer />
-              </>
-            }
-          />
 
-          <Route
-            path="/projects"
-            element={
-              <>
-                <Header isLoggedIn={isLoggedIn} />
-                <ProtectedRoute
-                  element={Projects}
-                  isLoggedIn={isLoggedIn}
-                  projects={projects}
-                  onCreateProjectClick={handleCreateProjectClick}
-                  onProjectDelete={handleDeleteProject}
-                />
-                <Footer />
-              </>
-            }
-          />
+          <Route path='/signin' element={
+            <Login
+              isLoggedIn={isLoggedIn}
+              onLogin={handleLogin}
+            />
+          }/>
+
+          <Route path='/' element={
+            <>
+              <Header 
+                isLoggedIn={isLoggedIn}
+                purpleThemeHeader='header_purple'
+                colorWhite='header_white-back'
+              />
+              <Main />
+              <Footer />
+            </>
+          }/>
+
+          <Route path='/projects' element={
+            <>
+              <Header
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Projects}
+                isLoggedIn={isLoggedIn}
+                projects={projects}
+                onCreateProjectClick={handleCreateProjectClick}
+                onProjectDelete={handleDeleteProject}
+              />
+              <Footer/>
+            </>
+          }/>
 
           <Route path={`/projects/:projectID/rooms`} element={
             <>
@@ -393,20 +394,20 @@ function downloadCSV() {
             </>
           }/>
 
-          <Route
-            path="/profile"
-            element={
-              <>
-                <Header isLoggedIn={isLoggedIn} />
-                <ProtectedRoute
-                  element={Profile}
-                  isLoggedIn={isLoggedIn}
-                  onSignOut={HandleSignOut}
-                  onUpdateUser={handleUpdateUser}
-                />
-              </>
-            }
-          />
+          <Route path='/profile' element={
+            <>
+              <Header 
+                isLoggedIn={isLoggedIn}
+              />
+              <ProtectedRoute
+                element={Profile}
+                isLoggedIn={isLoggedIn}
+
+                onSignOut={HandleSignOut}
+                onUpdateUser={handleUpdateUser}
+              />
+            </>
+          }/>
 
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -439,10 +440,11 @@ function downloadCSV() {
 
         <InfoTooltip
           isOpen={isInfoTooltipOpen}
-          onClose={closeInfoToolTip}
+          onClose={closeAllPopups}
           title={titleInfo}
           icon={iconInfo}
         />
+        
         <GetFacadePopup
           facade={selectedFacade}
           onClose = {closeAllPopups}

@@ -139,7 +139,6 @@ export const updateProject = (projectId, {
   .then(CheckRes)
 }
 
-
 export const downloadRooms = (projectId) => {
   return fetch(`${BASE_URL}/projects/${projectId}/rooms/download`, {
     method: 'GET',
