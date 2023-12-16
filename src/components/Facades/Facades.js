@@ -27,6 +27,7 @@ function Facades(props) {
             width={facade.width}
             areaWall={facade.areaWall}
             onCardDelete={props.onCardDelete}
+            onClickFacade={props.onClickFacade}
           />
         ))}
       </section>

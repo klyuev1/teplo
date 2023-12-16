@@ -9,6 +9,7 @@
 .element__button{
   background-color: #fff;
   border: #fff;
+  cursor: pointer;
 }
 .element__photo{
   margin: 6px;

@@ -11,7 +11,7 @@ function ProjectTable({isLoggedIn, projects, onProjectDelete}) {
     <thead>
       <tr className='table_header'>
         <th className='table_head column1'>Наименование проекта</th>
-        <th className='table_head column2'>Наруржняя температура</th>
+        <th className='table_head column2'>Наружняя температура</th>
         <th className='table_head column3'>Дата создания</th>
         <th className='table_head column4'></th>
       </tr>

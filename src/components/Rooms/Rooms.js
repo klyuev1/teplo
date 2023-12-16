@@ -1,25 +1,28 @@
 import React from 'react';
-import projLogo from '../../images/proj-logo.svg';
+import { useParams, Link } from 'react-router-dom';
 import RoomTable from './RoomTable/RoomTable'
-import { useParams } from 'react-router-dom';
 import {getRooms} from '../../utils/Api';
+import { useRooms } from '../../contexts/RoomsContext';
 
-function Rooms({isLoggedIn, handleCreateRoomClick, onRoomCreate}) {
+
+function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjectClick, onClickRoom }) {
 
   const {projectID} = useParams();
-  const [rooms, setRooms] = React.useState([]);
+  // const [rooms, setRooms] = React.useState([]);
+  const { rooms, setRooms, setProjectID } = useRooms();
 
   React.useEffect(() => {
       if (isLoggedIn){
     getRooms(projectID)
-    .then((rooms) => {
-      setRooms(rooms);
+    .then((fetchedRooms) => {
+      setRooms(fetchedRooms);
+      setProjectID(projectID);
     })
     .catch((err) => {
       console.log(err)
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }},[isLoggedIn]);
+  }},[isLoggedIn, setRooms, setProjectID]);
   
   return (
     <section className= 'rooms' >
@@ -27,13 +30,13 @@ function Rooms({isLoggedIn, handleCreateRoomClick, onRoomCreate}) {
       <div className='rooms__up-container'>
 
         <div className='rooms__title-box'>
-          <img className='rooms__title-logo' src={projLogo}/>
+          <Link to='/projects' className='rooms__title-logo' />
           <h2 className='rooms__title'>Проекты | Помещения</h2>
         </div>
         
         <div className='rooms__button-box'>
-          <button className='rooms__button' type='button'>Выгрузить в CSV</button>
-          <button className='rooms__button' type='button'>Редактировать проект</button>
+          <button className='rooms__button rooms__button_csv' type='button'>Выгрузить в CSV</button>
+          <button className='rooms__button' type='button' onClick={onUpdateProjectClick}>Редактировать проект</button>
           <button className='rooms__button' type='button' onClick={handleCreateRoomClick}>Создать помещение</button>
         </div>
         
@@ -41,9 +44,9 @@ function Rooms({isLoggedIn, handleCreateRoomClick, onRoomCreate}) {
       </div>
 
       <RoomTable
-        projectID={projectID}
         rooms={rooms}
-        onRoomCreate={onRoomCreate}
+        onRoomDelete={onRoomDelete}
+        onClickRoom={onClickRoom}
       />
 
     </section>

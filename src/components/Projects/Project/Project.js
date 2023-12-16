@@ -1,23 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 
 function Project({isLoggedIn, project, onProjectDelete}) {
   
-  
-
-  // React.useEffect(() => {
-  //   // if (isLoggedIn){
-  //   Promise.all([getRooms(project._id)])
-  //   .then(([roomsData]) => {
-  //     console.log(roomsData);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err)
-  //   });
-  // // }
-  //   //eslint-disable-next-line react-hooks/exhaustive-deps
-  // },[isLoggedIn]);
+  const parsedDate = new Date(project.createdAt);
+  const formattedDate = format(parsedDate, 'dd.MM.yyyy');
 
   function handleDeleteproject() {
     onProjectDelete(project)
@@ -31,7 +20,7 @@ function Project({isLoggedIn, project, onProjectDelete}) {
             </Link>
           </td>
           <td className='table_d column2'>{project.tOutside}</td>
-          <td className='table_d column3'>1111</td>
+          <td className='table_d column3'>{formattedDate}</td>
           <td className='table_d column4'><button className='table__delete' type='button' onClick={handleDeleteproject}/></td>
         </tr>
   );

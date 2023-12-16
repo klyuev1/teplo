@@ -10,8 +10,8 @@ function Header({isLoggedIn, purpleThemeHeader, colorWhite}) {
                   
           <div className='header__box'>
 
-            <a className='header__logo-berp' href='#'>B.ERP</a>
-            <div className={`header__br ${colorWhite}`}></div>
+            {/* <a className='header__logo-berp' href='#'>B.ERP</a> */}
+            {/* <div className={`header__br ${colorWhite}`}></div> */}
             <Link className='header__logo' to='/'>Брусника. Тепло</Link>
             {isLoggedIn === true &&<Link className='header__link' to='/projects'>Проекты</Link>}
             {isLoggedIn === true &&<Link className='header__link' to='/facades'>Фасады</Link>}

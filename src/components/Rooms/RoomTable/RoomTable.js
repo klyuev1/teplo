@@ -1,7 +1,7 @@
 import React from 'react';
 import Room from '../Room/Room';
 
-function RoomTable({projectID, rooms, onRoomCreate}) {
+function RoomTable({rooms, onRoomDelete, onClickRoom}) {
 
   
 
@@ -26,8 +26,8 @@ function RoomTable({projectID, rooms, onRoomCreate}) {
         <Room 
           room={room}
           key={room._id}
-          projectID={projectID}
-          onRoomCreate={onRoomCreate}
+          onRoomDelete={onRoomDelete}
+          onClickRoom={onClickRoom}
         />
 
       ))}

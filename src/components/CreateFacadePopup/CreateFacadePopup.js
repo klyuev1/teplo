@@ -119,7 +119,7 @@ function CreateFacadePopupOpen(props) {
               required
               onChange={handleChangeAreaWindow}
             />
-            <p className='popup__input-unit'>м2</p>
+            <p className='popup__input-unit'>м²</p>
           </div>
         </label>
       </div>

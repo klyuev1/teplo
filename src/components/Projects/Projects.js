@@ -3,7 +3,7 @@ import projLogo from '../../images/proj-logo.svg';
 import ProjectTable from './ProjectTable/ProjectTable';
 
 function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}) {
-  
+
   return (
     <section className= 'projects' >
 

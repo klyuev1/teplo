@@ -18,10 +18,16 @@ import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
 import CreateRoomPopup from '../CreateRoomPopup/CreateRoomPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import NotFound from '../NotFound/NotFound';
+// import { RoomProvider } from '../../contexts/RoomProvider';
+import { useRooms } from '../../contexts/RoomsContext';
+import UpdateProjectPopup from '../UpdateProjectPopup/UpdateProjectPopup';
+
+import GetFacadePopup from '../GetFacadePopup/GetFacadePopup';
+import GetRoomPopup from '../GetRoomPopup/GetRoomPopup';
 
 // API запросы
 import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
-import {getProjects, postProject, deleteProject, getFacades, postFacades, deleteFacade} from '../../utils/Api';
+import {getProjects, postProject, deleteProject, getFacades, postFacades, deleteFacade, postRoom, deleteRoom, updateProject} from '../../utils/Api';
 
 // etc
 import truth from '../../images/thurh.svg';
@@ -33,6 +39,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
   const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
+  const [isUpdateProjectPopupOpen, setIsUpdateProjectPopupOpen] = React.useState(false);
   const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
   const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
   
@@ -43,10 +50,12 @@ function App() {
   const [titleInfo, setTitleInfo] = React.useState("");
   const [iconInfo, setIconInfo] = React.useState("");
 
+  const { rooms, setRooms } = useRooms();
+  const [selectedFacade, setSelectedFacade] = React.useState({});
+  const [selectedRoom, setSelectedRoom] = React.useState({});
 
-  const [projID, setProjID] = React.useState("");
-  const [savedroom, setSavedroom] = React.useState({});
 
+  // Основные функции с api-запросами
   React.useEffect(() => {
     if (isLoggedIn){
     Promise.all([getUser(), getProjects(), getFacades()])
@@ -88,7 +97,6 @@ function App() {
     })
     .catch((err) => console.log(err));
   }
-  // Доделал вкладку проекты
 
   function handleRegister(name, email, password) {
     signup(name, email, password)
@@ -173,29 +181,6 @@ function App() {
     })
   }
   
-  function handleCreateProjectClick() {
-    setIsCreateProjectPopupOpen(true);
-  }
-
-  function handleCreateFacadeClick() {
-    setIsCreateFacadePopupOpen(true);
-  }
-
-  function handleCreateRoomClick() {
-    setIsCreateRoomPopupOpen(true);
-  }
-
-  function handleInfoTooltipClick() {
-    setIsInfoTooltipOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsCreateFacadePopupOpen(false);
-    setIsInfoTooltipOpen(false);
-    setIsCreateRoomPopupOpen(false);
-    setIsCreateProjectPopupOpen(false);
-  }
-
   function handleCreateFacade(name, link, height, width, areaWindow) {
     postFacades(name, link, height, width, areaWindow)
     .then((newFacade) => {
@@ -225,32 +210,95 @@ function App() {
     });
   }
 
-  function handleCreateRoomChild(projectID, room) {
-    setProjID(projectID);
-    setSavedroom(room);
-    console.log(room)
-  }
-  // Остановился здесь. Проблема с вложенностью
+  function handleCreateRoom(projectID, room) {
+    postRoom(projectID, {
+      number: room.number,
+      name: room.name,
+      height: room.height,
+      width: room.width,
+      areaWall: room.areaWall,
+      areaWindow: room.areaWindow,
+      areaRoom: room.areaRoom,
+      numberFacade: room.numberFacade
+    })
+    
+    .then((newRoom)=>{
+      // setRooms([newRoom, ...rooms]);
+      setRooms([...rooms, newRoom]);
+    })
+    .catch((err) => console.log(err));
 
-  // function handleCreateRoom(projectID, room) {
-  //   postProject(projectID, {
-  //     number: room.number,
-  //     name: room.name,
-  //     height: room.height,
-  //     width: room.width,
-  //     areaWall: room.areaWall,
-  //     areaWindow: room.areaWindow,
-  //     areaRoom: room.areaRoom
-  //   })
-  //   .then((newRoom)=>{
-  //     setRooms([newRoom, ...rooms]);
-  //   })
-  //   .catch((err) => console.log(err));
-  // }
+  }
+
+  function handleUpdateProject(projectID, project) {
+    updateProject(projectID, {
+      name: project.name, 
+      tOutside: project.tOutside, 
+      tInside: project.tInside, 
+      rWall: project.rWall, 
+      rWindow: project.rWindow, 
+      beta: project.beta, 
+      kHousehold: project.kHousehold
+    })
+    .then((newProject)=>{
+      setProjects([newProject, ...projects]);
+    })
+    .catch((err) => console.log(err));
+
+  }
+
+  function handleDeleteRoom(projectID, room) {
+    deleteRoom(projectID, room._id)
+    .then(() => {
+      setRooms((state) => state.filter((c) => c._id !== room._id));
+    })
+    .catch((err) => console.log(err));
+  }
+
   
+  // Функции кликеры
+  function handleCreateProjectClick() {
+    setIsCreateProjectPopupOpen(true);
+  }
+
+  function handleCreateFacadeClick() {
+    setIsCreateFacadePopupOpen(true);
+  }
+
+  function handleCreateRoomClick() {
+    setIsCreateRoomPopupOpen(true);
+  }
+  
+  function handleUpdateProjectClick() {
+    setIsUpdateProjectPopupOpen(true);
+  }
+
+  function handleInfoTooltipClick() {
+    setIsInfoTooltipOpen(true);
+  }
+
+  function closeAllPopups() {
+    setIsCreateFacadePopupOpen(false);
+    setIsInfoTooltipOpen(false);
+    setIsCreateRoomPopupOpen(false);
+    setIsCreateProjectPopupOpen(false);
+    setIsUpdateProjectPopupOpen(false);
+    setSelectedFacade({});
+    setSelectedRoom({});
+  }
+
+  function handleFacadeClick(facade) {
+    setSelectedFacade(facade);
+  }
+
+  function handleRoomClick(room) {
+    setSelectedRoom(room);
+  }
+
+
   return (
     <CurrentUserContext.Provider value={currentUser} >
-      
+
       <div className="app">
         <Routes>
 
@@ -297,18 +345,23 @@ function App() {
           }/>
 
           <Route path={`/projects/:projectID/rooms`} element={
-            <>
-              <Header
-                isLoggedIn={isLoggedIn}
-              />
-              <ProtectedRoute
-                element={Rooms}
-                isLoggedIn={isLoggedIn}
-                handleCreateRoomClick={handleCreateRoomClick}
-                onRoomCreate={handleCreateRoomChild}
-              />
-              <Footer/>
-            </>
+            
+            
+              <>
+                <Header
+                  isLoggedIn={isLoggedIn}
+                />
+                <ProtectedRoute
+                  element={Rooms}
+                  isLoggedIn={isLoggedIn}
+                  handleCreateRoomClick={handleCreateRoomClick}
+                  onUpdateProjectClick={handleUpdateProjectClick}
+                  onRoomDelete={handleDeleteRoom}
+                  onClickRoom={handleRoomClick}
+                />
+                <Footer/>
+              </>
+            
           }/>
 
           <Route path='/facades' element={
@@ -322,6 +375,7 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 onCreareFacade={handleCreateFacadeClick}
                 onCardDelete={handleDeleteFacade}
+                onClickFacade={handleFacadeClick}
               />
               <Footer/>   
             </>
@@ -365,6 +419,13 @@ function App() {
           isOpen={isCreateRoomPopupOpen}
           onClose={closeAllPopups}
           facades={facades}
+          onCreateRoom={handleCreateRoom}
+        />
+
+        <UpdateProjectPopup 
+          isOpen={isUpdateProjectPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateProject={handleUpdateProject}
         />
 
         <InfoTooltip
@@ -374,10 +435,19 @@ function App() {
           icon={iconInfo}
         />
 
+        <GetFacadePopup
+          facade={selectedFacade}
+          onClose = {closeAllPopups}
+        />
+        
+        <GetRoomPopup
+          room={selectedRoom}
+          onClose = {closeAllPopups}
+        />
+
 
       </div>
     </CurrentUserContext.Provider>    
   );
 }
-
 export default App;
