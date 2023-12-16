@@ -21,6 +21,7 @@ function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete})
       <ProjectTable 
         projects={projects}
         onProjectDelete={onProjectDelete}
+        
       />
 
     </section>

@@ -63,6 +63,8 @@ function CreateFacadePopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
+          minLength='2'
+          maxLength='40'
           value={name}
           required
           onChange={handleChangeName}
@@ -72,7 +74,7 @@ function CreateFacadePopupOpen(props) {
         <h3 className='popup__input-name'>Изображение:</h3>
         <input
           name='author'
-          type='text'
+          type='url'
           className='popup__input'
           value={link}
           required
@@ -85,7 +87,8 @@ function CreateFacadePopupOpen(props) {
           <div className='popup__input-unit-block'>
             <input
               name='author'
-              type='text'
+              type='number'
+              step='10'
               className='popup__input'
               value={height}
               required
@@ -99,7 +102,8 @@ function CreateFacadePopupOpen(props) {
           <div className='popup__input-unit-block'>
             <input
               name='author'
-              type='text'
+              type='number'
+              step='10'
               className='popup__input'
               value={width}
               required
@@ -113,7 +117,8 @@ function CreateFacadePopupOpen(props) {
           <div className='popup__input-unit-block'>
             <input
               name='author'
-              type='text'
+              type='number'
+              step='0.1'
               className='popup__input'
               value={areaWindow}
               required
