@@ -5,10 +5,9 @@ import {getRooms} from '../../utils/Api';
 import { useRooms } from '../../contexts/RoomsContext';
 
 
-function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjectClick, onClickRoom }) {
+function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjectClick, onClickRoom , onDownloadCSV}) {
 
   const {projectID} = useParams();
-  // const [rooms, setRooms] = React.useState([]);
   const { rooms, setRooms, setProjectID } = useRooms();
 
   React.useEffect(() => {
@@ -23,6 +22,10 @@ function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjec
     });
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }},[isLoggedIn, setRooms, setProjectID]);
+
+  function downloadCSV() {
+    onDownloadCSV(projectID);
+  }
   
   return (
     <section className= 'rooms' >
@@ -35,7 +38,7 @@ function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjec
         </div>
         
         <div className='rooms__button-box'>
-          <button className='rooms__button rooms__button_csv' type='button'>Выгрузить в CSV</button>
+          <button className='rooms__button rooms__button_csv' type='button'onClick={downloadCSV}>Выгрузить в CSV</button>
           <button className='rooms__button' type='button' onClick={onUpdateProjectClick}>Редактировать проект</button>
           <button className='rooms__button' type='button' onClick={handleCreateRoomClick}>Создать помещение</button>
         </div>

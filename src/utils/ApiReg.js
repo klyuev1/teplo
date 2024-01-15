@@ -1,6 +1,5 @@
 import { CheckRes } from "./utils"
 
-// export const BASE_URL = "https://api.klyuev-movies.nomoredomainsrocks.ru"
 export const BASE_URL = "http://localhost:3001"
 
 // Регистрация. Авторизация. Аутентификация

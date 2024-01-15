@@ -61,7 +61,6 @@ function App() {
           setCurrentUser(userData);
           setProjects(projectsData);
           setFacades(facadesData);
-          // console.log(projectsData);
           setIsLoggedIn(true);
         })
         .catch((err) => {
@@ -71,32 +70,6 @@ function App() {
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
-
-
-  function downloadCSV() {
-    downloadRooms('657d8c1c64db6069244714f4')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Ошибка загрузки: ${res.status} ${res.statusText}`);
-        }
-        return res.blob();
-      })
-      .then(blob => {
-        // console.log("Содержимое blob:", blob);
-        const url = window.URL.createObjectURL(blob);
-        // console.log("URL объекта:", url);
-
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'output.csv');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(error => {
-        console.error("Произошла ошибка:", error);
-      });
-  }
 
   function handleCreateProject(project) {
     postProject({
@@ -239,7 +212,6 @@ function App() {
     })
     
     .then((newRoom)=>{
-      // setRooms([newRoom, ...rooms]);
       setRooms([...rooms, newRoom]);
     })
     .catch((err) => console.log(err));
@@ -271,6 +243,28 @@ function App() {
     .catch((err) => console.log(err));
   }
 
+  function handleDownloadCSV(projectID) {
+    downloadRooms(projectID)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Ошибка загрузки: ${res.status} ${res.statusText}`);
+        }
+        return res.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'output.csv');
+        document.body.appendChild(link);
+        console.log(link)
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(error => {
+        console.error("Произошла ошибка:", error);
+      });
+  }
   
   // Функции кликеры
   function handleCreateProjectClick() {
@@ -371,7 +365,7 @@ function App() {
                 onUpdateProjectClick={handleUpdateProjectClick}
                 onRoomDelete={handleDeleteRoom}
                 onClickRoom={handleRoomClick}
-                // onDownloadCSV={downloadCSV}
+                onDownloadCSV={handleDownloadCSV}
               />
               <Footer/>
             </>
