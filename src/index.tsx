@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App/App.js';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import { RoomsProvider } from './contexts/RoomsContext.js';
+import { RoomsProvider } from './contexts/RoomsContext';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>

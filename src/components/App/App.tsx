@@ -1,10 +1,14 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
+import {Project, Facade, Room, ApiResponse, InfoTooltipProps} from "../../utils/interfaces"
+// Продолжить с логина и тд
+
+
 
 // Компоненты
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import Register from '../../components/Register/Register';
-import Login from '../../components/Login/Login';
+import Register from '../Register/Register';
+import Login from '../Login/Login';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -29,29 +33,29 @@ import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
 import {getProjects, postProject, deleteProject, getFacades, postFacades, deleteFacade, postRoom, deleteRoom, updateProject, downloadRooms} from '../../utils/Api';
 
 // etc
-import truth from "../../images/thurh.svg";
+import truth from "../../images/thurh.svg"; // Поправить позже
 import fail from "../../images/fail.svg";
+
 
 function App() {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-  const [currentUser, setCurrentUser] = React.useState({ name: '', email: '' });
-  const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState(false);
-  const [isUpdateProjectPopupOpen, setIsUpdateProjectPopupOpen] = React.useState(false);
-  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState(false);
-  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(true);
+  const [currentUser, setCurrentUser] = React.useState<{ name: string; email: string }>({ name: '', email: '' });
+  const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState<boolean>(false);
+  const [isUpdateProjectPopupOpen, setIsUpdateProjectPopupOpen] = React.useState<boolean>(false);
+  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState<boolean>(false);
+  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState<boolean>(false);
   
-  const [projects, setProjects] = React.useState([]);
-  const [facades, setFacades] = React.useState([]);
+  const [projects, setProjects] = React.useState<Project[]>([]);
+  const [facades, setFacades] = React.useState<Facade[]>([]);
 
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  const [titleInfo, setTitleInfo] = React.useState("");
-  const [iconInfo, setIconInfo] = React.useState("");
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState<boolean>(false);
+  const [titleInfo, setTitleInfo] = React.useState<string>("");
+  const [iconInfo, setIconInfo] = React.useState<React.FunctionComponent<React.SVGAttributes<SVGElement>> | null>(null);
 
   const { rooms, setRooms } = useRooms();
-  const [selectedFacade, setSelectedFacade] = React.useState({});
-  const [selectedRoom, setSelectedRoom] = React.useState({});
-
+  const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 });
+  const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: 0, name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
 
   // Основные функции с api-запросами
   React.useEffect(() => {
@@ -71,7 +75,7 @@ function App() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  function handleCreateProject(project) {
+  function handleCreateProject(project: Project) {
     postProject({
       name: project.name,
       tOutside: project.tOutside,
@@ -87,7 +91,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleDeleteProject(project) {
+  function handleDeleteProject(project: Project) {
     deleteProject(project._id)
       .then(() => {
         setProjects((state) => state.filter((c) => c._id !== project._id));
@@ -95,7 +99,7 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleRegister(name, email, password) {
+  function handleRegister(name: string, email: string, password: string) {
     signup(name, email, password)
       .then(() => {
         signin(email, password)
@@ -127,7 +131,7 @@ function App() {
       });
   }
 
-  function handleLogin(email, password) {
+  function handleLogin(email: string, password: string) {
     signin(email, password)
       .then(() => {
         setIsLoggedIn(true);
@@ -144,7 +148,7 @@ function App() {
       });
   }
 
-  function handleUpdateUser(name, email) {
+  function handleUpdateUser(name: string, email: string) {
     updateUser(name, email)
       .then((res) => {
         setTitleInfo("Данные о профиле изменены");
@@ -164,10 +168,6 @@ function App() {
     signout()
       .then(() => {
         setIsLoggedIn(false);
-        // setSavedMovies([]);
-        // setFormValueFound('');
-        // setShortMovies(false);
-        // setMoviesFound([]);
         navigate("/");
       })
       .catch((err) => console.log(err))
@@ -176,8 +176,9 @@ function App() {
       });
   }
 
-  function handleCreateFacade(name, link, height, width, areaWindow) {
-    postFacades(name, link, height, width, areaWindow)
+  function handleCreateFacade(facade: Facade) {
+    const {name, link, height, width, areaWindow} = facade;
+    postFacades({name, link, height, width, areaWindow})
       .then((newFacade) => {
         setFacades([newFacade, ...facades]);
         closeAllPopups();
@@ -193,13 +194,13 @@ function App() {
       });
   }
 
-  function handleDeleteFacade(facade) {
+  function handleDeleteFacade(facade: Facade) {
     deleteFacade(facade._id).then(() => {
       setFacades((state) => state.filter((c) => c._id !== facade._id));
     });
   }
 
-  function handleCreateRoom(projectID, room) {
+  function handleCreateRoom(projectID: string, room: Room) {
     postRoom(projectID, {
       number: room.number,
       name: room.name,
@@ -218,7 +219,7 @@ function App() {
 
   }
 
-  function handleUpdateProject(projectID, project) {
+  function handleUpdateProject(projectID: string, project: Project) {
     updateProject(projectID, {
       name: project.name, 
       tOutside: project.tOutside, 
@@ -235,15 +236,15 @@ function App() {
 
   }
 
-  function handleDeleteRoom(projectID, room) {
-    deleteRoom(projectID, room._id)
-    .then(() => {
-      setRooms((state) => state.filter((c) => c._id !== room._id));
-    })
-    .catch((err) => console.log(err));
-  }
+  // function handleDeleteRoom(projectID: string, room: Room) {
+  //   deleteRoom(projectID, room._id)
+  //   .then(() => {
+  //     setRooms((state) => state.filter((c) => c._id !== room._id));
+  //   })
+  //   .catch((err) => console.log(err));
+  // }
 
-  function handleDownloadCSV(projectID) {
+  function handleDownloadCSV(projectID: string) {
     downloadRooms(projectID)
       .then(res => {
         if (!res.ok) {
@@ -293,15 +294,15 @@ function App() {
     setIsCreateRoomPopupOpen(false);
     setIsCreateProjectPopupOpen(false);
     setIsUpdateProjectPopupOpen(false);
-    setSelectedFacade({});
-    setSelectedRoom({});
+    setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 });
+    setSelectedRoom({ _id: '', number: 0, name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
   }
 
-  function handleFacadeClick(facade) {
+  function handleFacadeClick(facade: Facade) {
     setSelectedFacade(facade);
   }
 
-  function handleRoomClick(room) {
+  function handleRoomClick(room: Room) {
     setSelectedRoom(room);
   }
   
@@ -318,12 +319,12 @@ function App() {
           }/>
 
 
-          <Route path='/signin' element={
+          {/* <Route path='/signin' element={
             <Login
               isLoggedIn={isLoggedIn}
               onLogin={handleLogin}
             />
-          }/>
+          }/> */}
 
           <Route path='/' element={
             <>
@@ -341,6 +342,8 @@ function App() {
             <>
               <Header
                 isLoggedIn={isLoggedIn}
+                purpleThemeHeader=''
+                colorWhite=''
               />
               <ProtectedRoute
                 element={Projects}
@@ -357,13 +360,15 @@ function App() {
             <>
               <Header
                 isLoggedIn={isLoggedIn}
+                purpleThemeHeader=''
+                colorWhite=''
               />
               <ProtectedRoute
                 element={Rooms}
                 isLoggedIn={isLoggedIn}
                 handleCreateRoomClick={handleCreateRoomClick}
                 onUpdateProjectClick={handleUpdateProjectClick}
-                onRoomDelete={handleDeleteRoom}
+                // onRoomDelete={handleDeleteRoom}
                 onClickRoom={handleRoomClick}
                 onDownloadCSV={handleDownloadCSV}
               />
@@ -375,6 +380,8 @@ function App() {
             <>
               <Header
                 isLoggedIn={isLoggedIn}
+                purpleThemeHeader=''
+                colorWhite=''
               />
               <ProtectedRoute
                 element={Facades}
@@ -388,10 +395,12 @@ function App() {
             </>
           }/>
 
-          <Route path='/profile' element={
+          {/* <Route path='/profile' element={
             <>
               <Header 
                 isLoggedIn={isLoggedIn}
+                purpleThemeHeader=''
+                colorWhite=''
               />
               <ProtectedRoute
                 element={Profile}
@@ -401,7 +410,7 @@ function App() {
                 onUpdateUser={handleUpdateUser}
               />
             </>
-          }/>
+          }/> */}
 
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,23 +1,24 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom'
-import logo from '../../images/logo.svg'
+import {Logo} from '../../ui/icons/svgIcons'
 import UseValidation from '../../utils/UseValidation';
 
+import {RegisterProps, FormValue} from "../../utils/interfaces"
 
-function Register({onRegister, isLoggedIn}) {
+function Register( {onRegister, isLoggedIn}: RegisterProps ) {
 
   const navigate = useNavigate();
   if (isLoggedIn === true) {
     navigate('/profile');
   }
 
-  const [formValue, setFormValue] = React.useState({
+  const [formValue, setFormValue] = React.useState<FormValue>({
     name: '',
     email: '',
     password: ''
   });
 
-  const { formErrors, isValidForm, handleChange, resetForm } = UseValidation(formValue, setFormValue);
+  const { formErrors, isValidForm, handleChange, resetForm } = UseValidation({formValue, setFormValue});
 
   React.useEffect(() =>{
     resetForm({
@@ -27,14 +28,14 @@ function Register({onRegister, isLoggedIn}) {
     }, {}, false);
   }, [resetForm])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onRegister(formValue.name, formValue.email, formValue.password);
   }
   
   return (
     <section className='register'>
-      <Link className='register__logo-link' to='/'><img className='register__logo' src={logo} alt='лого'/></Link>
+      <Link className='register__logo-link' to='/'><Logo /></Link>
       <h2 className='register__title'>Регистрация</h2>
       
       <form className='register__form' onSubmit={handleSubmit}>
@@ -45,7 +46,7 @@ function Register({onRegister, isLoggedIn}) {
               className={`register__input ${formErrors.name ? "register__input_error" : ""}`}
               type='name' placeholder='Ваше имя' 
               id='name' name='name' required
-              minLength="2" maxLength="30"
+              minLength={2} maxLength={30}
               value={formValue.name} onChange={handleChange}
             />
             <span className="register__input-span register__input-span_error">{formErrors.name}</span>

@@ -1,13 +1,15 @@
 import React from 'react';
+import {ValidationProps, FormValue, FormErrors} from "../utils/interfaces"
+
 const regexEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/;
 
 
-export default function UseValidation(formValue, setFormValue) {
+export default function UseValidation({ formValue, setFormValue }: ValidationProps) {
 
-  const [formErrors, setFormErrors] = React.useState({});
-  const [isValidForm, setIsValidForm] = React.useState(false);
+  const [formErrors, setFormErrors] = React.useState<FormErrors>({});
+  const [isValidForm, setIsValidForm] = React.useState<boolean>(false);
 
-  const handleChange = (evt) => {
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const input = evt.target;
     const value = input.value;
     const name = input.name;
@@ -20,18 +22,18 @@ export default function UseValidation(formValue, setFormValue) {
           setIsValidForm(false);
         } else {
             setFormErrors({ ...formErrors, [name]: input.validationMessage });
-            setIsValidForm(input.closest('form').checkValidity());
+            setIsValidForm(input.closest('form')?.checkValidity() || false);
         }
   
     } else {
         setFormErrors({ ...formErrors   , [name]: input.validationMessage });
-        setIsValidForm(input.closest('form').checkValidity());
+        setIsValidForm(input.closest('form')?.checkValidity() || false);
     }
     
   };
 
   const resetForm = React.useCallback(
-    (newValue = {}, newErrors = {}, newIsValid = false) => {
+    (newValue: FormValue = { name: '', email: '', password: '' }, newErrors = {}, newIsValid = false) => {
       setFormValue(newValue);
       setFormErrors(newErrors);
       setIsValidForm(newIsValid);
