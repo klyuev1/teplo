@@ -1,8 +1,10 @@
 import React from 'react';
-import projLogo from '../../images/proj-logo.svg';
+import {ProjLogo} from '../../ui/icons/svgIcons';
 import ProjectTable from './ProjectTable/ProjectTable';
 
-function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}) {
+import {ProjectsProps} from "../../utils/interfaces";
+
+function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}: ProjectsProps) {
 
   return (
     <section className= 'projects' >
@@ -10,7 +12,7 @@ function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete})
       <div className='projects__up-container'>
 
         <div className='projects__title-box'>
-          <img className='projects__title-logo' src={projLogo}/>
+          <ProjLogo/>
           <h2 className='projects__title'>Проекты</h2>
         </div>
         

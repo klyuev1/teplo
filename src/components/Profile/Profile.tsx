@@ -1,20 +1,25 @@
-import { React, useState, useContext, useEffect } from "react";
+import React from 'react';
+import {useState, useContext, useEffect } from "react";
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import UseValidation from '../../utils/UseValidation'; 
 
-function Profile({onSignOut, onUpdateUser}) {
+import {ProfileProps, FormValue} from "../../utils/interfaces"
+
+function Profile({onSignOut, onUpdateUser}: ProfileProps) {
   const currentUser = useContext(CurrentUserContext);
 
-  const [formValue, setFormValue] = useState({
+  const [formValue, setFormValue] = useState<FormValue>({
     name: '',
     email: '',
+    password: ''
   });
 
   const [isChanges, setIsChanges] = useState(false);
-  const { formErrors, isValidForm, handleChange, resetForm } = UseValidation(formValue, setFormValue);
+  const { formErrors, isValidForm, handleChange, resetForm } = UseValidation({formValue, setFormValue});
 
   useEffect(() => {
-    if ((formValue.email !== currentUser.email) || (formValue.name !== currentUser.name)) {
+
+    if (currentUser && ((formValue.email !== currentUser.email) || (formValue.name !== currentUser.name))) {
         setIsChanges(true);
     } else {
         setIsChanges(false);
@@ -24,18 +29,21 @@ function Profile({onSignOut, onUpdateUser}) {
 
 
   useEffect(() => {
-    resetForm(currentUser, {}, true);
+    if (currentUser) {
+
+      resetForm(currentUser, {}, true);
+    }
     setIsChanges(false);
   }, [currentUser, resetForm]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     onUpdateUser(formValue.name, formValue.email)
   }
   
   return (
     <section className='profile'>
-      <h1 className='profile__title'>Привет, {currentUser.name}!</h1>
+      <h1 className='profile__title'>Привет, {currentUser!.name}!</h1>
       <form className='profile__form' noValidate>
         
         <label className='profile__label'>

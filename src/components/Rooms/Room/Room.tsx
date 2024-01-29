@@ -1,13 +1,16 @@
 import React from 'react';
 import { useRooms } from '../../../contexts/RoomsContext';
 
+import { RoomProps } from "../../../utils/interfaces";
 
-function Room({room, onRoomDelete, onClickRoom}) {
+function Room({room, onRoomDelete, onClickRoom}: RoomProps ) {
 
-  const { projectID } = useRooms();
+  const { projectID = null } = useRooms() || {};
 
   function handleDeleteRoom() {
-    onRoomDelete(projectID, room)
+    if (typeof projectID === 'string') {
+      onRoomDelete(projectID, room)
+    }
   }
 
   function handleClick() {

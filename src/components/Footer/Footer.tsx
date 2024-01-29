@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../images/logo.svg'
+import {FooterLogo} from '../../ui/icons/svgIcons'
 
 function Footer() {
 
@@ -8,7 +8,7 @@ function Footer() {
       <div className='footer__bottom'>
         <p className='footer__year'>Copyright © 2023. All rights reserved</p>
         <div className='footer__links'>
-          <a className='footer__link' href='https://brusnika.ru/' target='_blank' rel='noreferrer'> <img className='footer__logo' src={logo} alt='лого'/> Брусника</a>
+          <a className='footer__link' href='https://brusnika.ru/' target='_blank' rel='noreferrer'> <FooterLogo/> Брусника</a>
         </div>
       </div>
     </footer>

@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
+import {ProjectProps} from "../../../utils/interfaces";
 
-function Project({isLoggedIn, project, onProjectDelete}) {
+function Project({project, onProjectDelete}: ProjectProps) {
   
-  const parsedDate = new Date(project.createdAt);
+  const parsedDate = new Date(project.createdAt!);
+  
   const formattedDate = format(parsedDate, 'dd.MM.yyyy');
 
   function handleDeleteproject() {

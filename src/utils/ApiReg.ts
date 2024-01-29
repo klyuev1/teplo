@@ -1,9 +1,8 @@
 import { CheckRes } from "./utils"
-
 export const BASE_URL = "http://localhost:3001"
 
 // Регистрация. Авторизация. Аутентификация
-export const signup = (name, email, password) => {
+export const signup = (name: string, email: string, password: string) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
@@ -16,7 +15,7 @@ export const signup = (name, email, password) => {
   .then(CheckRes)
 };
 
-export const signin = (email, password) => {
+export const signin = (email: string, password: string) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -53,7 +52,7 @@ export const getUser = () => {
   .then(CheckRes)
 }
 
-export const updateUser = (name, email) => {
+export const updateUser = (name: string, email: string) => {
   return fetch(`${BASE_URL}/users/me`, {
       method: 'PATCH',
       headers: {

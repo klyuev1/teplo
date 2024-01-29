@@ -4,18 +4,22 @@ import RoomTable from './RoomTable/RoomTable'
 import {getRooms} from '../../utils/Api';
 import { useRooms } from '../../contexts/RoomsContext';
 
+import { RoomsProps } from "../../utils/interfaces";
 
-function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjectClick, onClickRoom , onDownloadCSV}) {
 
+function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjectClick, onClickRoom , onDownloadCSV}: RoomsProps) {
+  
   const {projectID} = useParams();
-  const { rooms, setRooms, setProjectID } = useRooms();
+  const { rooms, setRooms, setProjectID } = useRooms() || { rooms: [], setRooms: () => {}, setProjectID: () => {} };
 
   React.useEffect(() => {
       if (isLoggedIn){
-    getRooms(projectID)
+    getRooms(projectID!)
     .then((fetchedRooms) => {
       setRooms(fetchedRooms);
+      if (typeof projectID === 'string') {
       setProjectID(projectID);
+      }
     })
     .catch((err) => {
       console.log(err)
@@ -24,7 +28,9 @@ function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjec
   }},[isLoggedIn, setRooms, setProjectID]);
 
   function downloadCSV() {
-    onDownloadCSV(projectID);
+    if (typeof projectID === 'string') {
+      onDownloadCSV(projectID);
+    }
   }
   
   return (

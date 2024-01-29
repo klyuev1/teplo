@@ -11,7 +11,7 @@ function AboutMe() {
       
       <div className='about-me__column'>
         
-        <div div className='about-me__resume'>
+        <div className='about-me__resume'>
           <div className='about-me__info'>
             <h2 className='about-me__name'>Клюев Артём</h2>
             <p className='about-me__prof'>Фулстек-разработчик</p>
@@ -21,7 +21,7 @@ function AboutMe() {
           <img className='about-me__photo' src={photo1} alt='мой аватар' />
         </div>
 
-        <div div className='about-me__resume'>
+        <div className='about-me__resume'>
           <div className='about-me__info'>
             <h2 className='about-me__name'>Клюев Олег</h2>
             <p className='about-me__prof'>Фулстек-разработчик</p>

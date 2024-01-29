@@ -10,21 +10,24 @@ import {
   T_OUTSIDE_SRG, T_INSIDE_SRG, R_WALL_SRG, R_WINDOW_SRG,
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
+import { useRooms } from '../../contexts/RoomsContext';
+import {UpdateProjectPopupProps, Project} from "../../utils/interfaces";
 
-function CreateProjectPopupOpen(props) {
-  const [name, setName] = React.useState('');
-  const [region, setRegion] = React.useState('');
-  const [tOutside, setTOutside] = React.useState();
-  const [tInside, setTInside] = React.useState();
-  const [rWall, setRWall] = React.useState();
-  const [rWindow, setRWindow] = React.useState();
-  const [beta, setBeta] = React.useState();
-  const [kHousehold, setKHousehold] = React.useState();
+function UpdateProjectPopup({isOpen, onClose, onUpdateProject}: UpdateProjectPopupProps) {
+  const [name, setName] = React.useState<string>('');
+  const [region, setRegion] = React.useState<string>('');
+  const [tOutside, setTOutside] = React.useState<number>();
+  const [tInside, setTInside] = React.useState<number>();
+  const [rWall, setRWall] = React.useState<number>();
+  const [rWindow, setRWindow] = React.useState<number>();
+  const [beta, setBeta] = React.useState<number>();
+  const [kHousehold, setKHousehold] = React.useState<number>();
+  const { projectID = null } = useRooms() || {};
 
   React.useEffect(() => {
     setName('');
     setRegion('');
-  }, [props.isOpen]);
+  }, [isOpen]);
   
   React.useEffect(() => {
     setBeta(BETA);
@@ -68,36 +71,46 @@ function CreateProjectPopupOpen(props) {
     } 
   }, [region]);
 
-  function handleChangeName(e) {
+  function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
   }
-  function handleChangeRegion(e) {
+  function handleChangeRegion(e: React.ChangeEvent<HTMLSelectElement>) {
     setRegion(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    props.handleCreateProject({name, tOutside, tInside, rWall, rWindow, beta, kHousehold});
-    props.onClose();
+    const project: Project = {
+      name: name!,
+      tOutside: tOutside!,
+      tInside: tInside!,
+      rWall: rWall!,
+      rWindow: rWindow!,
+      beta: beta!,
+      kHousehold: kHousehold!,
+    };
+    onUpdateProject(projectID!, project);
+    onClose();
   } 
    
 
   return (
     <PopupWithForm
       name='create-project'
-      title='Cоздание проекта'
-      buttonName='Создать проект'
-      isOpen={props.isOpen}
-      isClose={props.onClose}
+      title='Редактирование проекта'
+      buttonName='Редактировать проект'
+      isOpen={isOpen}
+      isClose={onClose}
       onSubmit={handleSubmit}
     >
       <label className='popup__label'>
         <h3 className='popup__input-name'>Наименование проекта:</h3>
         <input
-          name='name' type='text'
+          name='name'
+          type='text'
           className='popup__input'
-          minLength='2'
-          maxLength='40'
+          minLength={2}
+          maxLength={40}
           required
           value={name}
           onChange={handleChangeName}
@@ -138,4 +151,4 @@ function CreateProjectPopupOpen(props) {
   );
 }
 
-export default CreateProjectPopupOpen;
+export default UpdateProjectPopup;

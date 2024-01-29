@@ -1,9 +1,9 @@
 import React from 'react';
 import Room from '../Room/Room';
 
-function RoomTable({rooms, onRoomDelete, onClickRoom}) {
+import { RoomTableProps } from "../../../utils/interfaces";
 
-  
+function RoomTable({rooms, onRoomDelete, onClickRoom}: RoomTableProps) {
 
   return (
   <table className='table'>

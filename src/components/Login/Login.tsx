@@ -1,21 +1,24 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom'
-import logo from '../../images/logo.svg'
+import {Logo} from '../../ui/icons/svgIcons'
 import UseValidation from '../../utils/UseValidation';
 
-function Login({onLogin, isLoggedIn}) {
+import {LoginProps, FormValue} from "../../utils/interfaces"
+
+function Login({onLogin, isLoggedIn}: LoginProps) {
   
   const navigate = useNavigate();
   if (isLoggedIn === true) {
     navigate('/profile');
   }
   
-  const [formValue, setFormValue] = React.useState({
+  const [formValue, setFormValue] = React.useState<FormValue>({
+    name: '',
     email: '',
     password: ''
   });
 
-  const { formErrors, isValidForm, handleChange, resetForm } = UseValidation(formValue, setFormValue);
+  const { formErrors, isValidForm, handleChange, resetForm } = UseValidation({formValue, setFormValue});
 
   React.useEffect(() =>{
     resetForm({
@@ -25,14 +28,14 @@ function Login({onLogin, isLoggedIn}) {
     }, {}, false);
   }, [resetForm])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onLogin(formValue.email, formValue.password);
+    onLogin(formValue.email, formValue.password!);
   }
 
   return (
     <section className='register'>
-      <Link className='register__logo-link' to='/'><img className='register__logo' src={logo} alt='лого'/></Link>
+      <Link className='register__logo-link' to='/'><Logo /></Link>
       <h2 className='register__title'>Вход</h2>
       
       <form className='register__form' onSubmit={handleSubmit}>

@@ -1,9 +1,9 @@
 import React from 'react';
 import Project from '../Project/Project';
 
-function ProjectTable({isLoggedIn, projects, onProjectDelete}) {
-  
+import {ProjectTableProps} from "../../../utils/interfaces";
 
+function ProjectTable({isLoggedIn, projects, onProjectDelete}: ProjectTableProps) {
 
   return (
   <table className='table'>
@@ -21,7 +21,6 @@ function ProjectTable({isLoggedIn, projects, onProjectDelete}) {
 
       {projects.map(project => (
         <Project 
-          isLoggedIn={isLoggedIn}
           project={project}
           key={project._id}
           onProjectDelete={onProjectDelete}

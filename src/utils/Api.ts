@@ -1,4 +1,6 @@
 import { CheckRes } from "./utils"
+import { Project, Facade, Room } from "../utils/interfaces";
+
 
 // export const BASE_URL = "https://api.klyuev-movies.nomoredomainsrocks.ru"
 export const BASE_URL = "http://localhost:3001"
@@ -17,7 +19,7 @@ export const getProjects = () => {
 
 export const postProject = ({
   name, tOutside, tInside, rWall, rWindow, beta, kHousehold
-}) => {
+}: Project) => {
   return fetch(`${BASE_URL}/projects`, {
       method: 'POST',
       headers: {
@@ -31,7 +33,7 @@ export const postProject = ({
   .then(CheckRes)
 }
 
-export const deleteProject = (projectId) => {
+export const deleteProject = (projectId: string) => {
   return fetch(`${BASE_URL}/projects/${projectId}`, {
       method: 'DELETE',
       headers: {
@@ -58,7 +60,7 @@ export const getFacades = () => {
 
 export const postFacades = ({
   name, link, height, width, areaWindow
-}) => {
+}: Facade) => {
   return fetch(`${BASE_URL}/facades`, {
       method: 'POST',
       headers: {
@@ -72,7 +74,7 @@ export const postFacades = ({
   .then(CheckRes)
 }
 
-export const deleteFacade = (facadeId) => {
+export const deleteFacade = (facadeId: string) => {
   return fetch(`${BASE_URL}/facades/${facadeId}`, {
       method: 'DELETE',
       headers: {
@@ -83,7 +85,7 @@ export const deleteFacade = (facadeId) => {
   .then(CheckRes)
 }
 
-export const getRooms = (projectId) => {
+export const getRooms = (projectId: string) => {
   return fetch(`${BASE_URL}/projects/${projectId}/rooms`, {
       method: 'GET',
       headers: {
@@ -95,9 +97,9 @@ export const getRooms = (projectId) => {
   .then(CheckRes)
 }
 
-export const postRoom = (projectId, {
+export const postRoom = (projectId: string, {
   number, name, height, width, areaWall, areaWindow, areaRoom, numberFacade
-}) => {
+}: Room) => {
   return fetch(`${BASE_URL}/projects/${projectId}/rooms`, {
       method: 'POST',
       headers: {
@@ -111,7 +113,7 @@ export const postRoom = (projectId, {
   .then(CheckRes)
 }
 
-export const deleteRoom = (projectId, roomId) => {
+export const deleteRoom = (projectId: string, roomId: string) => {
   return fetch(`${BASE_URL}/projects/${projectId}/rooms/${roomId}`, {
       method: 'DELETE',
       headers: {
@@ -123,9 +125,9 @@ export const deleteRoom = (projectId, roomId) => {
   .then(CheckRes)
 }
 
-export const updateProject = (projectId, {
+export const updateProject = (projectId: string, {
   name, tOutside, tInside, rWall, rWindow, beta, kHousehold
-}) => {
+}: Project) => {
   return fetch(`${BASE_URL}/projects/${projectId}`, {
       method: 'PATCH',
       headers: {
@@ -139,7 +141,7 @@ export const updateProject = (projectId, {
   .then(CheckRes)
 }
 
-export const downloadRooms = (projectId) => {
+export const downloadRooms = (projectId: string) => {
   return fetch(`${BASE_URL}/projects/${projectId}/rooms/download`, {
     method: 'GET',
     headers: {

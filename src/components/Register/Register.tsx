@@ -30,7 +30,7 @@ function Register( {onRegister, isLoggedIn}: RegisterProps ) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onRegister(formValue.name, formValue.email, formValue.password);
+    onRegister(formValue.name, formValue.email, formValue.password!);
   }
   
   return (

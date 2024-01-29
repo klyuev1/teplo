@@ -1,9 +1,6 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import {Project, Facade, Room, ApiResponse, InfoTooltipProps} from "../../utils/interfaces"
-// Продолжить с логина и тд
-
-
+import {Project, Facade, Room} from "../../utils/interfaces"
 
 // Компоненты
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -53,9 +50,10 @@ function App() {
   const [titleInfo, setTitleInfo] = React.useState<string>("");
   const [iconInfo, setIconInfo] = React.useState<React.FunctionComponent<React.SVGAttributes<SVGElement>> | null>(null);
 
-  const { rooms, setRooms } = useRooms();
+  const { rooms, setRooms } = useRooms() || { rooms: [], setRooms: () => {} }
+
   const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 });
-  const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: 0, name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
+  const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
 
   // Основные функции с api-запросами
   React.useEffect(() => {
@@ -92,7 +90,7 @@ function App() {
   }
 
   function handleDeleteProject(project: Project) {
-    deleteProject(project._id)
+    deleteProject(project._id!)
       .then(() => {
         setProjects((state) => state.filter((c) => c._id !== project._id));
       })
@@ -195,7 +193,7 @@ function App() {
   }
 
   function handleDeleteFacade(facade: Facade) {
-    deleteFacade(facade._id).then(() => {
+    deleteFacade(facade._id!).then(() => {
       setFacades((state) => state.filter((c) => c._id !== facade._id));
     });
   }
@@ -236,13 +234,13 @@ function App() {
 
   }
 
-  // function handleDeleteRoom(projectID: string, room: Room) {
-  //   deleteRoom(projectID, room._id)
-  //   .then(() => {
-  //     setRooms((state) => state.filter((c) => c._id !== room._id));
-  //   })
-  //   .catch((err) => console.log(err));
-  // }
+  function handleDeleteRoom(projectID: string, room: Room) {
+    deleteRoom(projectID, room._id!)
+    .then(() => {
+      setRooms((state) => state.filter((c) => c._id !== room._id));
+    })
+    .catch((err) => console.log(err));
+  }
 
   function handleDownloadCSV(projectID: string) {
     downloadRooms(projectID)
@@ -295,7 +293,7 @@ function App() {
     setIsCreateProjectPopupOpen(false);
     setIsUpdateProjectPopupOpen(false);
     setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 });
-    setSelectedRoom({ _id: '', number: 0, name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
+    setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
   }
 
   function handleFacadeClick(facade: Facade) {
@@ -318,20 +316,18 @@ function App() {
             />
           }/>
 
-
-          {/* <Route path='/signin' element={
+          <Route path='/signin' element={
             <Login
               isLoggedIn={isLoggedIn}
               onLogin={handleLogin}
             />
-          }/> */}
+          }/>
 
           <Route path='/' element={
             <>
               <Header 
                 isLoggedIn={isLoggedIn}
                 purpleThemeHeader='header_purple'
-                colorWhite='header_white-back'
               />
               <Main />
               <Footer />
@@ -343,7 +339,6 @@ function App() {
               <Header
                 isLoggedIn={isLoggedIn}
                 purpleThemeHeader=''
-                colorWhite=''
               />
               <ProtectedRoute
                 element={Projects}
@@ -361,14 +356,13 @@ function App() {
               <Header
                 isLoggedIn={isLoggedIn}
                 purpleThemeHeader=''
-                colorWhite=''
               />
               <ProtectedRoute
                 element={Rooms}
                 isLoggedIn={isLoggedIn}
                 handleCreateRoomClick={handleCreateRoomClick}
                 onUpdateProjectClick={handleUpdateProjectClick}
-                // onRoomDelete={handleDeleteRoom}
+                onRoomDelete={handleDeleteRoom}
                 onClickRoom={handleRoomClick}
                 onDownloadCSV={handleDownloadCSV}
               />
@@ -381,7 +375,6 @@ function App() {
               <Header
                 isLoggedIn={isLoggedIn}
                 purpleThemeHeader=''
-                colorWhite=''
               />
               <ProtectedRoute
                 element={Facades}
@@ -395,12 +388,11 @@ function App() {
             </>
           }/>
 
-          {/* <Route path='/profile' element={
+          <Route path='/profile' element={
             <>
               <Header 
                 isLoggedIn={isLoggedIn}
                 purpleThemeHeader=''
-                colorWhite=''
               />
               <ProtectedRoute
                 element={Profile}
@@ -410,7 +402,7 @@ function App() {
                 onUpdateUser={handleUpdateUser}
               />
             </>
-          }/> */}
+          }/>
 
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -422,6 +414,7 @@ function App() {
           handleCreateProject={handleCreateProject}
         />
 
+        {/* для тебя Олег, хорошая работа */}
         <CreateFacadePopupOpen
           isOpen={isCreateFacadePopupOpen}
           onClose={closeAllPopups}
@@ -435,19 +428,12 @@ function App() {
           onCreateRoom={handleCreateRoom}
         />
 
-        <UpdateProjectPopup 
+        <UpdateProjectPopup
           isOpen={isUpdateProjectPopupOpen}
           onClose={closeAllPopups}
           onUpdateProject={handleUpdateProject}
         />
 
-        <InfoTooltip
-          isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
-          title={titleInfo}
-          icon={iconInfo}
-        />
-        
         <GetFacadePopup
           facade={selectedFacade}
           onClose = {closeAllPopups}
@@ -456,6 +442,13 @@ function App() {
         <GetRoomPopup
           room={selectedRoom}
           onClose = {closeAllPopups}
+        />
+
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
+          title={titleInfo}
+          icon={iconInfo}
         />
 
 
