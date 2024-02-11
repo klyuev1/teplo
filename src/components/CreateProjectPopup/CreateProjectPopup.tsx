@@ -11,8 +11,10 @@ import {
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
 import {CreateProjectPopupProps, Project} from "../../utils/interfaces";
+import { usePostProjectMutation } from '../../store/api/api';
 
-function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreateProjectPopupProps) {
+function CreateProjectPopupOpen({isOpen, onClose}: CreateProjectPopupProps) {
+
   const [name, setName] = React.useState<string>('');
   const [region, setRegion] = React.useState<string>('');
   const [tOutside, setTOutside] = React.useState<number>();
@@ -76,7 +78,10 @@ function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreatePr
     setRegion(e.target.value);
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  // !!!!!!!!!!!!!!!!!!!!
+  const [handleCreateProject, {}] = usePostProjectMutation();
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const project: Project = {
       name: name!,
@@ -87,9 +92,9 @@ function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreatePr
       beta: beta!,
       kHousehold: kHousehold!,
     };
-    handleCreateProject(project);
+    await handleCreateProject(project)
     onClose();
-  } 
+  }
    
 
   return (

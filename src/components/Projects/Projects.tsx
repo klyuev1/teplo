@@ -3,8 +3,22 @@ import {ProjLogo} from '../../ui/icons/svgIcons';
 import ProjectTable from './ProjectTable/ProjectTable';
 
 import {ProjectsProps} from "../../utils/interfaces";
+import { useGetProjectsQuery } from '../../store/api/api';
+
 
 function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}: ProjectsProps) {
+
+  
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error || !data) {
+  //   return <div>Error occurred or no data available.</div>;
+  // }
+  
+  
 
   return (
     <section className= 'projects' >
@@ -19,12 +33,11 @@ function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}:
         <button className='projects__button' type='button' onClick={onCreateProjectClick}>Создать проект</button>
       
       </div>
-
+        
       <ProjectTable 
         isLoggedIn={isLoggedIn}
-        projects={projects}
         onProjectDelete={onProjectDelete}
-        
+        projects={[]}
       />
 
     </section>

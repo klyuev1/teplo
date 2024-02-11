@@ -32,6 +32,7 @@ import {getProjects, postProject, deleteProject, getFacades, postFacades, delete
 // etc
 import truth from "../../images/thurh.svg"; // Поправить позже
 import fail from "../../images/fail.svg";
+import { useGetProjectsQuery } from "../../store/api/api";
 
 
 function App() {
@@ -56,38 +57,43 @@ function App() {
   const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
 
   // Основные функции с api-запросами
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      Promise.all([getUser(), getProjects(), getFacades()])
-        .then(([userData, projectsData, facadesData]) => {
-          setCurrentUser(userData);
-          setProjects(projectsData);
-          setFacades(facadesData);
-          setIsLoggedIn(true);
-        })
-        .catch((err) => {
-          console.log(err);
-          setIsLoggedIn(false);
-        });
-    }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn]);
+  // React.useEffect(() => {
+  //   if (isLoggedIn) {
+  //     Promise.all([getUser(), getProjects(), getFacades()])
+  //       .then(([userData, projectsData, facadesData]) => {
+  //         setCurrentUser(userData);
+  //         setProjects(projectsData);
+  //         setFacades(facadesData);
+  //         setIsLoggedIn(true);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //         setIsLoggedIn(false);
+  //       });
+  //   }
+  //   //eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isLoggedIn]);
 
-  function handleCreateProject(project: Project) {
-    postProject({
-      name: project.name,
-      tOutside: project.tOutside,
-      tInside: project.tInside,
-      rWall: project.rWall,
-      rWindow: project.rWindow,
-      beta: project.beta,
-      kHousehold: project.kHousehold,
-    })
-      .then((newProject) => {
-        setProjects([newProject, ...projects]);
-      })
-      .catch((err) => console.log(err));
-  }
+  // новоееее
+  // const {data} = useGetProjectsQuery();
+  // console.log(data)
+
+
+  // function handleCreateProject(project: Project) {
+    // postProject({
+    //   name: project.name,
+    //   tOutside: project.tOutside,
+    //   tInside: project.tInside,
+    //   rWall: project.rWall,
+    //   rWindow: project.rWindow,
+    //   beta: project.beta,
+    //   kHousehold: project.kHousehold,
+    // })
+    //   .then((newProject) => {
+    //     setProjects([newProject, ...projects]);
+    //   })
+    //   .catch((err) => console.log(err));
+  // }
 
   function handleDeleteProject(project: Project) {
     deleteProject(project._id!)
@@ -217,22 +223,21 @@ function App() {
 
   }
 
-  function handleUpdateProject(projectID: string, project: Project) {
-    updateProject(projectID, {
-      name: project.name, 
-      tOutside: project.tOutside, 
-      tInside: project.tInside, 
-      rWall: project.rWall, 
-      rWindow: project.rWindow, 
-      beta: project.beta, 
-      kHousehold: project.kHousehold
-    })
-    .then((newProject)=>{
-      setProjects([newProject, ...projects]);
-    })
-    .catch((err) => console.log(err));
-
-  }
+  // function handleUpdateProject(projectID: string, project: Project) {
+  //   updateProject(projectID, {
+  //     name: project.name, 
+  //     tOutside: project.tOutside, 
+  //     tInside: project.tInside, 
+  //     rWall: project.rWall, 
+  //     rWindow: project.rWindow, 
+  //     beta: project.beta, 
+  //     kHousehold: project.kHousehold
+  //   })
+  //   .then((newProject)=>{
+  //     setProjects([newProject, ...projects]);
+  //   })
+  //   .catch((err) => console.log(err));
+  // }
 
   function handleDeleteRoom(projectID: string, room: Room) {
     deleteRoom(projectID, room._id!)
@@ -333,7 +338,7 @@ function App() {
               <Footer />
             </>
           }/>
-
+          
           <Route path='/projects' element={
             <>
               <Header
@@ -411,7 +416,6 @@ function App() {
         <CreateProjectPopup
           isOpen={isCreateProjectPopupOpen}
           onClose={closeAllPopups}
-          handleCreateProject={handleCreateProject}
         />
 
         {/* для тебя Олег, хорошая работа */}
@@ -431,7 +435,6 @@ function App() {
         <UpdateProjectPopup
           isOpen={isUpdateProjectPopupOpen}
           onClose={closeAllPopups}
-          onUpdateProject={handleUpdateProject}
         />
 
         <GetFacadePopup

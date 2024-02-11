@@ -2,8 +2,11 @@ import React from 'react';
 import Project from '../Project/Project';
 
 import {ProjectTableProps} from "../../../utils/interfaces";
+import { useGetProjectsQuery } from '../../../store/api/api';
 
-function ProjectTable({isLoggedIn, projects, onProjectDelete}: ProjectTableProps) {
+function ProjectTable({isLoggedIn, onProjectDelete}: ProjectTableProps) {
+
+  const {data: projects} = useGetProjectsQuery();
 
   return (
   <table className='table'>
@@ -19,7 +22,7 @@ function ProjectTable({isLoggedIn, projects, onProjectDelete}: ProjectTableProps
 
     <tbody>
 
-      {projects.map(project => (
+      {projects && projects.map(project => (
         <Project 
           project={project}
           key={project._id}

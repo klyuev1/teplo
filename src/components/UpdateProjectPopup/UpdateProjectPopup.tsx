@@ -12,8 +12,9 @@ import {
 } from '../../utils/Regions';
 import { useRooms } from '../../contexts/RoomsContext';
 import {UpdateProjectPopupProps, Project} from "../../utils/interfaces";
+import { useUpdateProjectMutation } from '../../store/api/api';
 
-function UpdateProjectPopup({isOpen, onClose, onUpdateProject}: UpdateProjectPopupProps) {
+function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
   const [name, setName] = React.useState<string>('');
   const [region, setRegion] = React.useState<string>('');
   const [tOutside, setTOutside] = React.useState<number>();
@@ -78,6 +79,8 @@ function UpdateProjectPopup({isOpen, onClose, onUpdateProject}: UpdateProjectPop
     setRegion(e.target.value);
   }
 
+  const [handleUpdateProject, {}] = useUpdateProjectMutation();
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const project: Project = {
@@ -89,7 +92,8 @@ function UpdateProjectPopup({isOpen, onClose, onUpdateProject}: UpdateProjectPop
       beta: beta!,
       kHousehold: kHousehold!,
     };
-    onUpdateProject(projectID!, project);
+    handleUpdateProject({projectID, project});
+    
     onClose();
   } 
    

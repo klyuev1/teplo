@@ -147,7 +147,6 @@ export interface PopupWithFormProps {
 export interface CreateProjectPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  handleCreateProject: (project: Project) => void;
 }
 
 export interface CreateRoomPopupProps {
@@ -160,7 +159,6 @@ export interface CreateRoomPopupProps {
 export interface UpdateProjectPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  onUpdateProject: (projectID: string, project: Project) => void;
 }
 
 export interface GetFacadePopupProps {
