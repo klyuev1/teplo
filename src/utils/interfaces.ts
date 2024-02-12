@@ -25,6 +25,7 @@ export interface Facade {
   height: number;
   width: number;
   areaWindow: number;
+  areaWall: number;
 }
 
 export interface Room {
@@ -96,6 +97,19 @@ export interface ProjectProps {
   onProjectDelete: ( project: Project ) => void;
 }
 
+export interface FacadesProps {
+  facades: Facade[];
+  onClickFacade: () => {};
+  onCreareFacade: () => {};
+  onCardDelete: (facade : Facade) => void;
+}
+
+export interface FacadeProps {
+  facade: Facade;
+  onCardDelete: (facade : Facade) => void;
+  onClickFacade: (facade : Facade) => void;
+}
+
 export interface RoomsContextType {
   rooms: Room[];
   setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
@@ -148,6 +162,12 @@ export interface CreateProjectPopupProps {
   isOpen: boolean;
   onClose: () => void;
   handleCreateProject: (project: Project) => void;
+}
+
+export interface CreateFacadePopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onCreateFacade: (project: Facade) => void;
 }
 
 export interface CreateRoomPopupProps {

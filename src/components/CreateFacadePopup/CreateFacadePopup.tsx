@@ -1,51 +1,49 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
+import { CreateFacadePopupProps, Facade } from '../../utils/interfaces';
 
-function CreateFacadePopupOpen(props) {
-  const [name, setName] = React.useState('');
-  const [link, setLink] = React.useState('');
-  const [height, setHeight] = React.useState('');
-  const [width, setWidth] = React.useState('');
-  const [areaWindow, setAreaWindow] = React.useState('');
+function CreateFacadePopupOpen({onCreateFacade, isOpen, onClose}: CreateFacadePopupProps) {
+  const [name, setName] = React.useState<string>('');
+  const [link, setLink] = React.useState<string>('');
+  const [height, setHeight] = React.useState<number>();
+  const [width, setWidth] = React.useState<number>();
+  const [areaWindow, setAreaWindow] = React.useState<number>();
+  const [areaWall, setAreaWall] = React.useState<number>();
 
   React.useEffect(() => {
     setName('');
     setLink('');
-    setHeight('');
-    setWidth('');
-    setAreaWindow('');
   }, []);
 
   // Заполнение стейт переменных
-  function handleChangeName(e) {
+  function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
   }
 
-  function handleChangeLink(e) {
+  function handleChangeLink(e: React.ChangeEvent<HTMLInputElement>) {
     setLink(e.target.value);
   }
-  function handleChangeHeight(e) {
-    setHeight(e.target.value);
+  function handleChangeHeight(e: React.ChangeEvent<HTMLInputElement>) {
+    setHeight(Number(e.target.value));
   }
-  function handleChangeWidth(e) {
-    setWidth(e.target.value);
+  function handleChangeWidth(e: React.ChangeEvent<HTMLInputElement>) {
+    setWidth(Number(e.target.value));
   }
-  function handleChangeAreaWindow(e) {
-    setAreaWindow(e.target.value);
+  function handleChangeAreaWindow(e: React.ChangeEvent<HTMLInputElement>) {
+    setAreaWindow(Number(e.target.value));
   }
 
-  function handleSubmit(e) {
-    // Запрещаем браузеру переходить по адресу формы
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    // Передаём значения управляемых компонентов во внешний обработчик
-    props.onCreateFacade({
-      name,
-      link,
-      height,
-      width,
-      areaWindow,
-    });
+    const facade: Facade = {
+      name: name,
+      link: link,
+      height: height!,
+      width: width!,
+      areaWindow: areaWindow!,
+      areaWall: areaWall!
+    }
+    onCreateFacade(facade);
   }
 
   return (
@@ -53,8 +51,8 @@ function CreateFacadePopupOpen(props) {
       name='create-project'
       title='Cоздание фасада'
       buttonName='Создать фасад'
-      isOpen={props.isOpen}
-      isClose={props.onClose}
+      isOpen={isOpen}
+      isClose={onClose}
       onSubmit={handleSubmit}
     >
       <label className='popup__label'>
@@ -63,8 +61,8 @@ function CreateFacadePopupOpen(props) {
           name='author'
           type='text'
           className='popup__input'
-          minLength='2'
-          maxLength='40'
+          minLength={2}
+          maxLength={40}
           value={name}
           required
           onChange={handleChangeName}

@@ -52,7 +52,7 @@ function App() {
 
   const { rooms, setRooms } = useRooms() || { rooms: [], setRooms: () => {} }
 
-  const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 });
+  const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
   const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
 
   // Основные функции с api-запросами
@@ -175,8 +175,8 @@ function App() {
   }
 
   function handleCreateFacade(facade: Facade) {
-    const {name, link, height, width, areaWindow} = facade;
-    postFacades({name, link, height, width, areaWindow})
+    const {name, link, height, width, areaWindow, areaWall} = facade;
+    postFacades({name, link, height, width, areaWindow, areaWall})
       .then((newFacade) => {
         setFacades([newFacade, ...facades]);
         closeAllPopups();
@@ -292,7 +292,7 @@ function App() {
     setIsCreateRoomPopupOpen(false);
     setIsCreateProjectPopupOpen(false);
     setIsUpdateProjectPopupOpen(false);
-    setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 });
+    setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
     setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
   }
 
@@ -414,7 +414,7 @@ function App() {
           handleCreateProject={handleCreateProject}
         />
 
-        {/* для тебя Олег, хорошая работа */}
+        
         <CreateFacadePopupOpen
           isOpen={isCreateFacadePopupOpen}
           onClose={closeAllPopups}

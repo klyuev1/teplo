@@ -1,21 +1,22 @@
 import React from 'react';
+import { FacadeProps } from '../../utils/interfaces';
 
-function Facade(props) {
+function Facade({facade, onCardDelete, onClickFacade}: FacadeProps) {
 
   function handleDeleteClick() {
-    props.onCardDelete(props.facade)
+    onCardDelete(facade)
   }
 
   function handleClick() {
-    props.onClickFacade(props.facade);
+    onClickFacade(facade);
   }
 
   return (
     <article className='element'>
       <button className='element__button' type='button' onClick={handleClick}>
-        <img className='element__photo' src={props.link} alt='facade'/>
+        <img className='element__photo' src={facade.link} alt='facade'/>
         <div className='element__div'>
-          <h3 className='element__number'>{props.name}</h3>
+          <h3 className='element__number'>{facade.name}</h3>
           <button className='element__button-delete' type='button' onClick={handleDeleteClick}></button>
         </div>
       </button>

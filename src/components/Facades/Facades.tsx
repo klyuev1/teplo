@@ -1,33 +1,30 @@
 import React from 'react';
 import Facade from '../Facade/Facade';
-import iconFasades from '../../images/iconFasades.svg';
 
-function Facades(props) {
+import { FacadesProps } from '../../utils/interfaces';
+import { FacadeLogo } from '../../ui/icons/svgIcons';
+
+function Facades({onCreareFacade, onCardDelete, onClickFacade, facades}: FacadesProps) {
   return (
     <section className='facades'>
       
       <div className='fasades__up-container'>
         <div className='fasades__title-box'>
-          <img className='fasades__title-logo' src={iconFasades} alt='logo'/>
+          <FacadeLogo/>
           <h2 className='fasades__title'>Фасады</h2>
         </div>
         <button className='fasades__button' type='button'
-        onClick={props.onCreareFacade}>
+        onClick={onCreareFacade}>
           Создать фасад
         </button>
       </div>
 
       <section className='elements'>
-        {props.facades.map((facade) => (
+        {facades.map((facade) => (
           <Facade
             facade={facade}
-            name={facade.name}
-            link={facade.link}
-            height={facade.height}
-            width={facade.width}
-            areaWall={facade.areaWall}
-            onCardDelete={props.onCardDelete}
-            onClickFacade={props.onClickFacade}
+            onCardDelete={onCardDelete}
+            onClickFacade={onClickFacade}
           />
         ))}
       </section>
