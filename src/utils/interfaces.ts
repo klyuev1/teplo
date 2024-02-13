@@ -37,7 +37,7 @@ export interface Room {
   areaWall: number;
   areaWindow: number;
   areaRoom: number;
-  numberFacade: number;
+  numberFacade: string;
   heatLoss?: number;
 }
 
@@ -168,6 +168,15 @@ export interface CreateFacadePopupProps {
   isOpen: boolean;
   onClose: () => void;
   onCreateFacade: (project: Facade) => void;
+}
+
+export interface IFacadeModule {
+  facade: Facade;
+  setHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setWidth: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setAreaWall: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setAreaWindow: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setNumberFacade: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface CreateRoomPopupProps {

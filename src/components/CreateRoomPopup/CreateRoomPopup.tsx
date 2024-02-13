@@ -2,7 +2,7 @@ import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 // import { getFacades } from '../../utils/Api';
 import { useRooms } from '../../contexts/RoomsContext';
-import FacadeModule from './FacadeModule/FacadeModule'
+import FacadeModule from './FacadeModule/FacadeModule';
 import {CreateRoomPopupProps, Room} from "../../utils/interfaces";
 
 function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPopupProps) {
@@ -34,7 +34,7 @@ function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPop
   const [width,setWidth ] = React.useState<number>();
   const [areaWall,setAreaWall ] = React.useState<number>();
   const [areaWindow,setAreaWindow ] = React.useState<number>();
-  const [numberFacade, setNumberFacade] = React.useState<number>();
+  const [numberFacade, setNumberFacade] = React.useState('');
 
 
   // Убрать этот кусок кода после редактирования БЭКа

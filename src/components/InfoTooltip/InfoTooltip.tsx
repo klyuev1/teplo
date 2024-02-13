@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import {InfoTooltipProps} from "../../utils/interfaces";
 
 function InfoTooltip({isOpen, onClose, title, icon}: InfoTooltipProps) {
 
-  if (typeof icon === null) {
-    return "error";
+  if (icon === null) {
+    return null;
   }
 
 

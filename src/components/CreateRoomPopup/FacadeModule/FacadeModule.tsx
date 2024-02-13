@@ -1,7 +1,7 @@
 import React from 'react';
+import { IFacadeModule } from '../../../utils/interfaces';
 
-
-function FacadeModule({facade, setHeight, setWidth, setAreaWall, setAreaWindow, setNumberFacade}) {
+function FacadeModule({facade, setHeight, setWidth, setAreaWall, setAreaWindow, setNumberFacade}: IFacadeModule) {
   
   // setHeight(facade.height);
   const handleRadioChange = () => {
@@ -15,7 +15,7 @@ function FacadeModule({facade, setHeight, setWidth, setAreaWall, setAreaWindow, 
 
   return(
     <article className='popup-facade-room'>
-      <input type='radio' name="facade" className='popup-facade-room__input' onChange={handleRadioChange} required/ >
+      <input type='radio' name="facade" className='popup-facade-room__input' onChange={handleRadioChange} required />
       <div className='popup-facade-room__card'>
         <img src={facade.link} className='popup-facade-room__img'  alt='facade'/>
         <h3 className='popup-facade-room__title'>{facade.name}</h3>

@@ -53,7 +53,7 @@ function App() {
   const { rooms, setRooms } = useRooms() || { rooms: [], setRooms: () => {} }
 
   const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
-  const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
+  const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
 
   // Основные функции с api-запросами
   React.useEffect(() => {
@@ -293,7 +293,7 @@ function App() {
     setIsCreateProjectPopupOpen(false);
     setIsUpdateProjectPopupOpen(false);
     setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
-    setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: 0 });
+    setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
   }
 
   function handleFacadeClick(facade: Facade) {
