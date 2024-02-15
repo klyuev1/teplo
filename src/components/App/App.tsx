@@ -38,12 +38,12 @@ function App() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(true);
   const [currentUser, setCurrentUser] = React.useState<{ name: string; email: string }>({ name: '', email: '' });
-  const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState<boolean>(false);
+  // const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState<boolean>(false);
   const [isUpdateProjectPopupOpen, setIsUpdateProjectPopupOpen] = React.useState<boolean>(false);
   const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState<boolean>(false);
   const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState<boolean>(false);
   
-  const [projects, setProjects] = React.useState<Project[]>([]);
+  // const [projects, setProjects] = React.useState<Project[]>([]);
   const [facades, setFacades] = React.useState<Facade[]>([]);
 
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState<boolean>(false);
@@ -55,13 +55,16 @@ function App() {
   const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
   const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
 
+
+  // Объяснить Олегу функционал и разделить работу!!!!!!!
+
   // Основные функции с api-запросами
   React.useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([getUser(), getProjects(), getFacades()])
-        .then(([userData, projectsData, facadesData]) => {
+      Promise.all([getUser(), getFacades()])
+        .then(([userData, facadesData]) => {
           setCurrentUser(userData);
-          setProjects(projectsData);
+          // setProjects(projectsData);
           setFacades(facadesData);
           setIsLoggedIn(true);
         })
@@ -72,30 +75,6 @@ function App() {
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
-
-  function handleCreateProject(project: Project) {
-    postProject({
-      name: project.name,
-      tOutside: project.tOutside,
-      tInside: project.tInside,
-      rWall: project.rWall,
-      rWindow: project.rWindow,
-      beta: project.beta,
-      kHousehold: project.kHousehold,
-    })
-      .then((newProject) => {
-        setProjects([newProject, ...projects]);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  function handleDeleteProject(project: Project) {
-    deleteProject(project._id!)
-      .then(() => {
-        setProjects((state) => state.filter((c) => c._id !== project._id));
-      })
-      .catch((err) => console.log(err));
-  }
 
   function handleRegister(name: string, email: string, password: string) {
     signup(name, email, password)
@@ -217,23 +196,6 @@ function App() {
 
   }
 
-  function handleUpdateProject(projectID: string, project: Project) {
-    updateProject(projectID, {
-      name: project.name, 
-      tOutside: project.tOutside, 
-      tInside: project.tInside, 
-      rWall: project.rWall, 
-      rWindow: project.rWindow, 
-      beta: project.beta, 
-      kHousehold: project.kHousehold
-    })
-    .then((newProject)=>{
-      setProjects([newProject, ...projects]);
-    })
-    .catch((err) => console.log(err));
-
-  }
-
   function handleDeleteRoom(projectID: string, room: Room) {
     deleteRoom(projectID, room._id!)
     .then(() => {
@@ -264,11 +226,6 @@ function App() {
         console.error("Произошла ошибка:", error);
       });
   }
-  
-  // Функции кликеры
-  function handleCreateProjectClick() {
-    setIsCreateProjectPopupOpen(true);
-  }
 
   function handleCreateFacadeClick() {
     setIsCreateFacadePopupOpen(true);
@@ -290,7 +247,6 @@ function App() {
     setIsCreateFacadePopupOpen(false);
     setIsInfoTooltipOpen(false);
     setIsCreateRoomPopupOpen(false);
-    setIsCreateProjectPopupOpen(false);
     setIsUpdateProjectPopupOpen(false);
     setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
     setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
@@ -333,7 +289,7 @@ function App() {
               <Footer />
             </>
           }/>
-
+          
           <Route path='/projects' element={
             <>
               <Header
@@ -343,9 +299,6 @@ function App() {
               <ProtectedRoute
                 element={Projects}
                 isLoggedIn={isLoggedIn}
-                projects={projects}
-                onCreateProjectClick={handleCreateProjectClick}
-                onProjectDelete={handleDeleteProject}
               />
               <Footer/>
             </>
@@ -408,13 +361,8 @@ function App() {
         </Routes>
 
         {/* Попапы */}
-        <CreateProjectPopup
-          isOpen={isCreateProjectPopupOpen}
-          onClose={closeAllPopups}
-          handleCreateProject={handleCreateProject}
-        />
+        <CreateProjectPopup />
 
-        
         <CreateFacadePopupOpen
           isOpen={isCreateFacadePopupOpen}
           onClose={closeAllPopups}
@@ -431,7 +379,6 @@ function App() {
         <UpdateProjectPopup
           isOpen={isUpdateProjectPopupOpen}
           onClose={closeAllPopups}
-          onUpdateProject={handleUpdateProject}
         />
 
         <GetFacadePopup

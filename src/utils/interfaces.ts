@@ -73,19 +73,6 @@ export interface ProfileProps {
   onUpdateUser: (name: string, email: string) => void;
 }
 
-export interface ProjectsProps {
-  isLoggedIn: boolean;
-  projects: Project[];
-  onCreateProjectClick: () => {};
-  onProjectDelete: ( project: Project ) => void;
-}
-
-export interface ProjectTableProps {
-  isLoggedIn: boolean;
-  projects: Project[];
-  onProjectDelete: ( project: Project ) => void;
-}
-
 export interface ProjectTableProps {
   isLoggedIn: boolean;
   projects: Project[];
@@ -94,7 +81,6 @@ export interface ProjectTableProps {
 
 export interface ProjectProps {
   project: Project;
-  onProjectDelete: ( project: Project ) => void;
 }
 
 export interface FacadesProps {
@@ -158,27 +144,6 @@ export interface PopupWithFormProps {
   children: ReactNode;
 }
 
-export interface CreateProjectPopupProps {
-  isOpen: boolean;
-  onClose: () => void;
-  handleCreateProject: (project: Project) => void;
-}
-
-export interface CreateFacadePopupProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onCreateFacade: (project: Facade) => void;
-}
-
-export interface IFacadeModule {
-  facade: Facade;
-  setHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setWidth: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setAreaWall: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setAreaWindow: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setNumberFacade: React.Dispatch<React.SetStateAction<string>>;
-}
-
 export interface CreateRoomPopupProps {
   isOpen: boolean;
   facades: Facade[],
@@ -189,7 +154,6 @@ export interface CreateRoomPopupProps {
 export interface UpdateProjectPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  onUpdateProject: (projectID: string, project: Project) => void;
 }
 
 export interface GetFacadePopupProps {
@@ -217,6 +181,36 @@ export interface HeaderProps {
 export interface CurrentUserContextProps {
   name: string;
   email: string;
+}
+
+
+export interface FacadesProps {
+  facades: Facade[];
+  onClickFacade: () => {};
+  onCreareFacade: () => {};
+  onCardDelete: (facade : Facade) => void;
+}
+
+export interface FacadeProps {
+  facade: Facade;
+  onCardDelete: (facade : Facade) => void;
+  onClickFacade: (facade : Facade) => void;
+}
+
+
+export interface CreateFacadePopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onCreateFacade: (project: Facade) => void;
+}
+
+export interface IFacadeModule {
+  facade: Facade;
+  setHeight: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setWidth: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setAreaWall: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setAreaWindow: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setNumberFacade: React.Dispatch<React.SetStateAction<string>>;
 }
 
 

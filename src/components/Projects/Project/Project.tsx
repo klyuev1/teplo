@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import {ProjectProps} from "../../../utils/interfaces";
+import { useDeleteProjectMutation } from '../../../store/api/api';
 
-function Project({project, onProjectDelete}: ProjectProps) {
+function Project({project}: ProjectProps) {
+  
+  const [handleDeleteProject, {}] = useDeleteProjectMutation();
   
   const parsedDate = new Date(project.createdAt!);
-  
   const formattedDate = format(parsedDate, 'dd.MM.yyyy');
 
   function handleDeleteproject() {
-    onProjectDelete(project)
+    handleDeleteProject(project)
   }
 
   return (

@@ -151,6 +151,3 @@ export const downloadRooms = (projectId: string) => {
     credentials: "include"
   });
 };
-
-// Сделать редактирование + номер фасадного модуля и тд
-// Сделать прелоадер (у вас еще нет помещений и тд)

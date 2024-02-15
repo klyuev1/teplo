@@ -10,9 +10,21 @@ import {
   T_OUTSIDE_SRG, T_INSIDE_SRG, R_WALL_SRG, R_WINDOW_SRG,
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
-import {CreateProjectPopupProps, Project} from "../../utils/interfaces";
+import { Project } from "../../utils/interfaces";
+import { usePostProjectMutation } from '../../store/api/api';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { closeCreateProjectPopup } from '../../store/reducers/popupSlice';
 
-function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreateProjectPopupProps) {
+function CreateProjectPopupOpen() {
+
+  const [handleCreateProject, {}] = usePostProjectMutation();
+
+  const dispatch = useAppDispatch();
+  const isCreateProjectPopupOpen = useAppSelector(state => state.popup.isCreateProjectPopupOpen);
+  const handleClose = () => {
+    dispatch(closeCreateProjectPopup())
+  }
+
   const [name, setName] = React.useState<string>('');
   const [region, setRegion] = React.useState<string>('');
   const [tOutside, setTOutside] = React.useState<number>();
@@ -25,7 +37,7 @@ function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreatePr
   React.useEffect(() => {
     setName('');
     setRegion('');
-  }, [isOpen]);
+  }, [isCreateProjectPopupOpen]);
   
   React.useEffect(() => {
     setBeta(BETA);
@@ -76,7 +88,9 @@ function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreatePr
     setRegion(e.target.value);
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const project: Project = {
       name: name!,
@@ -87,9 +101,10 @@ function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreatePr
       beta: beta!,
       kHousehold: kHousehold!,
     };
-    handleCreateProject(project);
-    onClose();
-  } 
+    await handleCreateProject(project)
+    
+    handleClose();
+  }
    
 
   return (
@@ -97,8 +112,8 @@ function CreateProjectPopupOpen({isOpen, onClose, handleCreateProject}: CreatePr
       name='create-project'
       title='Cоздание проекта'
       buttonName='Создать проект'
-      isOpen={isOpen}
-      isClose={onClose}
+      isOpen={isCreateProjectPopupOpen}
+      isClose={handleClose}
       onSubmit={handleSubmit}
     >
       <label className='popup__label'>
