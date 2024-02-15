@@ -2,23 +2,17 @@ import React from 'react';
 import {ProjLogo} from '../../ui/icons/svgIcons';
 import ProjectTable from './ProjectTable/ProjectTable';
 
-import {ProjectsProps} from "../../utils/interfaces";
-import { useGetProjectsQuery } from '../../store/api/api';
+import { useAppDispatch } from '../../store/hooks/hooks';
+import { openCreateProjectPopup } from '../../store/reducers/popupSlice';
 
 
-function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}: ProjectsProps) {
+function Projects() {  
 
-  
+  const dispatch = useAppDispatch();
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error || !data) {
-  //   return <div>Error occurred or no data available.</div>;
-  // }
-  
-  
+  const handleCreateProjectClick = () => {
+    dispatch(openCreateProjectPopup())
+  }
 
   return (
     <section className= 'projects' >
@@ -30,15 +24,11 @@ function Projects({isLoggedIn, projects, onCreateProjectClick, onProjectDelete}:
           <h2 className='projects__title'>Проекты</h2>
         </div>
         
-        <button className='projects__button' type='button' onClick={onCreateProjectClick}>Создать проект</button>
+        <button className='projects__button' type='button' onClick={handleCreateProjectClick}>Создать проект</button>
       
       </div>
         
-      <ProjectTable 
-        isLoggedIn={isLoggedIn}
-        onProjectDelete={onProjectDelete}
-        projects={[]}
-      />
+      <ProjectTable />
 
     </section>
     

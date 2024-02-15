@@ -72,19 +72,6 @@ export interface ProfileProps {
   onUpdateUser: (name: string, email: string) => void;
 }
 
-export interface ProjectsProps {
-  isLoggedIn: boolean;
-  projects: Project[];
-  onCreateProjectClick: () => {};
-  onProjectDelete: ( project: Project ) => void;
-}
-
-export interface ProjectTableProps {
-  isLoggedIn: boolean;
-  projects: Project[];
-  onProjectDelete: ( project: Project ) => void;
-}
-
 export interface ProjectTableProps {
   isLoggedIn: boolean;
   projects: Project[];
@@ -93,7 +80,6 @@ export interface ProjectTableProps {
 
 export interface ProjectProps {
   project: Project;
-  onProjectDelete: ( project: Project ) => void;
 }
 
 export interface RoomsContextType {
@@ -142,11 +128,6 @@ export interface PopupWithFormProps {
   isClose: () => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   children: ReactNode;
-}
-
-export interface CreateProjectPopupProps {
-  isOpen: boolean;
-  onClose: () => void;
 }
 
 export interface CreateRoomPopupProps {

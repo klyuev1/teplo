@@ -1,10 +1,9 @@
 import React from 'react';
 import Project from '../Project/Project';
 
-import {ProjectTableProps} from "../../../utils/interfaces";
 import { useGetProjectsQuery } from '../../../store/api/api';
 
-function ProjectTable({isLoggedIn, onProjectDelete}: ProjectTableProps) {
+function ProjectTable() {
 
   const {data: projects} = useGetProjectsQuery();
 
@@ -26,7 +25,6 @@ function ProjectTable({isLoggedIn, onProjectDelete}: ProjectTableProps) {
         <Project 
           project={project}
           key={project._id}
-          onProjectDelete={onProjectDelete}
         />
       ))}
     </tbody>

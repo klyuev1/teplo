@@ -5,7 +5,9 @@ import './index.css';
 import App from './components/App/App';
 import { RoomsProvider } from './contexts/RoomsContext';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { setupStore } from './store/store';
+
+const store = setupStore();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
