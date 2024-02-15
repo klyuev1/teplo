@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import {ProjectProps} from "../../../utils/interfaces";
-import { useDeleteProjectMutation } from '../../../store/api/api';
+import { useDeleteProjectMutation } from '../../../store/api/apiProjectSlice';
 
 function Project({project}: ProjectProps) {
   
@@ -12,7 +12,7 @@ function Project({project}: ProjectProps) {
   const parsedDate = new Date(project.createdAt!);
   const formattedDate = format(parsedDate, 'dd.MM.yyyy');
 
-  function handleDeleteproject() {
+  function onDeleteproject() {
     handleDeleteProject(project)
   }
 
@@ -25,7 +25,7 @@ function Project({project}: ProjectProps) {
           </td>
           <td className='table_d column2'>{project.tOutside}</td>
           <td className='table_d column3'>{formattedDate}</td>
-          <td className='table_d column4'><button className='table__delete' type='button' onClick={handleDeleteproject}/></td>
+          <td className='table_d column4'><button className='table__delete' type='button' onClick={onDeleteproject}/></td>
         </tr>
   );
 }

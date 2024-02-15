@@ -1,17 +1,17 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "./api/api";
+import { apiProjectSlice } from "./api/apiProjectSlice";
 import popupReducer from './reducers/popupSlice';
 
 export const rootReducer = combineReducers({
   popup: popupReducer,
-  [apiSlice.reducerPath]: apiSlice.reducer,
+  [apiProjectSlice.reducerPath]: apiProjectSlice.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(apiProjectSlice.middleware),
   })
 }
 

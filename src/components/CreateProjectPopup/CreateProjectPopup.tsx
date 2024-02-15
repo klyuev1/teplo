@@ -11,7 +11,7 @@ import {
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
 import { Project } from "../../utils/interfaces";
-import { usePostProjectMutation } from '../../store/api/api';
+import { usePostProjectMutation } from '../../store/api/apiProjectSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateProjectPopup } from '../../store/reducers/popupSlice';
 
@@ -20,9 +20,9 @@ function CreateProjectPopupOpen() {
   const [handleCreateProject, {}] = usePostProjectMutation();
 
   const dispatch = useAppDispatch();
-  const isCreateProjectPopupOpen = useAppSelector(state => state.popup.isCreateProjectPopupOpen);
+  const isOpen = useAppSelector(state => state.popup.isCreateProjectPopupOpen);
   const handleClose = () => {
-    dispatch(closeCreateProjectPopup())
+    dispatch(closeCreateProjectPopup());
   }
 
   const [name, setName] = React.useState<string>('');
@@ -37,7 +37,7 @@ function CreateProjectPopupOpen() {
   React.useEffect(() => {
     setName('');
     setRegion('');
-  }, [isCreateProjectPopupOpen]);
+  }, [isOpen]);
   
   React.useEffect(() => {
     setBeta(BETA);
@@ -112,7 +112,7 @@ function CreateProjectPopupOpen() {
       name='create-project'
       title='Cоздание проекта'
       buttonName='Создать проект'
-      isOpen={isCreateProjectPopupOpen}
+      isOpen={isOpen}
       isClose={handleClose}
       onSubmit={handleSubmit}
     >

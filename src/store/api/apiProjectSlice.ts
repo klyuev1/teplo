@@ -3,7 +3,7 @@ import { Project } from '../../models/models';
 
 export const BASE_URL = "http://localhost:3001"
 
-export const apiSlice = createApi({
+export const apiProjectSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
@@ -50,4 +50,4 @@ export const apiSlice = createApi({
   })
 });
 
-export const {useGetProjectsQuery, usePostProjectMutation, useUpdateProjectMutation, useDeleteProjectMutation} = apiSlice;
+export const {useGetProjectsQuery, usePostProjectMutation, useUpdateProjectMutation, useDeleteProjectMutation} = apiProjectSlice;

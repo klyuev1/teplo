@@ -1,7 +1,7 @@
 import React from 'react';
 import Project from '../Project/Project';
 
-import { useGetProjectsQuery } from '../../../store/api/api';
+import { useGetProjectsQuery } from '../../../store/api/apiProjectSlice';
 
 function ProjectTable() {
 
