@@ -1,10 +1,13 @@
 import React from 'react';
 import { FacadeProps } from '../../utils/interfaces';
+import { useDeleteFacadeMutation } from '../../store/api/apiFacadeSlice';
 
 function Facade({facade, onCardDelete, onClickFacade}: FacadeProps) {
 
+  const [handleDeleteFacade, {}] = useDeleteFacadeMutation();
+
   function handleDeleteClick() {
-    onCardDelete(facade)
+    handleDeleteFacade(facade)
   }
 
   function handleClick() {
