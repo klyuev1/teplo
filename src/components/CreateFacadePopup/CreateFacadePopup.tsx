@@ -1,8 +1,20 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { CreateFacadePopupProps, Facade } from '../../utils/interfaces';
+import { usePostFacadeMutation } from '../../store/api/apiFacadeSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { closeCreateFacadePopup } from '../../store/reducers/popupSlice';
 
-function CreateFacadePopupOpen({onCreateFacade, isOpen, onClose}: CreateFacadePopupProps) {
+function CreateFacadePopupOpen() {
+  
+  const [handleCreateFacade, {}] = usePostFacadeMutation();
+
+  const dispatch = useAppDispatch();
+  const isCreateFacadePopupOpen = useAppSelector(state => state.popup.isCreateFacadePopupOpen);
+  const handleClose = () => {
+    dispatch(closeCreateFacadePopup())
+  }
+
   const [name, setName] = React.useState<string>('');
   const [link, setLink] = React.useState<string>('');
   const [height, setHeight] = React.useState<number>();
@@ -13,7 +25,7 @@ function CreateFacadePopupOpen({onCreateFacade, isOpen, onClose}: CreateFacadePo
   React.useEffect(() => {
     setName('');
     setLink('');
-  }, []);
+  }, [isCreateFacadePopupOpen]);
 
   // Заполнение стейт переменных
   function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -33,7 +45,7 @@ function CreateFacadePopupOpen({onCreateFacade, isOpen, onClose}: CreateFacadePo
     setAreaWindow(Number(e.target.value));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const facade: Facade = {
       name: name,
@@ -43,7 +55,9 @@ function CreateFacadePopupOpen({onCreateFacade, isOpen, onClose}: CreateFacadePo
       areaWindow: areaWindow!,
       areaWall: areaWall!
     }
-    onCreateFacade(facade);
+    await handleCreateFacade(facade);
+
+    handleClose();
   }
 
   return (
@@ -51,8 +65,8 @@ function CreateFacadePopupOpen({onCreateFacade, isOpen, onClose}: CreateFacadePo
       name='create-project'
       title='Cоздание фасада'
       buttonName='Создать фасад'
-      isOpen={isOpen}
-      isClose={onClose}
+      isOpen={isCreateFacadePopupOpen}
+      isClose={handleClose}
       onSubmit={handleSubmit}
     >
       <label className='popup__label'>

@@ -9,3 +9,13 @@ export interface Project {
   kHousehold: number;
   createdAt?: number;
 }
+
+export interface Facade {
+  _id?: string;
+  name: string;
+  link: string;
+  height: number;
+  width: number;
+  areaWindow: number;
+  areaWall: number;
+}

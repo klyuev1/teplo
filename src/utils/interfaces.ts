@@ -84,7 +84,6 @@ export interface ProjectProps {
 }
 
 export interface FacadesProps {
-  facades: Facade[];
   onClickFacade: () => {};
   onCreareFacade: () => {};
   onCardDelete: (facade : Facade) => void;
@@ -184,12 +183,6 @@ export interface CurrentUserContextProps {
 }
 
 
-export interface FacadesProps {
-  facades: Facade[];
-  onClickFacade: () => {};
-  onCreareFacade: () => {};
-  onCardDelete: (facade : Facade) => void;
-}
 
 export interface FacadeProps {
   facade: Facade;

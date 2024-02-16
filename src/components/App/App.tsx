@@ -65,7 +65,7 @@ function App() {
         .then(([userData, facadesData]) => {
           setCurrentUser(userData);
           // setProjects(projectsData);
-          setFacades(facadesData);
+          // setFacades(facadesData);
           setIsLoggedIn(true);
         })
         .catch((err) => {
@@ -73,7 +73,6 @@ function App() {
           setIsLoggedIn(false);
         });
     }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
   function handleRegister(name: string, email: string, password: string) {
@@ -331,7 +330,6 @@ function App() {
               />
               <ProtectedRoute
                 element={Facades}
-                facades={facades}
                 isLoggedIn={isLoggedIn}
                 onCreareFacade={handleCreateFacadeClick}
                 onCardDelete={handleDeleteFacade}
@@ -364,9 +362,7 @@ function App() {
         <CreateProjectPopup />
 
         <CreateFacadePopupOpen
-          isOpen={isCreateFacadePopupOpen}
-          onClose={closeAllPopups}
-          onCreateFacade={handleCreateFacade}
+
         />
 
         <CreateRoomPopup

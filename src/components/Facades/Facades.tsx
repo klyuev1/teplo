@@ -3,8 +3,19 @@ import Facade from '../Facade/Facade';
 
 import { FacadesProps } from '../../utils/interfaces';
 import { FacadeLogo } from '../../ui/icons/svgIcons';
+import { useGetFacadesQuery } from '../../store/api/apiFacadeSlice';
+import { useAppDispatch } from '../../store/hooks/hooks';
+import { openCreateFacadePopup } from '../../store/reducers/popupSlice';
 
-function Facades({onCreareFacade, onCardDelete, onClickFacade, facades}: FacadesProps) {
+function Facades({onCreareFacade, onCardDelete, onClickFacade}: FacadesProps) {
+  
+  const {data: facades} = useGetFacadesQuery();
+  const dispatch = useAppDispatch();
+  
+  const handleCreateFacadeClick = () => {
+    dispatch(openCreateFacadePopup())
+  }
+  
   return (
     <section className='facades'>
       
@@ -14,13 +25,13 @@ function Facades({onCreareFacade, onCardDelete, onClickFacade, facades}: Facades
           <h2 className='fasades__title'>Фасады</h2>
         </div>
         <button className='fasades__button' type='button'
-        onClick={onCreareFacade}>
+        onClick={handleCreateFacadeClick}>
           Создать фасад
         </button>
       </div>
 
       <section className='elements'>
-        {facades.map((facade) => (
+        {facades && facades.map((facade) => (
           <Facade
             facade={facade}
             onCardDelete={onCardDelete}
