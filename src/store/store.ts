@@ -1,12 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "./api/api";
+import { apiProjectSlice } from "./api/apiProjectSlice";
 import popupReducer from './reducers/popupSlice';
 import { apiFacadeSlice } from "./api/apiFacadeSlice";
 
 export const rootReducer = combineReducers({
   popup: popupReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
-  [apiFacadeSlice.reducerPath]: apiFacadeSlice.reducer
+  [apiFacadeSlice.reducerPath]: apiFacadeSlice.reducer,
 });
 
 export const setupStore = () => {

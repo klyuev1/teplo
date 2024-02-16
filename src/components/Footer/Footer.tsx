@@ -1,6 +1,6 @@
 import React from 'react';
 import {FooterLogo} from '../../ui/icons/svgIcons'
-import { useGetProjectsQuery } from '../../store/api/api';
+import { useGetProjectsQuery } from '../../store/api/apiProjectSlice';
 
 function Footer() {
 

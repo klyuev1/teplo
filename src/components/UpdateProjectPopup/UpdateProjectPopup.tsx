@@ -12,7 +12,7 @@ import {
 } from '../../utils/Regions';
 import { useRooms } from '../../contexts/RoomsContext';
 import {UpdateProjectPopupProps, Project} from "../../utils/interfaces";
-import { useUpdateProjectMutation } from '../../store/api/api';
+import { useUpdateProjectMutation } from '../../store/api/apiProjectSlice';
 
 function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
   const [name, setName] = React.useState<string>('');
