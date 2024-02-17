@@ -5,8 +5,12 @@ import {CreateRoomPopupProps, Room} from "../../utils/interfaces";
 import { usePostRoomMutation } from '../../store/api/apiRoomSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateRoomPopup } from '../../store/reducers/popupSlice';
+import { useGetFacadesQuery } from '../../store/api/apiFacadeSlice';
 
-function CreateRoomPopup({ facades }: CreateRoomPopupProps) {
+function CreateRoomPopup() {
+
+
+  const { data: facades } = useGetFacadesQuery();
 
   const projectID = useAppSelector((state) => state.projectID);
   const [handleCreateRoom, {error, isLoading}] = usePostRoomMutation();
@@ -122,7 +126,7 @@ function CreateRoomPopup({ facades }: CreateRoomPopupProps) {
         <h3 className='popup__input-name'>Тип фасада</h3>
         
         <div className='popup-facade-room__box'>
-          {facades.map((facade) => (
+          {facades && facades.map((facade) => (
             <FacadeModule 
               facade={facade}
               setHeight={setHeight}

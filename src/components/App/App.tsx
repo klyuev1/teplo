@@ -228,6 +228,7 @@ function App() {
           }/>
 
           <Route path="*" element={<NotFound />} />
+
         </Routes>
 
         {/* Попапы */}
@@ -235,20 +236,18 @@ function App() {
 
         <CreateFacadePopupOpen />
 
-        <CreateRoomPopup
-          facades={facades}
-        />
+        <CreateRoomPopup />
 
         <UpdateProjectPopup />
 
-        <GetFacadePopup/>
+        <GetFacadePopup />
         
         <GetRoomPopup />
 
-        <InfoTooltip/>
-
+        <InfoTooltip />
 
       </div>
+      
     </CurrentUserContext.Provider>
   );
 }

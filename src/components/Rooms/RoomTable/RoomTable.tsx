@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Room from '../Room/Room';
-import { RoomTableProps } from "../../../utils/interfaces";
 import { useGetRoomsQuery } from '../../../store/api/apiRoomSlice';
 import { useAppSelector } from '../../../store/hooks/hooks';
 
