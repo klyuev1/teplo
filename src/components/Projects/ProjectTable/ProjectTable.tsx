@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Project from '../Project/Project';
 
 import { useGetProjectsQuery } from '../../../store/api/apiProjectSlice';
 
 function ProjectTable() {
 
-  const {data: projects} = useGetProjectsQuery();
+  const {data: projects, error} = useGetProjectsQuery();
+
+  useEffect(() => {
+    if (error) {
+      console.log(error)
+    }
+  },[error])
 
   return (
   <table className='table'>

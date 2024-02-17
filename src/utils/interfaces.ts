@@ -107,31 +107,12 @@ export interface RoomsProviderProps {
   children: React.ReactNode;
 }
 
-export interface RoomsProps {
-  isLoggedIn: boolean;
-  handleCreateRoomClick: () => {};
-  onRoomDelete: (projectID: string, room: Room) => {};
-  onUpdateProjectClick: () => {};
-  onClickRoom: (room: Room) => {};
-  onDownloadCSV: (projectID: string) => {};
-}
-
 export interface RoomTableProps {
-  rooms: Room[];
-  onRoomDelete: (projectID: string, room: Room) => {};
   onClickRoom: (room: Room) => {};
 }
 
 export interface RoomProps {
   room: Room;
-  onRoomDelete: (projectID: string, room: Room) => {};
-  onClickRoom: (room: Room) => {};
-}
-
-export interface RoomProps {
-  room: Room;
-  onRoomDelete: (projectID: string, room: Room) => {};
-  onClickRoom: (room: Room) => {};
 }
 
 export interface PopupWithFormProps {
@@ -145,24 +126,11 @@ export interface PopupWithFormProps {
 }
 
 export interface CreateRoomPopupProps {
-  isOpen: boolean;
   facades: Facade[],
-  onClose: () => void;
-  onCreateRoom: (projectID: string, room: Room) => void;
-}
-
-export interface UpdateProjectPopupProps {
-  isOpen: boolean;
-  onClose: () => void;
 }
 
 export interface GetFacadePopupProps {
   facade: Facade;
-  onClose: () => void;
-}
-
-export interface GetRoomPopupProps {
-  room: Room;
   onClose: () => void;
 }
 

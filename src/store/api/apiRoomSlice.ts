@@ -1,0 +1,50 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Room } from '../../models/models';
+
+export const BASE_URL = "http://localhost:3001";
+
+export const apiRoomSlice = createApi({
+  reducerPath: 'apiRoom',
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL,
+    credentials: 'include',
+  }),
+  tagTypes: ['Room'],
+  endpoints: builder => ({
+    
+    getRooms: builder.query<Room[], {projectID: string}>({
+      query: ({projectID}) => ({
+        url: `/projects/${projectID}/rooms`
+      }),
+      providesTags: result => ['Room'],
+    }),
+
+    postRoom: builder.mutation<Room, { projectID: string; room: Partial<Room> }>({
+      query: ({ projectID, room }) => ({
+        url: `/projects/${projectID}/rooms`,
+        method: 'POST',
+        body: room,
+      }),
+      invalidatesTags: ['Room'],
+    }),
+
+    deleteRoom: builder.mutation<Room, { projectID: string; room: Partial<Room> }>({
+      query: ({ projectID, room }) => ({
+        url: `/projects/${projectID}/rooms/${room._id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Room'],
+    }),
+    
+    // downloadRooms: builder.query<Room[], {projectID: string}>({
+    //   query: ({projectID}) => ({
+    //     url: `/projects/${projectID}/rooms/download`
+    //   }),
+    //   providesTags: result => ['Room'],
+    // }),
+
+
+  })
+});
+
+export const { useGetRoomsQuery, usePostRoomMutation, useDeleteRoomMutation } = apiRoomSlice;

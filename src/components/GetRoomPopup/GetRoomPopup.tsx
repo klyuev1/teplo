@@ -1,7 +1,16 @@
 import React from 'react';
-import {GetRoomPopupProps} from "../../utils/interfaces";
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { closeSelectedRoom } from '../../store/reducers/selectedRoomSlice';
 
-function GetRoomPopup({room, onClose}: GetRoomPopupProps) {
+function GetRoomPopup() {
+  
+  const dispatch = useAppDispatch();
+  const room = useAppSelector(state => state.selectedRoom.selectedRoom);
+
+  const onClose = () => {
+    dispatch(closeSelectedRoom());
+  }
+
 
   const widthInMM = room.width*1000;
   const heightInMM = room.height*1000;

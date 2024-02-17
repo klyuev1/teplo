@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Room from '../Room/Room';
-
 import { RoomTableProps } from "../../../utils/interfaces";
+import { useGetRoomsQuery } from '../../../store/api/apiRoomSlice';
+import { useAppSelector } from '../../../store/hooks/hooks';
 
-function RoomTable({rooms, onRoomDelete, onClickRoom}: RoomTableProps) {
+function RoomTable() {
+  
+  const projectID = useAppSelector((state) => state.projectID);
+
+  const { data: rooms, error } = useGetRoomsQuery({ projectID });
+
+  useEffect(() => {
+    if (error) {
+      console.log(error)
+    }
+  },[error])
 
   return (
   <table className='table'>
@@ -20,14 +31,11 @@ function RoomTable({rooms, onRoomDelete, onClickRoom}: RoomTableProps) {
     </thead>
 
     <tbody>
-
-      {rooms.map(room => (
+      {rooms && rooms.map(room => (
 
         <Room 
           room={room}
           key={room._id}
-          onRoomDelete={onRoomDelete}
-          onClickRoom={onClickRoom}
         />
 
       ))}

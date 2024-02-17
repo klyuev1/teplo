@@ -11,10 +11,21 @@ import {
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
 import { useRooms } from '../../contexts/RoomsContext';
-import {UpdateProjectPopupProps, Project} from "../../utils/interfaces";
+import {Project} from "../../utils/interfaces";
 import { useUpdateProjectMutation } from '../../store/api/apiProjectSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { closeUpdateProjectPopup } from '../../store/reducers/popupSlice';
 
-function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
+function UpdateProjectPopup() {
+
+  const [handleUpdateProject, {error, isLoading}] = useUpdateProjectMutation();
+
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector(state => state.popup.isUpdateProjectPopupOpen);
+  const handleClose = () => {
+    dispatch(closeUpdateProjectPopup());
+  }
+
   const [name, setName] = React.useState<string>('');
   const [region, setRegion] = React.useState<string>('');
   const [tOutside, setTOutside] = React.useState<number>();
@@ -24,6 +35,12 @@ function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
   const [beta, setBeta] = React.useState<number>();
   const [kHousehold, setKHousehold] = React.useState<number>();
   const { projectID = null } = useRooms() || {};
+
+  React.useEffect(() => {
+    if (error) {
+      console.log(error)
+    }
+  },[error])
 
   React.useEffect(() => {
     setName('');
@@ -79,9 +96,7 @@ function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
     setRegion(e.target.value);
   }
 
-  const [handleUpdateProject, {}] = useUpdateProjectMutation();
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const project: Project = {
       name: name!,
@@ -92,9 +107,9 @@ function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
       beta: beta!,
       kHousehold: kHousehold!,
     };
-    handleUpdateProject({projectID, project});
+    await handleUpdateProject({projectID, project});
     
-    onClose();
+    handleClose();
   } 
    
 
@@ -102,9 +117,9 @@ function UpdateProjectPopup({isOpen, onClose}: UpdateProjectPopupProps) {
     <PopupWithForm
       name='create-project'
       title='Редактирование проекта'
-      buttonName='Редактировать проект'
+      buttonName={isLoading ? 'Редактирование...' : 'Редактировать проект'}
       isOpen={isOpen}
-      isClose={onClose}
+      isClose={handleClose}
       onSubmit={handleSubmit}
     >
       <label className='popup__label'>

@@ -1,17 +1,32 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-// import { getFacades } from '../../utils/Api';
-import { useRooms } from '../../contexts/RoomsContext';
 import FacadeModule from './FacadeModule/FacadeModule';
 import {CreateRoomPopupProps, Room} from "../../utils/interfaces";
+import { usePostRoomMutation } from '../../store/api/apiRoomSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { closeCreateRoomPopup } from '../../store/reducers/popupSlice';
 
-function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPopupProps) {
+function CreateRoomPopup({ facades }: CreateRoomPopupProps) {
 
-  const { projectID = null } = useRooms() || {};
+  const projectID = useAppSelector((state) => state.projectID);
+  const [handleCreateRoom, {error, isLoading}] = usePostRoomMutation();
+
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector(state => state.popup.isCreateRoomPopupOpen);
+  const handleClose = () => {
+    dispatch(closeCreateRoomPopup());
+  }
+
   const [number, setNumber] = React.useState('');
   const [name, setName] = React.useState('');
-  const [areaRoom, setAreaRoom] = React.useState<number>();
+  const [areaRoom, setAreaRoom] = React.useState<number | undefined>();
   
+
+  React.useEffect(() => {
+    if (error) {
+      console.log(error)
+    }
+  },[error])
 
   React.useEffect(() => {
     setNumber('');
@@ -40,7 +55,7 @@ function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPop
   // Убрать этот кусок кода после редактирования БЭКа
   // height, width, areaWall, areaWindow
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const room: Room = {
       number: number!,
@@ -53,8 +68,8 @@ function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPop
       numberFacade: numberFacade!,
     };
     if (typeof projectID === 'string') {
-      onCreateRoom(projectID, room)
-      onClose();
+      await handleCreateRoom({ projectID, room })
+      handleClose();
     }
   } 
 
@@ -62,9 +77,9 @@ function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPop
     <PopupWithForm
     name='create-project'
     title='Cоздание комнаты'
-    buttonName='Создать комнату'
+    buttonName={isLoading ? 'Создание...' : 'Создать комнату'}
     isOpen={isOpen}
-    isClose={onClose}
+    isClose={handleClose}
     onSubmit={handleSubmit}
     >
       <label className='popup__label'>
@@ -98,7 +113,7 @@ function CreateRoomPopup({isOpen, onClose, facades, onCreateRoom}: CreateRoomPop
         <h3 className='popup__input-name'>Площадь помещения:</h3>
         <input
           name='areaRoom' type='number' className='popup__input' required
-          onChange={handleChangeAreaRoom} value={areaRoom}
+          onChange={handleChangeAreaRoom} value={areaRoom && areaRoom }
         />
       </label>
       
