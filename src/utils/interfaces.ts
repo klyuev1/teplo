@@ -91,8 +91,6 @@ export interface FacadesProps {
 
 export interface FacadeProps {
   facade: Facade;
-  onCardDelete: (facade : Facade) => void;
-  onClickFacade: (facade : Facade) => void;
 }
 
 export interface RoomsContextType {
@@ -156,7 +154,7 @@ export interface UpdateProjectPopupProps {
 }
 
 export interface GetFacadePopupProps {
-  facade: Facade;
+  // facade: Facade;
   onClose: () => void;
 }
 
@@ -182,13 +180,6 @@ export interface CurrentUserContextProps {
   email: string;
 }
 
-
-
-export interface FacadeProps {
-  facade: Facade;
-  onCardDelete: (facade : Facade) => void;
-  onClickFacade: (facade : Facade) => void;
-}
 
 
 export interface CreateFacadePopupProps {

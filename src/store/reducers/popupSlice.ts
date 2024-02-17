@@ -16,21 +16,15 @@ const popupSlice = createSlice({
   reducers: {
     openCreateProjectPopup(state) {
       state.isCreateProjectPopupOpen = true;
-      state.isCreateFacadePopupOpen = false;
-
     },
     closeCreateProjectPopup(state) {
       state.isCreateProjectPopupOpen = false;
-      state.isCreateFacadePopupOpen = false;
-
     },
     openCreateFacadePopup(state) {
       state.isCreateFacadePopupOpen = true;
-      state.isCreateProjectPopupOpen = false;
     },
     closeCreateFacadePopup(state) {
       state.isCreateFacadePopupOpen = false;
-      state.isCreateProjectPopupOpen = false;
     },
   },
 });

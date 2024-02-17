@@ -4,9 +4,13 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import UseValidation from '../../utils/UseValidation'; 
 
 import {ProfileProps, FormValue} from "../../utils/interfaces"
+import { useGetUserQuery } from '../../store/api/apiProfileSlice';
 
 function Profile({onSignOut, onUpdateUser}: ProfileProps) {
-  const currentUser = useContext(CurrentUserContext);
+
+  const {data: user} = useGetUserQuery();
+
+  // const currentUser = useContext(CurrentUserContext);
 
   const [formValue, setFormValue] = useState<FormValue>({
     name: '',
@@ -19,22 +23,21 @@ function Profile({onSignOut, onUpdateUser}: ProfileProps) {
 
   useEffect(() => {
 
-    if (currentUser && ((formValue.email !== currentUser.email) || (formValue.name !== currentUser.name))) {
+    if (user && ((formValue.email !== user.email) || (formValue.name !== user.name))) {
         setIsChanges(true);
     } else {
         setIsChanges(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formValue, setIsChanges]);
 
 
   useEffect(() => {
-    if (currentUser) {
+    if (user) {
 
-      resetForm(currentUser, {}, true);
+      resetForm(user, {}, true);
     }
     setIsChanges(false);
-  }, [currentUser, resetForm]);
+  }, [user, resetForm]);
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -43,7 +46,7 @@ function Profile({onSignOut, onUpdateUser}: ProfileProps) {
   
   return (
     <section className='profile'>
-      <h1 className='profile__title'>Привет, {currentUser!.name}!</h1>
+      <h1 className='profile__title'>Привет, {user!.name}!</h1>
       <form className='profile__form' noValidate>
         
         <label className='profile__label'>

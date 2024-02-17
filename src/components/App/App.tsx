@@ -56,13 +56,12 @@ function App() {
   const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
 
 
-  // Объяснить Олегу функционал и разделить работу!!!!!!!
 
   // Основные функции с api-запросами
   React.useEffect(() => {
     if (isLoggedIn) {
-      Promise.all([getUser(), getFacades()])
-        .then(([userData, facadesData]) => {
+      Promise.all([getUser()])
+        .then(([userData]) => {
           setCurrentUser(userData);
           // setProjects(projectsData);
           // setFacades(facadesData);
@@ -152,30 +151,6 @@ function App() {
       });
   }
 
-  function handleCreateFacade(facade: Facade) {
-    const {name, link, height, width, areaWindow, areaWall} = facade;
-    postFacades({name, link, height, width, areaWindow, areaWall})
-      .then((newFacade) => {
-        setFacades([newFacade, ...facades]);
-        closeAllPopups();
-      })
-      .catch((error) => {
-        if (error === 409) {
-          setTitleInfo("Площадь стены не может быть меньше 0");
-        } else {
-          setTitleInfo("Что-то не так с введенными данными");
-        }
-        setIconInfo(fail);
-        handleInfoTooltipClick();
-      });
-  }
-
-  function handleDeleteFacade(facade: Facade) {
-    deleteFacade(facade._id!).then(() => {
-      setFacades((state) => state.filter((c) => c._id !== facade._id));
-    });
-  }
-
   function handleCreateRoom(projectID: string, room: Room) {
     postRoom(projectID, {
       number: room.number,
@@ -226,10 +201,6 @@ function App() {
       });
   }
 
-  function handleCreateFacadeClick() {
-    setIsCreateFacadePopupOpen(true);
-  }
-
   function handleCreateRoomClick() {
     setIsCreateRoomPopupOpen(true);
   }
@@ -251,9 +222,6 @@ function App() {
     setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
   }
 
-  function handleFacadeClick(facade: Facade) {
-    setSelectedFacade(facade);
-  }
 
   function handleRoomClick(room: Room) {
     setSelectedRoom(room);
@@ -331,9 +299,6 @@ function App() {
               <ProtectedRoute
                 element={Facades}
                 isLoggedIn={isLoggedIn}
-                onCreareFacade={handleCreateFacadeClick}
-                onCardDelete={handleDeleteFacade}
-                onClickFacade={handleFacadeClick}
               />
               <Footer/>   
             </>
@@ -361,9 +326,7 @@ function App() {
         {/* Попапы */}
         <CreateProjectPopup />
 
-        <CreateFacadePopupOpen
-
-        />
+        <CreateFacadePopupOpen />
 
         <CreateRoomPopup
           isOpen={isCreateRoomPopupOpen}
@@ -377,22 +340,14 @@ function App() {
           onClose={closeAllPopups}
         />
 
-        <GetFacadePopup
-          facade={selectedFacade}
-          onClose = {closeAllPopups}
-        />
+        <GetFacadePopup/>
         
         <GetRoomPopup
           room={selectedRoom}
           onClose = {closeAllPopups}
         />
 
-        <InfoTooltip
-          isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
-          title={titleInfo}
-          icon={iconInfo}
-        />
+        <InfoTooltip/>
 
 
       </div>

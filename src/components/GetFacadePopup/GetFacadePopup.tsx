@@ -1,7 +1,18 @@
 import React from 'react';
-import {GetFacadePopupProps} from "../../utils/interfaces";
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { closeSelectedFacade } from '../../store/reducers/selectedFacadeSlice';
 
-function GetFacadePopup({facade, onClose}: GetFacadePopupProps) {
+function GetFacadePopup() {
+
+  const dispatch = useAppDispatch();
+  const facade = useAppSelector(state => state.selectedFacade.selectedFacade);
+
+  const handleClose = () => {
+    dispatch(closeSelectedFacade())
+  }
+
+
+
   return (
     <div className={`popup popup_type ${facade.link ? 'popup_opened' : ''} `}>
       <div className='popup__container'>
@@ -10,7 +21,7 @@ function GetFacadePopup({facade, onClose}: GetFacadePopupProps) {
           
           <div className='popup__header'>
             <h2 className='popup__title'>Информация о фасаде</h2>
-            <button className='popup__button-close' onClick={onClose} type='button'> </button>
+            <button className='popup__button-close' onClick={handleClose} type='button'> </button>
           </div>
 
           <div className='popup__common-div'>

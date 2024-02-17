@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FacadeProps } from '../../utils/interfaces';
 import { useDeleteFacadeMutation } from '../../store/api/apiFacadeSlice';
+import { openSelectedFacade } from '../../store/reducers/selectedFacadeSlice';
+import { useAppDispatch } from '../../store/hooks/hooks';
 
-function Facade({facade, onCardDelete, onClickFacade}: FacadeProps) {
+function Facade({facade}: FacadeProps) {
 
-  const [handleDeleteFacade, {}] = useDeleteFacadeMutation();
+  const dispatch = useAppDispatch();
+  const [handleDeleteFacade, {error} ] = useDeleteFacadeMutation();
 
   function handleDeleteClick() {
     handleDeleteFacade(facade)
   }
 
-  function handleClick() {
-    onClickFacade(facade);
+  const handleClick = () => {
+    dispatch(openSelectedFacade(facade));
   }
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+    }
+  }, [error]);
 
   return (
     <article className='element'>

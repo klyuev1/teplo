@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import { CreateFacadePopupProps, Facade } from '../../utils/interfaces';
 import { usePostFacadeMutation } from '../../store/api/apiFacadeSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateFacadePopup } from '../../store/reducers/popupSlice';
+import { openInfoTooltipFacade } from '../../store/reducers/infoTooltipSlice';
 
 function CreateFacadePopupOpen() {
+  const [isLoading, setIsLoading] = useState(false);
   
-  const [handleCreateFacade, {}] = usePostFacadeMutation();
+  const [handleCreateFacade, {error}] = usePostFacadeMutation();
 
   const dispatch = useAppDispatch();
   const isCreateFacadePopupOpen = useAppSelector(state => state.popup.isCreateFacadePopupOpen);
+  
+  const handleOpenInfoToolTip = () => {
+    if (error) {
+      dispatch(openInfoTooltipFacade('Что-то не так с введенными данными'))
+    }
+    
+  }
   const handleClose = () => {
+    
     dispatch(closeCreateFacadePopup())
   }
 
@@ -22,10 +32,17 @@ function CreateFacadePopupOpen() {
   const [areaWindow, setAreaWindow] = React.useState<number>();
   const [areaWall, setAreaWall] = React.useState<number>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setName('');
     setLink('');
   }, [isCreateFacadePopupOpen]);
+
+  useEffect(() => {
+    if (error) {
+      handleOpenInfoToolTip();
+      console.log(error);
+    }
+  }, [error]);
 
   // Заполнение стейт переменных
   function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -46,7 +63,9 @@ function CreateFacadePopupOpen() {
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+
     e.preventDefault();
+    setIsLoading(true);
     const facade: Facade = {
       name: name,
       link: link,
@@ -56,15 +75,16 @@ function CreateFacadePopupOpen() {
       areaWall: areaWall!
     }
     await handleCreateFacade(facade);
-
-    handleClose();
+    await setIsLoading(false);
+    await handleClose();
+    
   }
 
   return (
     <PopupWithForm
       name='create-project'
       title='Cоздание фасада'
-      buttonName='Создать фасад'
+      buttonName={isLoading ? 'Создание...' : 'Создать фасад'}
       isOpen={isCreateFacadePopupOpen}
       isClose={handleClose}
       onSubmit={handleSubmit}
