@@ -1,20 +1,29 @@
-import React from 'react';
-import { useRooms } from '../../../contexts/RoomsContext';
-
+import { useEffect, useState } from "react";
 import { RoomProps } from "../../../utils/interfaces";
+import { useAppDispatch, useAppSelector } from '../../../store/hooks/hooks';
+import { useDeleteRoomMutation } from '../../../store/api/apiRoomSlice';
+import { openSelectedRoom } from "../../../store/reducers/selectedRoomSlice";
 
-function Room({room, onRoomDelete, onClickRoom}: RoomProps ) {
+function Room({ room }: RoomProps ) {
 
-  const { projectID = null } = useRooms() || {};
+  const projectID = useAppSelector((state) => state.projectID);
 
-  function handleDeleteRoom() {
-    if (typeof projectID === 'string') {
-      onRoomDelete(projectID, room)
+  const dispatch = useAppDispatch();
+
+  const [handleDeleteRoom, {error}] = useDeleteRoomMutation();
+
+  useEffect(() => {
+    if (error) {
+      console.log(error)
     }
+  },[error])
+
+  function onDeleteRoom() {
+      handleDeleteRoom({projectID, room})
   }
 
-  function handleClick() {
-    onClickRoom(room);
+  const handleClick = () => {
+    dispatch(openSelectedRoom(room));
   }
 
   return (
@@ -28,7 +37,7 @@ function Room({room, onRoomDelete, onClickRoom}: RoomProps ) {
       <td className='table_d room-column3'>{room.areaRoom} м²</td>
       <td className='table_d room-column4'>{room.numberFacade}</td>
       <td className='table_d room-column5'>{room.heatLoss} Вт</td>
-      <td className='table_d room-column6'><button className='table__delete' type='button' onClick={handleDeleteRoom}/></td>
+      <td className='table_d room-column6'><button className='table__delete' type='button' onClick={onDeleteRoom}/></td>
     </tr>
   );
 }

@@ -17,7 +17,7 @@ import { closeCreateProjectPopup } from '../../store/reducers/popupSlice';
 
 function CreateProjectPopupOpen() {
 
-  const [handleCreateProject, {}] = usePostProjectMutation();
+  const [handleCreateProject, {error, isLoading}] = usePostProjectMutation();
 
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(state => state.popup.isCreateProjectPopupOpen);
@@ -33,6 +33,12 @@ function CreateProjectPopupOpen() {
   const [rWindow, setRWindow] = React.useState<number>();
   const [beta, setBeta] = React.useState<number>();
   const [kHousehold, setKHousehold] = React.useState<number>();
+
+  React.useEffect(() => {
+    if (error) {
+      console.log(error)
+    }
+  },[error])
 
   React.useEffect(() => {
     setName('');
@@ -102,7 +108,6 @@ function CreateProjectPopupOpen() {
       kHousehold: kHousehold!,
     };
     await handleCreateProject(project)
-    
     handleClose();
   }
    
@@ -111,7 +116,7 @@ function CreateProjectPopupOpen() {
     <PopupWithForm
       name='create-project'
       title='Cоздание проекта'
-      buttonName='Создать проект'
+      buttonName={isLoading ? 'Создание...' : 'Создать проект'}
       isOpen={isOpen}
       isClose={handleClose}
       onSubmit={handleSubmit}

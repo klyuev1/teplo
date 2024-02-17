@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Project } from '../../models/models';
 
-export const BASE_URL = "http://localhost:3001"
+export const BASE_URL = "http://localhost:3001";
 
 export const apiProjectSlice = createApi({
-  reducerPath: 'api',
+  reducerPath: 'apiProject',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     credentials: 'include',
@@ -46,7 +46,6 @@ export const apiProjectSlice = createApi({
       invalidatesTags: ['Project'],
     }),
 
-    // Остановился на DELETEPROJECT
   })
 });
 

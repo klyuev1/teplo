@@ -1,7 +1,5 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import {Project, Facade, Room} from "../../utils/interfaces"
-
 // Компоненты
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import Register from '../Register/Register';
@@ -19,7 +17,6 @@ import CreateFacadePopupOpen from '../CreateFacadePopup/CreateFacadePopup';
 import CreateRoomPopup from '../CreateRoomPopup/CreateRoomPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import NotFound from '../NotFound/NotFound';
-import { useRooms } from '../../contexts/RoomsContext';
 import UpdateProjectPopup from '../UpdateProjectPopup/UpdateProjectPopup';
 
 import GetFacadePopup from '../GetFacadePopup/GetFacadePopup';
@@ -27,7 +24,6 @@ import GetRoomPopup from '../GetRoomPopup/GetRoomPopup';
 
 // API запросы
 import {signup, signin, signout, getUser, updateUser} from '../../utils/ApiReg';
-import {getProjects, postProject, deleteProject, getFacades, postFacades, deleteFacade, postRoom, deleteRoom, updateProject, downloadRooms} from '../../utils/Api';
 
 // etc
 import truth from "../../images/thurh.svg"; // Поправить позже
@@ -38,24 +34,12 @@ function App() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(true);
   const [currentUser, setCurrentUser] = React.useState<{ name: string; email: string }>({ name: '', email: '' });
-  // const [isCreateProjectPopupOpen, setIsCreateProjectPopupOpen] = React.useState<boolean>(false);
-  const [isUpdateProjectPopupOpen, setIsUpdateProjectPopupOpen] = React.useState<boolean>(false);
-  const [isCreateFacadePopupOpen, setIsCreateFacadePopupOpen] = React.useState<boolean>(false);
-  const [isCreateRoomPopupOpen, setIsCreateRoomPopupOpen] = React.useState<boolean>(false);
-  
-  // const [projects, setProjects] = React.useState<Project[]>([]);
-  const [facades, setFacades] = React.useState<Facade[]>([]);
-
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState<boolean>(false);
   const [titleInfo, setTitleInfo] = React.useState<string>("");
   const [iconInfo, setIconInfo] = React.useState<React.FunctionComponent<React.SVGAttributes<SVGElement>> | null>(null);
 
-  const { rooms, setRooms } = useRooms() || { rooms: [], setRooms: () => {} }
 
-  const [selectedFacade, setSelectedFacade] = React.useState<Facade>({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
-  const [selectedRoom, setSelectedRoom] = React.useState<Room>({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
-
-
+  // Объяснить Олегу функционал и разделить работу!!!!!!!
 
   // Основные функции с api-запросами
   React.useEffect(() => {
@@ -151,80 +135,8 @@ function App() {
       });
   }
 
-  function handleCreateRoom(projectID: string, room: Room) {
-    postRoom(projectID, {
-      number: room.number,
-      name: room.name,
-      height: room.height,
-      width: room.width,
-      areaWall: room.areaWall,
-      areaWindow: room.areaWindow,
-      areaRoom: room.areaRoom,
-      numberFacade: room.numberFacade
-    })
-    
-    .then((newRoom)=>{
-      setRooms([...rooms, newRoom]);
-    })
-    .catch((err) => console.log(err));
-
-  }
-
-  function handleDeleteRoom(projectID: string, room: Room) {
-    deleteRoom(projectID, room._id!)
-    .then(() => {
-      setRooms((state) => state.filter((c) => c._id !== room._id));
-    })
-    .catch((err) => console.log(err));
-  }
-
-  function handleDownloadCSV(projectID: string) {
-    downloadRooms(projectID)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`Ошибка загрузки: ${res.status} ${res.statusText}`);
-        }
-        return res.blob();
-      })
-      .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'output.csv');
-        document.body.appendChild(link);
-        console.log(link)
-        link.click();
-        document.body.removeChild(link);
-      })
-      .catch(error => {
-        console.error("Произошла ошибка:", error);
-      });
-  }
-
-  function handleCreateRoomClick() {
-    setIsCreateRoomPopupOpen(true);
-  }
-  
-  function handleUpdateProjectClick() {
-    setIsUpdateProjectPopupOpen(true);
-  }
-
   function handleInfoTooltipClick() {
     setIsInfoTooltipOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsCreateFacadePopupOpen(false);
-    setIsInfoTooltipOpen(false);
-    setIsCreateRoomPopupOpen(false);
-    setIsUpdateProjectPopupOpen(false);
-    setSelectedFacade({ _id: '', name: '', link: '', height: 0, width: 0, areaWindow: 0 , areaWall: 0});
-    setSelectedRoom({ _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '' });
-  }
-
-
-  function handleRoomClick(room: Room) {
-    setSelectedRoom(room);
   }
   
   return (
@@ -280,11 +192,6 @@ function App() {
               <ProtectedRoute
                 element={Rooms}
                 isLoggedIn={isLoggedIn}
-                handleCreateRoomClick={handleCreateRoomClick}
-                onUpdateProjectClick={handleUpdateProjectClick}
-                onRoomDelete={handleDeleteRoom}
-                onClickRoom={handleRoomClick}
-                onDownloadCSV={handleDownloadCSV}
               />
               <Footer/>
             </>
@@ -329,23 +236,14 @@ function App() {
         <CreateFacadePopupOpen />
 
         <CreateRoomPopup
-          isOpen={isCreateRoomPopupOpen}
-          onClose={closeAllPopups}
           facades={facades}
-          onCreateRoom={handleCreateRoom}
         />
 
-        <UpdateProjectPopup
-          isOpen={isUpdateProjectPopupOpen}
-          onClose={closeAllPopups}
-        />
+        <UpdateProjectPopup />
 
         <GetFacadePopup/>
         
-        <GetRoomPopup
-          room={selectedRoom}
-          onClose = {closeAllPopups}
-        />
+        <GetRoomPopup />
 
         <InfoTooltip/>
 

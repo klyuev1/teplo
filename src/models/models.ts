@@ -9,7 +9,6 @@ export interface Project {
   kHousehold: number;
   createdAt?: number;
 }
-
 export interface Facade {
   _id?: string;
   name: string;
@@ -18,4 +17,17 @@ export interface Facade {
   width: number;
   areaWindow: number;
   areaWall: number;
+}
+export interface Room {
+  _id?: string;
+  number: string;
+  name: string;
+  height: number;
+  width: number;
+  areaWall: number;
+  areaWindow: number;
+  areaRoom: number;
+  numberFacade: string;
+  heatLoss?: number;
+
 }

@@ -1,36 +1,57 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import RoomTable from './RoomTable/RoomTable'
-import {getRooms} from '../../utils/Api';
-import { useRooms } from '../../contexts/RoomsContext';
+import { useAppDispatch } from '../../store/hooks/hooks';
+import { openCreateRoomPopup, openUpdateProjectPopup } from '../../store/reducers/popupSlice';
+import { setProjectID } from '../../store/reducers/projectIDSlice';
+import { downloadRooms } from '../../utils/Api';
 
-import { RoomsProps } from "../../utils/interfaces";
 
-
-function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjectClick, onClickRoom , onDownloadCSV}: RoomsProps) {
+function Rooms() {
   
   const {projectID} = useParams();
-  const { rooms, setRooms, setProjectID } = useRooms() || { rooms: [], setRooms: () => {}, setProjectID: () => {} };
+  const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-      if (isLoggedIn){
-    getRooms(projectID!)
-    .then((fetchedRooms) => {
-      setRooms(fetchedRooms);
-      if (typeof projectID === 'string') {
-      setProjectID(projectID);
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    });
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }},[isLoggedIn, setRooms, setProjectID]);
-
-  function downloadCSV() {
     if (typeof projectID === 'string') {
-      onDownloadCSV(projectID);
+      dispatch(setProjectID(projectID));
     }
+  }, [projectID, dispatch]);
+
+  const handleCreateRoomClick = () => {
+    dispatch(openCreateRoomPopup());
+  }
+
+  const handleUpdateProjectClick = () => {
+    dispatch(openUpdateProjectPopup());
+  }
+
+  const downloadCSV = () => {
+    if (typeof projectID === 'string') {
+      handleDownloadCSV(projectID);
+    }
+  }
+
+  function handleDownloadCSV(projectID: string) {
+    downloadRooms(projectID)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Ошибка загрузки: ${res.status} ${res.statusText}`);
+        }
+        return res.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'output.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch(error => {
+        console.error("Произошла ошибка:", error);
+      });
   }
   
   return (
@@ -45,18 +66,14 @@ function Rooms({ isLoggedIn, handleCreateRoomClick, onRoomDelete, onUpdateProjec
         
         <div className='rooms__button-box'>
           <button className='rooms__button rooms__button_csv' type='button'onClick={downloadCSV}>Выгрузить в CSV</button>
-          <button className='rooms__button' type='button' onClick={onUpdateProjectClick}>Редактировать проект</button>
+          <button className='rooms__button' type='button' onClick={handleUpdateProjectClick}>Редактировать проект</button>
           <button className='rooms__button' type='button' onClick={handleCreateRoomClick}>Создать помещение</button>
         </div>
         
       
       </div>
 
-      <RoomTable
-        rooms={rooms}
-        onRoomDelete={onRoomDelete}
-        onClickRoom={onClickRoom}
-      />
+      <RoomTable />
 
     </section>
     

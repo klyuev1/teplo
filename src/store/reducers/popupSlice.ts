@@ -2,11 +2,15 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface PopupState {
   isCreateProjectPopupOpen: boolean;
+  isUpdateProjectPopupOpen: boolean;
+  isCreateRoomPopupOpen: boolean;
   isCreateFacadePopupOpen: boolean;
 }
 
 const initialState: PopupState = {
   isCreateProjectPopupOpen: false,
+  isUpdateProjectPopupOpen: false,
+  isCreateRoomPopupOpen: false,
   isCreateFacadePopupOpen: false,
 };
 
@@ -20,6 +24,19 @@ const popupSlice = createSlice({
     closeCreateProjectPopup(state) {
       state.isCreateProjectPopupOpen = false;
     },
+    openUpdateProjectPopup(state) {
+      state.isUpdateProjectPopupOpen = true;
+    },
+    closeUpdateProjectPopup(state) {
+      state.isUpdateProjectPopupOpen = false;
+    },
+    
+    openCreateRoomPopup(state) {
+      state.isCreateRoomPopupOpen = true;
+    },
+    closeCreateRoomPopup(state) {
+      state.isCreateRoomPopupOpen = false;
+    },
     openCreateFacadePopup(state) {
       state.isCreateFacadePopupOpen = true;
     },
@@ -29,5 +46,18 @@ const popupSlice = createSlice({
   },
 });
 
-export const { openCreateProjectPopup, closeCreateProjectPopup, openCreateFacadePopup, closeCreateFacadePopup } = popupSlice.actions;
+export const { 
+  openCreateProjectPopup,
+  closeCreateProjectPopup,
+  
+  openUpdateProjectPopup,
+  closeUpdateProjectPopup,
+
+  openCreateRoomPopup,
+  closeCreateRoomPopup,
+
+  openCreateFacadePopup,
+  closeCreateFacadePopup  
+
+  } = popupSlice.actions;
 export default popupSlice.reducer;
