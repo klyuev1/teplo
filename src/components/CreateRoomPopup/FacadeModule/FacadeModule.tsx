@@ -1,5 +1,5 @@
 import React from 'react';
-import { IFacadeModule } from '../../../utils/interfaces';
+import { IFacadeModule } from '../../../models/props';
 
 function FacadeModule({facade, setHeight, setWidth, setAreaWall, setAreaWindow, setNumberFacade}: IFacadeModule) {
   

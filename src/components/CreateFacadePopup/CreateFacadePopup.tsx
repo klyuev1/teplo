@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import { CreateFacadePopupProps, Facade } from '../../utils/interfaces';
+import { Facade } from '../../models/models';
 import { usePostFacadeMutation } from '../../store/api/apiFacadeSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateFacadePopup } from '../../store/reducers/popupSlice';

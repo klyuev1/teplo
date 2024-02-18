@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom'
 import {Logo} from '../../ui/icons/svgIcons'
 import UseValidation from '../../utils/UseValidation';
 
-import {LoginProps, FormValue} from "../../utils/interfaces"
+import { FormValue } from "../../models/props"
+import { useSigninMutation } from '../../store/api/apiProfileSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { openInfoTooltipLogin } from '../../store/reducers/infoTooltipSlice';
+import { setIsLoggedIn } from '../../store/reducers/authSlice';
 
-function Login({onLogin, isLoggedIn}: LoginProps) {
-  
+function Login() {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  if (isLoggedIn === true) {
-    navigate('/profile');
-  }
+
+  useEffect(() => {
+    if (isLoggedIn === true) {
+      navigate('/profile');
+    }
+  }, [dispatch])
+  
   
   const [formValue, setFormValue] = React.useState<FormValue>({
     name: '',
@@ -28,11 +37,26 @@ function Login({onLogin, isLoggedIn}: LoginProps) {
     }, {}, false);
   }, [resetForm])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onLogin(formValue.email, formValue.password!);
+  const [handleLogin, {error}] = useSigninMutation();
+
+  // запрос не сразу на ошибку отправляется, а со второй попытки
+  const onLogin = async (email: string, password: string) => {
+    try {
+      await handleLogin({email, password}).unwrap()
+      dispatch(openInfoTooltipLogin("Вы успешно авторизировались!"))
+      navigate("/projects", { replace: true });
+      dispatch(setIsLoggedIn(true));
+    } catch {
+      console.log(error)
+      dispatch(openInfoTooltipLogin("Что-то пошло не так! Попробуйте ещё раз."));
+    }
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onLogin(formValue.email, formValue.password!)
+  }
+  
   return (
     <section className='register'>
       <Link className='register__logo-link' to='/'><Logo /></Link>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ValidationProps, FormValue, FormErrors} from "../utils/interfaces"
+import {ValidationProps, FormValue, FormErrors} from "../models/props"
 
 const regexEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$/;
 

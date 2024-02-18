@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FacadeProps } from '../../utils/interfaces';
+import { FacadeProps } from '../../models/props';
 import { useDeleteFacadeMutation } from '../../store/api/apiFacadeSlice';
 import { openSelectedFacade } from '../../store/reducers/selectedFacadeSlice';
 import { useAppDispatch } from '../../store/hooks/hooks';

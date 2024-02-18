@@ -1,5 +1,5 @@
 import React from 'react';
-import {PopupWithFormProps} from "../../utils/interfaces";
+import {PopupWithFormProps} from "../../models/props";
 
 function PopupWithForm({name, title, buttonName, isOpen, isClose, onSubmit, children}: PopupWithFormProps) {
   return (

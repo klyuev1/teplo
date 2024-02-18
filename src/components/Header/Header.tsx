@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {HeaderProps} from "../../utils/interfaces";
+import {HeaderProps} from "../../models/props";
 
 function Header({isLoggedIn, purpleThemeHeader}: HeaderProps) {
   

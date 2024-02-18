@@ -10,7 +10,7 @@ import {
   T_OUTSIDE_SRG, T_INSIDE_SRG, R_WALL_SRG, R_WINDOW_SRG,
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
-import { Project } from "../../utils/interfaces";
+import { Project } from "../../models/models";
 import { usePostProjectMutation } from '../../store/api/apiProjectSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateProjectPopup } from '../../store/reducers/popupSlice';
@@ -137,7 +137,7 @@ function CreateProjectPopupOpen() {
         <h3 className='popup__input-name'>Регион:</h3>
         <select className='popup__select' id='region' onChange={handleChangeRegion} value={region} required >
           
-          <option className='popup__select-item' value='' selected disabled>
+          <option className='popup__select-item' value='' disabled>
             Выберите город
           </option>
           <option className='popup__select-item' value='Москва'>

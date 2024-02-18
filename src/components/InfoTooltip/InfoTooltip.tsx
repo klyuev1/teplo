@@ -1,5 +1,3 @@
-import React, { ReactElement } from 'react';
-import {InfoTooltipProps} from "../../utils/interfaces";
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeInfoTooltipFacade } from '../../store/reducers/infoTooltipSlice';
 

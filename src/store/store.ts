@@ -8,8 +8,10 @@ import { apiFacadeSlice } from "./api/apiFacadeSlice";
 import selectedFacadeSlice from "./reducers/selectedFacadeSlice";
 import infoTooltipSlice from "./reducers/infoTooltipSlice";
 import { apiProfileSlice } from "./api/apiProfileSlice";
+import authReducer from "./reducers/authSlice";
 
 export const rootReducer = combineReducers({
+  auth: authReducer,
   projectID: projectIDReducer,
   popup: popupReducer,
   selectedRoom: selectedRoomSlice,

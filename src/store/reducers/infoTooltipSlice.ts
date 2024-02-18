@@ -4,7 +4,7 @@ import { FunctionComponent } from 'react';
 interface infoTooltipState {
     isInfoTooltipOpen: boolean,
     titleInfo: string,
-    iconInfo: FunctionComponent<React.SVGAttributes<SVGElement>> | ''
+    iconInfo: FunctionComponent<React.SVGAttributes<SVGElement>> | '',
 }
 
 const initialState: infoTooltipState = {
@@ -25,8 +25,46 @@ const infoTooltipSlice = createSlice({
         state.isInfoTooltipOpen = false;
         state.titleInfo = '';
     },
+    
+    openInfoTooltipLogin(state, action: PayloadAction<string>) {
+        state.isInfoTooltipOpen = true;
+        state.titleInfo = action.payload;
+    },
+    closeInfoTooltipLogin(state) {
+        state.isInfoTooltipOpen = false;
+        state.titleInfo = '';
+    },
+    
+    openInfoTooltipRegist(state, action: PayloadAction<string>) {
+        state.isInfoTooltipOpen = true;
+        state.titleInfo = action.payload;
+    },
+    closeInfoTooltipRegist(state) {
+        state.isInfoTooltipOpen = false;
+        state.titleInfo = '';
+    },
+    
+    openInfoTooltipProfile(state, action: PayloadAction<string>) {
+        state.isInfoTooltipOpen = true;
+        state.titleInfo = action.payload;
+    },
+    closeInfoTooltipProfile(state) {
+        state.isInfoTooltipOpen = false;
+        state.titleInfo = '';
+    },
   }
 });
 
-export const { openInfoTooltipFacade, closeInfoTooltipFacade } = infoTooltipSlice.actions;
+export const { 
+  openInfoTooltipFacade,
+  closeInfoTooltipFacade, 
+  openInfoTooltipLogin, 
+  closeInfoTooltipLogin,
+  openInfoTooltipRegist,
+  closeInfoTooltipRegist,
+  openInfoTooltipProfile,
+  closeInfoTooltipProfile
+
+} = infoTooltipSlice.actions;
+
 export default infoTooltipSlice.reducer;

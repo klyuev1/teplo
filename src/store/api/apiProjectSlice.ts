@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Project } from '../../models/models';
-
-export const BASE_URL = "http://localhost:3001";
+import { BASE_URL } from "../../utils/constants";
 
 export const apiProjectSlice = createApi({
   reducerPath: 'apiProject',

@@ -1,7 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { FormValue } from "../../utils/interfaces";
+import { BASE_URL } from "../../utils/constants";
 
-export const BASE_URL = "http://localhost:3001"
+export interface Profile {
+  name: string;
+  email: string;
+  password: string;
+}
+export interface ProfileView {
+  name: string;
+  email: string;
+}
 
 export const apiProfileSlice = createApi({
   reducerPath: 'apiProfile',
@@ -11,13 +19,45 @@ export const apiProfileSlice = createApi({
   }),
   tagTypes: ['Profile'],
   endpoints: builder => ({
-    getUser: builder.query<FormValue, void>({
+    
+    getUser: builder.query<ProfileView, void>({
       query: () => ({
         url: '/users/me'
       }),
       providesTags: result => ['Profile'],
     }),
+    signup: builder.mutation<Profile, Partial<Profile>>({
+      query: (profile) => ({
+        url: '/signup',
+        method: 'POST',
+        body: profile,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
+    signin: builder.mutation<Profile, {email: string, password: string}>({
+      query: ({email, password}) => ({
+        url: '/signin',
+        method: 'POST',
+        body: {email, password},
+      }),
+      invalidatesTags: ['Profile'],
+    }),
+    signout: builder.mutation<void, void>({
+      query: () => ({
+        url: '/signout',
+        method: 'GET',
+      }),
+      invalidatesTags: ['Profile'],
+    }),
+    updateUser: builder.mutation<ProfileView, Partial<ProfileView>>({
+      query: (profile) => ({
+        url: '/users/me',
+        method: 'PATCH',
+        body: profile,
+      }),
+      invalidatesTags: ['Profile'],
+    }),
   })
 })
 
-export const { useGetUserQuery } = apiProfileSlice;
+export const { useGetUserQuery, useSignupMutation, useSigninMutation, useUpdateUserMutation, useSignoutMutation } = apiProfileSlice;

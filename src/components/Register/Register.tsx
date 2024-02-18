@@ -3,14 +3,22 @@ import { useNavigate, Link } from 'react-router-dom'
 import {Logo} from '../../ui/icons/svgIcons'
 import UseValidation from '../../utils/UseValidation';
 
-import {RegisterProps, FormValue} from "../../utils/interfaces"
+import { FormValue } from "../../models/props"
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
+import { useSigninMutation, useSignupMutation } from '../../store/api/apiProfileSlice';
+import { openInfoTooltipRegist } from '../../store/reducers/infoTooltipSlice';
+import { setIsLoggedIn } from '../../store/reducers/authSlice';
 
-function Register( {onRegister, isLoggedIn}: RegisterProps ) {
-
+function Register() {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  if (isLoggedIn === true) {
-    navigate('/profile');
-  }
+
+  React.useEffect(() => {
+    if (isLoggedIn === true) {
+      navigate('/profile');
+    }
+  }, [dispatch])
 
   const [formValue, setFormValue] = React.useState<FormValue>({
     name: '',
@@ -28,10 +36,39 @@ function Register( {onRegister, isLoggedIn}: RegisterProps ) {
     }, {}, false);
   }, [resetForm])
 
+  const [handleRegiset, {error: regError}] = useSignupMutation();
+  const [handleLogin, {error: loginError}] = useSigninMutation();
+
+  // запрос не сразу на ошибку отправляется, а со второй попытки
+  const onRegister = async (name: string, email: string, password: string) => {
+    try {
+      await handleRegiset({name, email, password}).unwrap()
+      
+      try{ 
+        await handleLogin({email, password}).unwrap()
+        dispatch(openInfoTooltipRegist("Вы успешно зарегистрировались!"))
+        navigate("/projects", { replace: true });
+        dispatch(setIsLoggedIn(true));
+      } catch {
+        console.log(loginError)
+        dispatch(openInfoTooltipRegist("Что-то пошло не так! Попробуйте ещё раз."));
+      }
+      
+    } catch {
+      if (regError && 'status' in regError && regError.status === 409) {
+        dispatch(openInfoTooltipRegist("Пользователь с таким Email уже зарегистрирован"));
+      } else {
+        console.log(regError)
+        dispatch(openInfoTooltipRegist("Что-то не так с введенными данными"));
+      } 
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onRegister(formValue.name, formValue.email, formValue.password!);
   }
+
   
   return (
     <section className='register'>

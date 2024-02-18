@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Facade from "../Facade/Facade";
-
-import { FacadesProps } from "../../utils/interfaces";
 import { FacadeLogo } from "../../ui/icons/svgIcons";
 import { useGetFacadesQuery } from "../../store/api/apiFacadeSlice";
 import { useAppDispatch } from "../../store/hooks/hooks";

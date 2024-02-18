@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
-import {ProjectProps} from "../../../utils/interfaces";
+import {ProjectProps} from "../../../models/props";
 import { useDeleteProjectMutation } from '../../../store/api/apiProjectSlice';
 
 function Project({project}: ProjectProps) {

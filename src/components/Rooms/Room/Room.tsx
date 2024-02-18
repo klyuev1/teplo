@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RoomProps } from "../../../utils/interfaces";
+import { RoomProps } from "../../../models/props";
 import { useAppDispatch, useAppSelector } from '../../../store/hooks/hooks';
 import { useDeleteRoomMutation } from '../../../store/api/apiRoomSlice';
 import { openSelectedRoom } from "../../../store/reducers/selectedRoomSlice";

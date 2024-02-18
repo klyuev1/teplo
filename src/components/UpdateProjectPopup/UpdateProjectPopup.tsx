@@ -10,8 +10,7 @@ import {
   T_OUTSIDE_SRG, T_INSIDE_SRG, R_WALL_SRG, R_WINDOW_SRG,
   BETA, K_HOUSEHOLD
 } from '../../utils/Regions';
-import { useRooms } from '../../contexts/RoomsContext';
-import {Project} from "../../utils/interfaces";
+import {Project} from "../../models/models";
 import { useUpdateProjectMutation } from '../../store/api/apiProjectSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeUpdateProjectPopup } from '../../store/reducers/popupSlice';
@@ -19,6 +18,7 @@ import { closeUpdateProjectPopup } from '../../store/reducers/popupSlice';
 function UpdateProjectPopup() {
 
   const [handleUpdateProject, {error, isLoading}] = useUpdateProjectMutation();
+  const projectID = useAppSelector((state) => state.projectID);
 
   const dispatch = useAppDispatch();
   const isOpen = useAppSelector(state => state.popup.isUpdateProjectPopupOpen);
@@ -34,7 +34,6 @@ function UpdateProjectPopup() {
   const [rWindow, setRWindow] = React.useState<number>();
   const [beta, setBeta] = React.useState<number>();
   const [kHousehold, setKHousehold] = React.useState<number>();
-  const { projectID = null } = useRooms() || {};
 
   React.useEffect(() => {
     if (error) {

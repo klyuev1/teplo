@@ -1,7 +1,7 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import FacadeModule from './FacadeModule/FacadeModule';
-import {CreateRoomPopupProps, Room} from "../../utils/interfaces";
+import { Room } from "../../models/models";
 import { usePostRoomMutation } from '../../store/api/apiRoomSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateRoomPopup } from '../../store/reducers/popupSlice';
@@ -54,10 +54,6 @@ function CreateRoomPopup() {
   const [areaWall,setAreaWall ] = React.useState<number>();
   const [areaWindow,setAreaWindow ] = React.useState<number>();
   const [numberFacade, setNumberFacade] = React.useState('');
-
-
-  // Убрать этот кусок кода после редактирования БЭКа
-  // height, width, areaWall, areaWindow
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -129,6 +125,7 @@ function CreateRoomPopup() {
           {facades && facades.map((facade) => (
             <FacadeModule 
               facade={facade}
+              key={facade._id}
               setHeight={setHeight}
               setWidth={setWidth}
               setAreaWall={setAreaWall}

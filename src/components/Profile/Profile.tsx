@@ -1,28 +1,24 @@
 import React from 'react';
-import {useState, useContext, useEffect } from "react";
-import CurrentUserContext from '../../contexts/CurrentUserContext';
+import {useState, useEffect } from "react";
 import UseValidation from '../../utils/UseValidation'; 
 
-import {ProfileProps, FormValue} from "../../utils/interfaces"
-import { useGetUserQuery } from '../../store/api/apiProfileSlice';
+import { FormValue } from "../../models/props"
+import { useGetUserQuery, useSignoutMutation, useUpdateUserMutation } from '../../store/api/apiProfileSlice';
+import { openInfoTooltipProfile } from '../../store/reducers/infoTooltipSlice';
+import { useAppDispatch } from '../../store/hooks/hooks';
+import { setIsLoggedIn } from '../../store/reducers/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-function Profile({onSignOut, onUpdateUser}: ProfileProps) {
+function Profile() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { data: user } = useGetUserQuery();
 
-  const {data: user} = useGetUserQuery();
-
-  // const currentUser = useContext(CurrentUserContext);
-
-  const [formValue, setFormValue] = useState<FormValue>({
-    name: '',
-    email: '',
-    password: ''
-  });
-
+  const [formValue, setFormValue] = useState<FormValue>({ name: '', email: '', password: '' });
   const [isChanges, setIsChanges] = useState(false);
   const { formErrors, isValidForm, handleChange, resetForm } = UseValidation({formValue, setFormValue});
 
   useEffect(() => {
-
     if (user && ((formValue.email !== user.email) || (formValue.name !== user.name))) {
         setIsChanges(true);
     } else {
@@ -30,23 +26,50 @@ function Profile({onSignOut, onUpdateUser}: ProfileProps) {
     }
   }, [formValue, setIsChanges]);
 
-
   useEffect(() => {
     if (user) {
-
-      resetForm(user, {}, true);
+      resetForm(user!, {}, true);
     }
     setIsChanges(false);
   }, [user, resetForm]);
 
+
+  const [handleUpdateProfile, {error}] = useUpdateUserMutation();
+
+  const onUpdateProfile = async (name: string, email: string) => {
+    try {
+      await handleUpdateProfile({ name, email }).unwrap()
+      dispatch(openInfoTooltipProfile("Данные о профиле изменены"))
+    } catch {
+      console.log(error)
+      dispatch(openInfoTooltipProfile("Что-то пошло не так! Попробуйте ещё раз."));
+    }
+  }
+
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    onUpdateUser(formValue.name, formValue.email)
+    onUpdateProfile(formValue.name, formValue.email)
   }
-  
+
+  const [handleSignout, {error: signoutError}] = useSignoutMutation();
+
+  // запрос не сразу на ошибку отправляется, а со второй попытки
+  const OnSignOut = async () => {
+    try {
+      await handleSignout()
+      dispatch(setIsLoggedIn(false));
+      navigate("/");
+    } catch {
+      console.log(signoutError)
+      dispatch(openInfoTooltipProfile("Что-то пошло не так! Попробуйте ещё раз."));
+    } finally {
+      localStorage.clear();
+    }
+  }
+
   return (
     <section className='profile'>
-      <h1 className='profile__title'>Привет, {user!.name}!</h1>
+      <h1 className='profile__title'>Привет, {user && user.name}!</h1>
       <form className='profile__form' noValidate>
         
         <label className='profile__label'>
@@ -79,7 +102,7 @@ function Profile({onSignOut, onUpdateUser}: ProfileProps) {
         onClick={handleSubmit}
         >Редактировать</button>
       <button className='profile__exit-button' type='button' 
-        onClick={onSignOut}
+        onClick={OnSignOut}
       >Выйти из аккаунта</button>
 
     </section>

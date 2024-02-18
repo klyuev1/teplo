@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Project from '../Project/Project';
 
 import { useGetProjectsQuery } from '../../../store/api/apiProjectSlice';
