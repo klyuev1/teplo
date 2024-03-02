@@ -125,7 +125,7 @@ function CreateRoomPopup() {
           {facades && facades.map((facade) => (
             <FacadeModule 
               facade={facade}
-              key={facade._id}
+              key={facade.id}
               setHeight={setHeight}
               setWidth={setWidth}
               setAreaWall={setAreaWall}

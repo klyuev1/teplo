@@ -7,7 +7,7 @@ interface selectedRoomState {
 
 const initialState: selectedRoomState = {
   selectedRoom: {
-    _id: '',
+    id: '',
     number: '',
     name: '',
     height: 0,
@@ -29,7 +29,7 @@ const selectedRoomSlice = createSlice({
     },
     closeSelectedRoom(state) {
       state.selectedRoom = { 
-        _id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '', heatLoss: 0, 
+        id: '', number: '', name: '', height: 0, width: 0, areaWall: 0, areaWindow: 0, areaRoom: 0, numberFacade: '', heatLoss: 0, 
       };  
     }
   }

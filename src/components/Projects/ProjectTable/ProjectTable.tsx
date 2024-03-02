@@ -30,7 +30,7 @@ function ProjectTable() {
       {projects && projects.map(project => (
         <Project 
           project={project}
-          key={project._id}
+          key={project.id}
         />
       ))}
     </tbody>

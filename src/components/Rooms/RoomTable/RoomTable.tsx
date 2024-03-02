@@ -34,7 +34,7 @@ function RoomTable() {
 
         <Room 
           room={room}
-          key={room._id}
+          key={room.id}
         />
 
       ))}

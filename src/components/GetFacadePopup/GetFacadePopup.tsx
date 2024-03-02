@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeSelectedFacade } from '../../store/reducers/selectedFacadeSlice';
+import { BASE_URL } from '../../utils/constants';
 
 function GetFacadePopup() {
 
@@ -27,7 +28,7 @@ function GetFacadePopup() {
           <div className='popup__common-div'>
 
             <div className='popup__label popup__main-label'>
-              <img className='popup__img' src={facade.link} alt={facade.name}/>
+              <img className='popup__img' src={`${BASE_URL}/${facade.link}`} alt='facade'/>
               <h3 className='popup__input-name popup__name-start'>Наименование фасада:</h3>
               <p className='popup__input popup__text'>{facade.name}</p>
             </div>

@@ -17,9 +17,9 @@ function Project({project}: ProjectProps) {
   }
 
   return (
-        <tr className='table_row' key={project._id}>
+        <tr className='table_row' key={project.id}>
           <td className='table_d column1'>
-            <Link className='table__td-button' to={`/projects/${project._id}/rooms`}>
+            <Link className='table__td-button' to={`/projects/${project.id}/rooms`}>
               <div className='table__icon' />{project.name}
             </Link>
           </td>

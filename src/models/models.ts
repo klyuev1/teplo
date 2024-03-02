@@ -1,5 +1,5 @@
 export interface Project {
-  _id?: string;
+  id?: string;
   name: string;
   tOutside: number;
   tInside: number;
@@ -10,7 +10,7 @@ export interface Project {
   createdAt?: number;
 }
 export interface Facade {
-  _id?: string;
+  id?: string;
   name: string;
   link: string;
   height: number;
@@ -19,7 +19,7 @@ export interface Facade {
   areaWall: number;
 }
 export interface Room {
-  _id?: string;
+  id?: string;
   number: string;
   name: string;
   height: number;

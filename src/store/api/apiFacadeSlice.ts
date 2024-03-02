@@ -18,18 +18,27 @@ export const apiFacadeSlice = createApi({
       providesTags: result => ['Facade'],
     }),
 
-    postFacade: builder.mutation<Facade, Partial<Facade>>({
-      query: (facade) => ({
-        url: '/facades',
-        method: 'POST',
-        body: facade,
-      }),
+    postFacade: builder.mutation<Facade, { facade: Partial<Facade>, image: File }>({
+      query: ({ facade, image }) => {
+        const formData = new FormData();
+        formData.append('name', facade.name|| '');
+        formData.append('height', (facade.height || 0).toString());
+        formData.append('width', (facade.width || 0).toString());
+        formData.append('areaWindow', (facade.areaWindow || 0).toString());
+        formData.append('areaWall', (facade.areaWall || 0).toString());
+        formData.append('image', image);
+        return {
+          url: '/facades',
+          method: 'POST',
+          body: formData,
+        }
+      },
       invalidatesTags: ['Facade'],
     }),
 
     deleteFacade: builder.mutation<Facade, Partial<Facade>>({
       query: (facade) => ({
-        url: `/facades/${facade._id}`,
+        url: `/facades/${facade.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Facade'],

@@ -45,7 +45,7 @@ export const apiProfileSlice = createApi({
     signout: builder.mutation<void, void>({
       query: () => ({
         url: '/signout',
-        method: 'GET',
+        method: 'POST',
       }),
       invalidatesTags: ['Profile'],
     }),

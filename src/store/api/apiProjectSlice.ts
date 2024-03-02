@@ -39,7 +39,7 @@ export const apiProjectSlice = createApi({
     
     deleteProject: builder.mutation<Project, Partial<Project>>({
       query: (project) => ({
-        url: `/projects/${project._id}`,
+        url: `/projects/${project.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Project'],

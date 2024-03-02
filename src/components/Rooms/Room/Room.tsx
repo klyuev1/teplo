@@ -27,7 +27,7 @@ function Room({ room }: RoomProps ) {
   }
 
   return (
-    <tr className='table_row' key={room._id}>
+    <tr className='table_row' key={room.id}>
       <td className='table_d room-column1'>{room.number}</td>
       <td className='table_d room-column2'>
         <button className='table__td-button' type='button' onClick={handleClick}>

@@ -7,7 +7,7 @@ interface selectedFacadeState {
 
 const initialState: selectedFacadeState = {
   selectedFacade: {
-    _id: '',
+    id: '',
     name: '',
     link: '',
     height: 0,

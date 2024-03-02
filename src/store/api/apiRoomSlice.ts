@@ -29,7 +29,7 @@ export const apiRoomSlice = createApi({
 
     deleteRoom: builder.mutation<Room, { projectID: string; room: Partial<Room> }>({
       query: ({ projectID, room }) => ({
-        url: `/projects/${projectID}/rooms/${room._id}`,
+        url: `/projects/${projectID}/rooms/${room.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Room'],

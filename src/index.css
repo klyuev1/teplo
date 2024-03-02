@@ -64,7 +64,7 @@
 /* Правила для NotFound*/
 @import url(./components/NotFound/NotFound.css);
 
-/* Правила для NotFound*/
+/* Правила для CreateRoomPopup*/
 @import url(./components/CreateRoomPopup/CreateRoomPopup.css);
 
 /* Правила для GetFacadePopup*/
@@ -75,3 +75,6 @@
 
 /* Правила для Room*/
 @import url(./components/Rooms/Room/Room.css);
+
+/* Правила для CreateFacadePopup*/
+@import url(./components/CreateFacadePopup/CreateFacadePopup.css);

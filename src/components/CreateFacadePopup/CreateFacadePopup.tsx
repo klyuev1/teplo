@@ -18,15 +18,14 @@ function CreateFacadePopupOpen() {
     if (error) {
       dispatch(openInfoTooltipFacade('Что-то не так с введенными данными'))
     }
-    
   }
   const handleClose = () => {
-    
     dispatch(closeCreateFacadePopup())
   }
 
   const [name, setName] = React.useState<string>('');
   const [link, setLink] = React.useState<string>('');
+  const [imageFile, setImageFile] = React.useState<File | null>(null);
   const [height, setHeight] = React.useState<number>();
   const [width, setWidth] = React.useState<number>();
   const [areaWindow, setAreaWindow] = React.useState<number>();
@@ -34,23 +33,22 @@ function CreateFacadePopupOpen() {
 
   useEffect(() => {
     setName('');
-    setLink('');
+    setImageFile(null);
+    setHeight(undefined);
+    setWidth(undefined);
+    setAreaWindow(undefined);
+    setAreaWall(undefined);
   }, [isCreateFacadePopupOpen]);
-
-  useEffect(() => {
-    if (error) {
-      handleOpenInfoToolTip();
-      console.log(error);
-    }
-  }, [error]);
 
   // Заполнение стейт переменных
   function handleChangeName(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
   }
-
-  function handleChangeLink(e: React.ChangeEvent<HTMLInputElement>) {
-    setLink(e.target.value);
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      setImageFile(file);
+    }
   }
   function handleChangeHeight(e: React.ChangeEvent<HTMLInputElement>) {
     setHeight(Number(e.target.value));
@@ -63,26 +61,21 @@ function CreateFacadePopupOpen() {
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-
     e.preventDefault();
     setIsLoading(true);
-    const facade: Facade = {
-      name: name,
-      link: link,
-      height: height!,
-      width: width!,
-      areaWindow: areaWindow!,
-      areaWall: areaWall!
+    console.log({ facade: { name, height, width, areaWindow, areaWall }, image: imageFile! })
+    try {
+      await handleCreateFacade({ facade: { name, height, width, areaWindow, areaWall }, image: imageFile! });
+      handleClose();
+    } catch(e) {
+      console.error('Error creating facade:', error);
+      handleOpenInfoToolTip();
     }
-    await handleCreateFacade(facade);
-    await setIsLoading(false);
-    await handleClose();
-    
+    setIsLoading(false);
   }
 
   return (
-    <PopupWithForm
-      name='create-project'
+    <PopupWithForm name='create-project'
       title='Cоздание фасада'
       buttonName={isLoading ? 'Создание...' : 'Создать фасад'}
       isOpen={isCreateFacadePopupOpen}
@@ -92,27 +85,18 @@ function CreateFacadePopupOpen() {
       <label className='popup__label'>
         <h3 className='popup__input-name'>Наименование фасада:</h3>
         <input
-          name='author'
-          type='text'
-          className='popup__input'
-          minLength={2}
-          maxLength={40}
-          value={name}
-          required
-          onChange={handleChangeName}
+          name='author' type='text' className='popup__input' minLength={2} maxLength={40}
+          value={name} required onChange={handleChangeName}
         />
       </label>
+      
       <label className='popup__label'>
         <h3 className='popup__input-name'>Изображение:</h3>
         <input
-          name='author'
-          type='url'
-          className='popup__input'
-          value={link}
-          required
-          onChange={handleChangeLink}
+          name='author' type='file' className='popup__input popup__input_file' required onChange={handleImageChange}
         />
       </label>
+
       <div className='popup__input-section'>
         <label className='popup__label'>
           <h3 className='popup__input-name'>Высота фасада:</h3>
@@ -160,6 +144,7 @@ function CreateFacadePopupOpen() {
           </div>
         </label>
       </div>
+
     </PopupWithForm>
   );
 }
