@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import { Facade } from '../../models/models';
 import { usePostFacadeMutation } from '../../store/api/apiFacadeSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeCreateFacadePopup } from '../../store/reducers/popupSlice';
@@ -24,7 +23,6 @@ function CreateFacadePopupOpen() {
   }
 
   const [name, setName] = React.useState<string>('');
-  const [link, setLink] = React.useState<string>('');
   const [imageFile, setImageFile] = React.useState<File | null>(null);
   const [height, setHeight] = React.useState<number>();
   const [width, setWidth] = React.useState<number>();

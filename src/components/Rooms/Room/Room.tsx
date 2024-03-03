@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { RoomProps } from "../../../models/props";
 import { useAppDispatch, useAppSelector } from '../../../store/hooks/hooks';
 import { useDeleteRoomMutation } from '../../../store/api/apiRoomSlice';

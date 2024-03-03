@@ -18,6 +18,7 @@ function Login() {
     if (isLoggedIn === true) {
       navigate('/profile');
     }
+    
   }, [dispatch])
   
   
