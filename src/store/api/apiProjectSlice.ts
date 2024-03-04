@@ -15,7 +15,7 @@ export const apiProjectSlice = createApi({
       query: () => ({
         url: '/projects'
       }),
-      providesTags: result => ['Project'],
+      providesTags: () => ['Project'],
     }),
     
     postProject: builder.mutation<Project, Partial<Project>>({

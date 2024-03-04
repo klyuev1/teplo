@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from "react";
 import Facade from "../Facade/Facade";
 import { FacadeLogo } from "../../ui/icons/svgIcons";
@@ -37,7 +38,7 @@ function Facades() {
       </div>
       
       <section className="elements">
-        {facades && facades.map((facade) => <Facade facade={facade} />)}
+      {facades && facades.map((facade) => <Facade key={facade.id} facade={facade} />)}
       </section>
     </section>
   );

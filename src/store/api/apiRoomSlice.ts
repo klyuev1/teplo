@@ -15,7 +15,7 @@ export const apiRoomSlice = createApi({
       query: ({projectID}) => ({
         url: `/projects/${projectID}/rooms`
       }),
-      providesTags: result => ['Room'],
+      providesTags: () => ['Room'],
     }),
 
     postRoom: builder.mutation<Room, { projectID: string; room: Partial<Room> }>({

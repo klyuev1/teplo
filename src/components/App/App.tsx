@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
+import React from 'react';
 // Компоненты
 import Register from '../Register/Register';
 import Login from '../Login/Login';

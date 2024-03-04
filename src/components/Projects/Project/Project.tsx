@@ -7,7 +7,7 @@ import { useDeleteProjectMutation } from '../../../store/api/apiProjectSlice';
 
 function Project({project}: ProjectProps) {
   
-  const [handleDeleteProject, { }] = useDeleteProjectMutation();
+  const [handleDeleteProject] = useDeleteProjectMutation();
   
   const parsedDate = new Date(project.createdAt!);
   const formattedDate = format(parsedDate, 'dd.MM.yyyy');

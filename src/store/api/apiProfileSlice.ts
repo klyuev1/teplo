@@ -24,7 +24,7 @@ export const apiProfileSlice = createApi({
       query: () => ({
         url: '/users/me'
       }),
-      providesTags: result => ['Profile'],
+      providesTags: () => ['Profile'],
     }),
     signup: builder.mutation<Profile, Partial<Profile>>({
       query: (profile) => ({

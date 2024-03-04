@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import Room from '../Room/Room';
 import { useGetRoomsQuery } from '../../../store/api/apiRoomSlice';

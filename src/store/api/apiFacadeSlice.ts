@@ -15,7 +15,7 @@ export const apiFacadeSlice = createApi({
       query: () => ({
         url: '/facades'
       }),
-      providesTags: result => ['Facade'],
+      providesTags: () => ['Facade'],
     }),
 
     postFacade: builder.mutation<Facade, { facade: Partial<Facade>, image: File }>({

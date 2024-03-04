@@ -1,3 +1,4 @@
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { closeInfoTooltipFacade } from '../../store/reducers/infoTooltipSlice';
 

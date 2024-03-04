@@ -1,3 +1,4 @@
+import React from 'react';
 import {FooterLogo} from '../../ui/icons/svgIcons'
 
 function Footer() {

@@ -4,7 +4,7 @@ import { Project, Facade, Room} from "./models"
 export interface ProtectedRouteProps {
   element: React.ElementType;
   isLoggedIn: boolean;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ValidationProps {
