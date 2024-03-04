@@ -66,8 +66,8 @@
 }
 
 .Info-tooltip__text-auth {
-  margin: 0;
-  margin-bottom: 60px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   text-align: center;
   font-family: 'Grtsk-Tera', 'Arial', sans-serif;
   font-weight: 900;
