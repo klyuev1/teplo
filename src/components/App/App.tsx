@@ -27,12 +27,12 @@ function App() {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   
-  useEffect(() => {
-    const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
-    if (!jwtCookie) {
-      dispatch(setIsLoggedIn(false));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
+  //   if (!jwtCookie) {
+  //     dispatch(setIsLoggedIn(false));
+  //   }
+  // }, [dispatch]);
   
   return (
       <div className="app">
