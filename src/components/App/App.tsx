@@ -29,9 +29,6 @@ function App() {
   
   useEffect(() => {
     const jwtCookie = document.cookie.split('; ').find(row => row.startsWith('jwt='));
-    
-    console.log(jwtCookie)
-
     if (!jwtCookie) {
       dispatch(setIsLoggedIn(false));
     }
